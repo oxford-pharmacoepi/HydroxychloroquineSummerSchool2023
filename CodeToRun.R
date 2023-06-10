@@ -1,15 +1,28 @@
 # ADD NECESSARY PACKAGES
-
-library(CDMConnector)
 library(DBI)
-library(log4r)
+library(CDMConnector)
+library(CodelistGenerator)
 library(dplyr)
 library(dbplyr)
 library(here)
+library(readr)
+library(IncidencePrevalence)
+library(stringr)
+library(log4r)
+library(remotes)
+library(testthat)
+
+# Install PaitentProfiles and DrugUtilisation packages from GutHub (order matters):
+install_github("ohdsi/CirceR")
+install_github("darwin-eu-dev/PatientProfiles")
+install_github("darwin-eu-dev/DrugUtilisation")
+library(DrugUtilisation)
+library(PatientProfiles)
+library(CircleR)
 
 # database metadata and connection details -----
 # The name/ acronym for the database
-db_name <- "...."
+db_name <- "PHARMETRICS"
 
 # Set output folder location -----
 # the path to a folder where the results from this analysis will be saved
@@ -25,21 +38,27 @@ if (!dir.exists(output_folder)) {
 # for more details.
 # you may need to install another package for this 
 # eg for postgres 
-# db <- dbConnect(
-#   RPostgres::Postgres(), 
-#   dbname = server_dbi, 
-#   port = port, 
-#   host = host, 
-#   user = user,
-#   password = password
-# )
-db <- dbConnect("....")
+
+server_dbi <- Sys.getenv("DB_SERVER_DBI_ph")
+user       <- Sys.getenv("DB_USER")
+password   <- Sys.getenv("DB_PASSWORD")
+port       <- Sys.getenv("DB_PORT")
+host       <- Sys.getenv("DB_HOST")
+
+db <- dbConnect(
+  RPostgres::Postgres(),
+  dbname = server_dbi,
+  port = port,
+  host = host,
+  user = user,
+  password = password
+)
 
 # The name of the schema that contains the OMOP CDM with patient-level data
-cdm_database_schema <- "...."
+cdm_database_schema <- "public_100k"
 
 # The name of the schema where results tables will be created 
-results_database_schema <- "...."
+results_database_schema <- "results"
 
 # Name of stem outcome table in the result schema where the outcome cohorts will
 # be stored. 
@@ -48,10 +67,16 @@ results_database_schema <- "...."
 #   will be overwritten
 # - more than one cohort will be created
 # - name must be lower case
-stem_table <- "...."
+stem_table <- "hcq"
 
 # minimum counts that can be displayed according to data governance
 minimum_counts <- 5
+
+# Study dates
+study.start <- as.Date("2019-01-01")
+covid.start <- as.Date("2020-02-01")
+hcq.end     <- as.Date("2020-06-15")
+study.end   <- as.Date("2022-06-01")
 
 # create cdm reference ----
 cdm <- CDMConnector::cdm_from_con(
@@ -59,10 +84,16 @@ cdm <- CDMConnector::cdm_from_con(
   cdm_schema = cdm_database_schema,
   write_schema = results_database_schema
 )
+
 # check database connection
 # running the next line should give you a count of your person table
 cdm$person %>% 
   tally()
+
+# jobs to run
+instantiate_cohorts  <- TRUE
+incidence_prevalence <- FALSE
+plot_ip_results      <- FALSE
 
 # Run the study ------
 source(here("RunAnalysis.R"))

@@ -1,0 +1,24 @@
+window,indication_gap_0_ra,indication_gap_0_malaria,indication_gap_0_general,indication_gap_0_covid,indication_gap_0_none,indication_gap_7_ra,indication_gap_7_general,indication_gap_7_malaria,indication_gap_7_covid,indication_gap_7_none,indication_gap_30_malaria,indication_gap_30_general,indication_gap_30_ra,indication_gap_30_covid,indication_gap_30_none,indication_gap_0_unknown,indication_gap_7_unknown,indication_gap_30_unknown,age_group,sex
+hcq,0,0,0,0,36,0,0,0,0,30,1,0,0,0,17,4,10,22,0;150,Both
+after,0,0,0,0,59,0,0,0,0,36,1,0,0,0,28,37,60,67,0;150,Both
+before,0,0,0,0,30,0,2,0,0,19,4,6,1,0,9,24,33,39,0;150,Both
+hcq,0,0,0,0,2,0,0,0,0,1,0,0,0,0,0,0,1,2,20 to 39,Male
+hcq,0,0,0,0,5,0,0,0,0,5,0,0,0,0,2,0,0,3,60 to 79,Male
+before,0,0,0,0,8,0,0,0,0,8,0,0,0,0,4,5,5,9,60 to 79,Female
+after,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,0 to 19,Female
+after,0,0,0,0,16,0,0,0,0,9,0,0,0,0,8,7,14,15,60 to 79,Female
+after,0,0,0,0,3,0,0,0,0,3,0,0,0,0,3,1,1,1,20 to 39,Male
+before,0,0,0,0,13,0,1,0,0,5,1,2,0,0,3,11,18,19,40 to 59,Female
+after,0,0,0,0,2,0,0,0,0,1,0,0,0,0,1,0,1,1,80 to 150,Female
+hcq,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0 to 19,Male
+after,0,0,0,0,10,0,0,0,0,5,0,0,0,0,4,6,11,12,20 to 39,Female
+before,0,0,0,0,2,0,0,0,0,1,0,0,0,0,0,0,1,2,80 to 150,Female
+hcq,0,0,0,0,4,0,0,0,0,4,1,0,0,0,3,1,1,1,40 to 59,Male
+after,0,0,0,0,15,0,0,0,0,8,1,0,0,0,6,14,21,22,40 to 59,Female
+before,0,0,0,0,7,0,1,0,0,5,1,2,0,0,2,5,6,8,20 to 39,Female
+hcq,0,0,0,0,10,0,0,0,0,9,0,0,0,0,6,0,1,4,40 to 59,Female
+before,0,0,0,0,0,0,0,0,0,0,2,2,1,0,0,3,3,1,60 to 79,Male
+after,0,0,0,0,7,0,0,0,0,6,0,0,0,0,4,7,8,10,60 to 79,Male
+hcq,0,0,0,0,11,0,0,0,0,8,0,0,0,0,4,3,6,10,60 to 79,Female
+hcq,0,0,0,0,3,0,0,0,0,2,0,0,0,0,1,0,1,2,20 to 39,Female
+after,0,0,0,0,6,0,0,0,0,4,0,0,0,0,2,0,2,4,40 to 59,Male

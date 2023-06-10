@@ -1,0 +1,2 @@
+cdm_source_name,cdm_version,cdm_holder,cdm_release_date,vocabulary_version,person_cnt,observation_period_cnt,cdm_schema,write_schema,cdm_name
+PharMetrics Plus,v5.3.1,OMOP,2022-08-31,v5.0 22-JUN-22,100000,106564,public_100k,results,PharMetrics Plus

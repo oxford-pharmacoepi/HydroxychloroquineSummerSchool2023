@@ -1,0 +1,157 @@
+cohort_definition_id,age_group,sex,days_prior_history,start_date,end_date,strata_cohort_definition_id,strata_cohort_name,number_records,number_subjects,reason_id,reason,excluded_records,excluded_subjects
+1,0;19,Both,365,2019-01-01,2022-06-01,NA,NA,106564,100000,1,Starting population,NA,NA
+1,0;19,Both,365,2019-01-01,2022-06-01,NA,NA,106564,100000,2,Missing year of birth,0,0
+1,0;19,Both,365,2019-01-01,2022-06-01,NA,NA,106557,99993,3,Missing sex,7,7
+1,0;19,Both,365,2019-01-01,2022-06-01,NA,NA,106557,99993,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+1,0;19,Both,365,2019-01-01,2022-06-01,NA,NA,56134,53804,5,No observation time available during study period,50423,46189
+1,0;19,Both,365,2019-01-01,2022-06-01,NA,NA,56134,53804,6,Doesn't satisfy age criteria during the study period,0,0
+1,0;19,Both,365,2019-01-01,2022-06-01,NA,NA,38523,38115,7,Prior history requirement not fulfilled during study period,17611,15689
+1,0;19,Both,365,2019-01-01,2022-06-01,NA,NA,7213,7137,10,No observation time available after applying age and prior history criteria,31310,30978
+2,0;19,Female,365,2019-01-01,2022-06-01,NA,NA,106564,100000,1,Starting population,NA,NA
+2,0;19,Female,365,2019-01-01,2022-06-01,NA,NA,106564,100000,2,Missing year of birth,0,0
+2,0;19,Female,365,2019-01-01,2022-06-01,NA,NA,106557,99993,3,Missing sex,7,7
+2,0;19,Female,365,2019-01-01,2022-06-01,NA,NA,106557,99993,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+2,0;19,Female,365,2019-01-01,2022-06-01,NA,NA,56134,53804,5,No observation time available during study period,50423,46189
+2,0;19,Female,365,2019-01-01,2022-06-01,NA,NA,56134,53804,6,Doesn't satisfy age criteria during the study period,0,0
+2,0;19,Female,365,2019-01-01,2022-06-01,NA,NA,38523,38115,7,Prior history requirement not fulfilled during study period,17611,15689
+2,0;19,Female,365,2019-01-01,2022-06-01,NA,NA,20014,19806,8,Not Female,18509,18309
+2,0;19,Female,365,2019-01-01,2022-06-01,NA,NA,3561,3528,10,No observation time available after applying age and prior history criteria,16453,16278
+3,0;19,Male,365,2019-01-01,2022-06-01,NA,NA,106564,100000,1,Starting population,NA,NA
+3,0;19,Male,365,2019-01-01,2022-06-01,NA,NA,106564,100000,2,Missing year of birth,0,0
+3,0;19,Male,365,2019-01-01,2022-06-01,NA,NA,106557,99993,3,Missing sex,7,7
+3,0;19,Male,365,2019-01-01,2022-06-01,NA,NA,106557,99993,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+3,0;19,Male,365,2019-01-01,2022-06-01,NA,NA,56134,53804,5,No observation time available during study period,50423,46189
+3,0;19,Male,365,2019-01-01,2022-06-01,NA,NA,56134,53804,6,Doesn't satisfy age criteria during the study period,0,0
+3,0;19,Male,365,2019-01-01,2022-06-01,NA,NA,38523,38115,7,Prior history requirement not fulfilled during study period,17611,15689
+3,0;19,Male,365,2019-01-01,2022-06-01,NA,NA,18509,18309,8,Not Male,20014,19806
+3,0;19,Male,365,2019-01-01,2022-06-01,NA,NA,3652,3609,10,No observation time available after applying age and prior history criteria,14857,14700
+4,20;39,Both,365,2019-01-01,2022-06-01,NA,NA,106564,100000,1,Starting population,NA,NA
+4,20;39,Both,365,2019-01-01,2022-06-01,NA,NA,106564,100000,2,Missing year of birth,0,0
+4,20;39,Both,365,2019-01-01,2022-06-01,NA,NA,106557,99993,3,Missing sex,7,7
+4,20;39,Both,365,2019-01-01,2022-06-01,NA,NA,106557,99993,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+4,20;39,Both,365,2019-01-01,2022-06-01,NA,NA,56134,53804,5,No observation time available during study period,50423,46189
+4,20;39,Both,365,2019-01-01,2022-06-01,NA,NA,56134,53804,6,Doesn't satisfy age criteria during the study period,0,0
+4,20;39,Both,365,2019-01-01,2022-06-01,NA,NA,38523,38115,7,Prior history requirement not fulfilled during study period,17611,15689
+4,20;39,Both,365,2019-01-01,2022-06-01,NA,NA,10967,10845,10,No observation time available after applying age and prior history criteria,27556,27270
+5,20;39,Female,365,2019-01-01,2022-06-01,NA,NA,106564,100000,1,Starting population,NA,NA
+5,20;39,Female,365,2019-01-01,2022-06-01,NA,NA,106564,100000,2,Missing year of birth,0,0
+5,20;39,Female,365,2019-01-01,2022-06-01,NA,NA,106557,99993,3,Missing sex,7,7
+5,20;39,Female,365,2019-01-01,2022-06-01,NA,NA,106557,99993,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+5,20;39,Female,365,2019-01-01,2022-06-01,NA,NA,56134,53804,5,No observation time available during study period,50423,46189
+5,20;39,Female,365,2019-01-01,2022-06-01,NA,NA,56134,53804,6,Doesn't satisfy age criteria during the study period,0,0
+5,20;39,Female,365,2019-01-01,2022-06-01,NA,NA,38523,38115,7,Prior history requirement not fulfilled during study period,17611,15689
+5,20;39,Female,365,2019-01-01,2022-06-01,NA,NA,20014,19806,8,Not Female,18509,18309
+5,20;39,Female,365,2019-01-01,2022-06-01,NA,NA,5616,5555,10,No observation time available after applying age and prior history criteria,14398,14251
+6,20;39,Male,365,2019-01-01,2022-06-01,NA,NA,106564,100000,1,Starting population,NA,NA
+6,20;39,Male,365,2019-01-01,2022-06-01,NA,NA,106564,100000,2,Missing year of birth,0,0
+6,20;39,Male,365,2019-01-01,2022-06-01,NA,NA,106557,99993,3,Missing sex,7,7
+6,20;39,Male,365,2019-01-01,2022-06-01,NA,NA,106557,99993,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+6,20;39,Male,365,2019-01-01,2022-06-01,NA,NA,56134,53804,5,No observation time available during study period,50423,46189
+6,20;39,Male,365,2019-01-01,2022-06-01,NA,NA,56134,53804,6,Doesn't satisfy age criteria during the study period,0,0
+6,20;39,Male,365,2019-01-01,2022-06-01,NA,NA,38523,38115,7,Prior history requirement not fulfilled during study period,17611,15689
+6,20;39,Male,365,2019-01-01,2022-06-01,NA,NA,18509,18309,8,Not Male,20014,19806
+6,20;39,Male,365,2019-01-01,2022-06-01,NA,NA,5351,5290,10,No observation time available after applying age and prior history criteria,13158,13019
+7,40;59,Both,365,2019-01-01,2022-06-01,NA,NA,106564,100000,1,Starting population,NA,NA
+7,40;59,Both,365,2019-01-01,2022-06-01,NA,NA,106564,100000,2,Missing year of birth,0,0
+7,40;59,Both,365,2019-01-01,2022-06-01,NA,NA,106557,99993,3,Missing sex,7,7
+7,40;59,Both,365,2019-01-01,2022-06-01,NA,NA,106557,99993,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+7,40;59,Both,365,2019-01-01,2022-06-01,NA,NA,56134,53804,5,No observation time available during study period,50423,46189
+7,40;59,Both,365,2019-01-01,2022-06-01,NA,NA,56134,53804,6,Doesn't satisfy age criteria during the study period,0,0
+7,40;59,Both,365,2019-01-01,2022-06-01,NA,NA,38523,38115,7,Prior history requirement not fulfilled during study period,17611,15689
+7,40;59,Both,365,2019-01-01,2022-06-01,NA,NA,11401,11296,10,No observation time available after applying age and prior history criteria,27122,26819
+8,40;59,Female,365,2019-01-01,2022-06-01,NA,NA,106564,100000,1,Starting population,NA,NA
+8,40;59,Female,365,2019-01-01,2022-06-01,NA,NA,106564,100000,2,Missing year of birth,0,0
+8,40;59,Female,365,2019-01-01,2022-06-01,NA,NA,106557,99993,3,Missing sex,7,7
+8,40;59,Female,365,2019-01-01,2022-06-01,NA,NA,106557,99993,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+8,40;59,Female,365,2019-01-01,2022-06-01,NA,NA,56134,53804,5,No observation time available during study period,50423,46189
+8,40;59,Female,365,2019-01-01,2022-06-01,NA,NA,56134,53804,6,Doesn't satisfy age criteria during the study period,0,0
+8,40;59,Female,365,2019-01-01,2022-06-01,NA,NA,38523,38115,7,Prior history requirement not fulfilled during study period,17611,15689
+8,40;59,Female,365,2019-01-01,2022-06-01,NA,NA,20014,19806,8,Not Female,18509,18309
+8,40;59,Female,365,2019-01-01,2022-06-01,NA,NA,5924,5869,10,No observation time available after applying age and prior history criteria,14090,13937
+9,40;59,Male,365,2019-01-01,2022-06-01,NA,NA,106564,100000,1,Starting population,NA,NA
+9,40;59,Male,365,2019-01-01,2022-06-01,NA,NA,106564,100000,2,Missing year of birth,0,0
+9,40;59,Male,365,2019-01-01,2022-06-01,NA,NA,106557,99993,3,Missing sex,7,7
+9,40;59,Male,365,2019-01-01,2022-06-01,NA,NA,106557,99993,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+9,40;59,Male,365,2019-01-01,2022-06-01,NA,NA,56134,53804,5,No observation time available during study period,50423,46189
+9,40;59,Male,365,2019-01-01,2022-06-01,NA,NA,56134,53804,6,Doesn't satisfy age criteria during the study period,0,0
+9,40;59,Male,365,2019-01-01,2022-06-01,NA,NA,38523,38115,7,Prior history requirement not fulfilled during study period,17611,15689
+9,40;59,Male,365,2019-01-01,2022-06-01,NA,NA,18509,18309,8,Not Male,20014,19806
+9,40;59,Male,365,2019-01-01,2022-06-01,NA,NA,5477,5427,10,No observation time available after applying age and prior history criteria,13032,12882
+10,60;79,Both,365,2019-01-01,2022-06-01,NA,NA,106564,100000,1,Starting population,NA,NA
+10,60;79,Both,365,2019-01-01,2022-06-01,NA,NA,106564,100000,2,Missing year of birth,0,0
+10,60;79,Both,365,2019-01-01,2022-06-01,NA,NA,106557,99993,3,Missing sex,7,7
+10,60;79,Both,365,2019-01-01,2022-06-01,NA,NA,106557,99993,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+10,60;79,Both,365,2019-01-01,2022-06-01,NA,NA,56134,53804,5,No observation time available during study period,50423,46189
+10,60;79,Both,365,2019-01-01,2022-06-01,NA,NA,56134,53804,6,Doesn't satisfy age criteria during the study period,0,0
+10,60;79,Both,365,2019-01-01,2022-06-01,NA,NA,38523,38115,7,Prior history requirement not fulfilled during study period,17611,15689
+10,60;79,Both,365,2019-01-01,2022-06-01,NA,NA,9136,9063,10,No observation time available after applying age and prior history criteria,29387,29052
+11,60;79,Female,365,2019-01-01,2022-06-01,NA,NA,106564,100000,1,Starting population,NA,NA
+11,60;79,Female,365,2019-01-01,2022-06-01,NA,NA,106564,100000,2,Missing year of birth,0,0
+11,60;79,Female,365,2019-01-01,2022-06-01,NA,NA,106557,99993,3,Missing sex,7,7
+11,60;79,Female,365,2019-01-01,2022-06-01,NA,NA,106557,99993,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+11,60;79,Female,365,2019-01-01,2022-06-01,NA,NA,56134,53804,5,No observation time available during study period,50423,46189
+11,60;79,Female,365,2019-01-01,2022-06-01,NA,NA,56134,53804,6,Doesn't satisfy age criteria during the study period,0,0
+11,60;79,Female,365,2019-01-01,2022-06-01,NA,NA,38523,38115,7,Prior history requirement not fulfilled during study period,17611,15689
+11,60;79,Female,365,2019-01-01,2022-06-01,NA,NA,20014,19806,8,Not Female,18509,18309
+11,60;79,Female,365,2019-01-01,2022-06-01,NA,NA,4877,4835,10,No observation time available after applying age and prior history criteria,15137,14971
+12,60;79,Male,365,2019-01-01,2022-06-01,NA,NA,106564,100000,1,Starting population,NA,NA
+12,60;79,Male,365,2019-01-01,2022-06-01,NA,NA,106564,100000,2,Missing year of birth,0,0
+12,60;79,Male,365,2019-01-01,2022-06-01,NA,NA,106557,99993,3,Missing sex,7,7
+12,60;79,Male,365,2019-01-01,2022-06-01,NA,NA,106557,99993,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+12,60;79,Male,365,2019-01-01,2022-06-01,NA,NA,56134,53804,5,No observation time available during study period,50423,46189
+12,60;79,Male,365,2019-01-01,2022-06-01,NA,NA,56134,53804,6,Doesn't satisfy age criteria during the study period,0,0
+12,60;79,Male,365,2019-01-01,2022-06-01,NA,NA,38523,38115,7,Prior history requirement not fulfilled during study period,17611,15689
+12,60;79,Male,365,2019-01-01,2022-06-01,NA,NA,18509,18309,8,Not Male,20014,19806
+12,60;79,Male,365,2019-01-01,2022-06-01,NA,NA,4259,4228,10,No observation time available after applying age and prior history criteria,14250,14081
+13,80;150,Both,365,2019-01-01,2022-06-01,NA,NA,106564,100000,1,Starting population,NA,NA
+13,80;150,Both,365,2019-01-01,2022-06-01,NA,NA,106564,100000,2,Missing year of birth,0,0
+13,80;150,Both,365,2019-01-01,2022-06-01,NA,NA,106557,99993,3,Missing sex,7,7
+13,80;150,Both,365,2019-01-01,2022-06-01,NA,NA,106557,99993,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+13,80;150,Both,365,2019-01-01,2022-06-01,NA,NA,56134,53804,5,No observation time available during study period,50423,46189
+13,80;150,Both,365,2019-01-01,2022-06-01,NA,NA,56134,53804,6,Doesn't satisfy age criteria during the study period,0,0
+13,80;150,Both,365,2019-01-01,2022-06-01,NA,NA,38523,38115,7,Prior history requirement not fulfilled during study period,17611,15689
+13,80;150,Both,365,2019-01-01,2022-06-01,NA,NA,2255,2250,10,No observation time available after applying age and prior history criteria,36268,35865
+14,80;150,Female,365,2019-01-01,2022-06-01,NA,NA,106564,100000,1,Starting population,NA,NA
+14,80;150,Female,365,2019-01-01,2022-06-01,NA,NA,106564,100000,2,Missing year of birth,0,0
+14,80;150,Female,365,2019-01-01,2022-06-01,NA,NA,106557,99993,3,Missing sex,7,7
+14,80;150,Female,365,2019-01-01,2022-06-01,NA,NA,106557,99993,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+14,80;150,Female,365,2019-01-01,2022-06-01,NA,NA,56134,53804,5,No observation time available during study period,50423,46189
+14,80;150,Female,365,2019-01-01,2022-06-01,NA,NA,56134,53804,6,Doesn't satisfy age criteria during the study period,0,0
+14,80;150,Female,365,2019-01-01,2022-06-01,NA,NA,38523,38115,7,Prior history requirement not fulfilled during study period,17611,15689
+14,80;150,Female,365,2019-01-01,2022-06-01,NA,NA,20014,19806,8,Not Female,18509,18309
+14,80;150,Female,365,2019-01-01,2022-06-01,NA,NA,1285,1282,10,No observation time available after applying age and prior history criteria,18729,18524
+15,80;150,Male,365,2019-01-01,2022-06-01,NA,NA,106564,100000,1,Starting population,NA,NA
+15,80;150,Male,365,2019-01-01,2022-06-01,NA,NA,106564,100000,2,Missing year of birth,0,0
+15,80;150,Male,365,2019-01-01,2022-06-01,NA,NA,106557,99993,3,Missing sex,7,7
+15,80;150,Male,365,2019-01-01,2022-06-01,NA,NA,106557,99993,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+15,80;150,Male,365,2019-01-01,2022-06-01,NA,NA,56134,53804,5,No observation time available during study period,50423,46189
+15,80;150,Male,365,2019-01-01,2022-06-01,NA,NA,56134,53804,6,Doesn't satisfy age criteria during the study period,0,0
+15,80;150,Male,365,2019-01-01,2022-06-01,NA,NA,38523,38115,7,Prior history requirement not fulfilled during study period,17611,15689
+15,80;150,Male,365,2019-01-01,2022-06-01,NA,NA,18509,18309,8,Not Male,20014,19806
+15,80;150,Male,365,2019-01-01,2022-06-01,NA,NA,970,968,10,No observation time available after applying age and prior history criteria,17539,17341
+16,0;150,Both,365,2019-01-01,2022-06-01,NA,NA,106564,100000,1,Starting population,NA,NA
+16,0;150,Both,365,2019-01-01,2022-06-01,NA,NA,106564,100000,2,Missing year of birth,0,0
+16,0;150,Both,365,2019-01-01,2022-06-01,NA,NA,106557,99993,3,Missing sex,7,7
+16,0;150,Both,365,2019-01-01,2022-06-01,NA,NA,106557,99993,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+16,0;150,Both,365,2019-01-01,2022-06-01,NA,NA,56134,53804,5,No observation time available during study period,50423,46189
+16,0;150,Both,365,2019-01-01,2022-06-01,NA,NA,56134,53804,6,Doesn't satisfy age criteria during the study period,0,0
+16,0;150,Both,365,2019-01-01,2022-06-01,NA,NA,38523,38115,7,Prior history requirement not fulfilled during study period,17611,15689
+16,0;150,Both,365,2019-01-01,2022-06-01,NA,NA,38523,38115,10,No observation time available after applying age and prior history criteria,0,0
+17,0;150,Female,365,2019-01-01,2022-06-01,NA,NA,106564,100000,1,Starting population,NA,NA
+17,0;150,Female,365,2019-01-01,2022-06-01,NA,NA,106564,100000,2,Missing year of birth,0,0
+17,0;150,Female,365,2019-01-01,2022-06-01,NA,NA,106557,99993,3,Missing sex,7,7
+17,0;150,Female,365,2019-01-01,2022-06-01,NA,NA,106557,99993,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+17,0;150,Female,365,2019-01-01,2022-06-01,NA,NA,56134,53804,5,No observation time available during study period,50423,46189
+17,0;150,Female,365,2019-01-01,2022-06-01,NA,NA,56134,53804,6,Doesn't satisfy age criteria during the study period,0,0
+17,0;150,Female,365,2019-01-01,2022-06-01,NA,NA,38523,38115,7,Prior history requirement not fulfilled during study period,17611,15689
+17,0;150,Female,365,2019-01-01,2022-06-01,NA,NA,20014,19806,8,Not Female,18509,18309
+17,0;150,Female,365,2019-01-01,2022-06-01,NA,NA,20014,19806,10,No observation time available after applying age and prior history criteria,0,0
+18,0;150,Male,365,2019-01-01,2022-06-01,NA,NA,106564,100000,1,Starting population,NA,NA
+18,0;150,Male,365,2019-01-01,2022-06-01,NA,NA,106564,100000,2,Missing year of birth,0,0
+18,0;150,Male,365,2019-01-01,2022-06-01,NA,NA,106557,99993,3,Missing sex,7,7
+18,0;150,Male,365,2019-01-01,2022-06-01,NA,NA,106557,99993,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+18,0;150,Male,365,2019-01-01,2022-06-01,NA,NA,56134,53804,5,No observation time available during study period,50423,46189
+18,0;150,Male,365,2019-01-01,2022-06-01,NA,NA,56134,53804,6,Doesn't satisfy age criteria during the study period,0,0
+18,0;150,Male,365,2019-01-01,2022-06-01,NA,NA,38523,38115,7,Prior history requirement not fulfilled during study period,17611,15689
+18,0;150,Male,365,2019-01-01,2022-06-01,NA,NA,18509,18309,8,Not Male,20014,19806
+18,0;150,Male,365,2019-01-01,2022-06-01,NA,NA,18509,18309,10,No observation time available after applying age and prior history criteria,0,0
