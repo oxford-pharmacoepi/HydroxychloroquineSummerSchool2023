@@ -1,3 +1,3 @@
-# StudyTemplate
+# Use of Hydroxychloroquine 
 
-This template can be used to create a new study.
+Code for the research study conducted during the practical sessions of RWE Summer School 2023.
