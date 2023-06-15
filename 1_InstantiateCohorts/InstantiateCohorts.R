@@ -1,10 +1,4 @@
-## ED CODE INSTANTIATE + DIAGNOSIS? ----
-
-
-
-## temporal cohort instantiation using atlas generated jsons ----
-
-# Instantiate json cohorts ----
+## Instantiate JSON cohorts ----
 # Pakcage: CDMConnector
 
 # Read json files
@@ -16,51 +10,106 @@ json_cohort_set <- readCohortSet(
 cdm <- generateCohortSet(
   cdm = cdm,
   cohortSet = json_cohort_set,
-  name = strataTableName,
+  name = study_table_name,
   computeAttrition = TRUE,
   overwrite = TRUE
 )
 
-
 # get cohort definitions id's
 json_covid_id <- json_cohort_set %>% 
-  filter(cohort_name == "covid19") %>%
+  filter(cohort_name == "covid") %>%
   pull(cohort_definition_id)
 
 json_ra_id <- json_cohort_set %>% 
-  filter(cohort_name == "rheumatoid_arthritis") %>%
+  filter(cohort_name == "RA") %>%
   pull(cohort_definition_id)
 
 json_malaria_id <- json_cohort_set %>% 
   filter(cohort_name == "malaria") %>%
   pull(cohort_definition_id)
 
+## Instantiate cohorts for table characteristics ----
+# Pakcage: DrugUtilisation
 
-# Instantiate hydroxychloroquine ----
-# Generate concept list (package: CodelistGenerator)
-conceptList_hcq <- getDrugIngredientCodes(cdm, "hydroxychloroquine")
-
-# Instantiate hidroxychloroquine cohort from concept list (package: DrugUtilisation)
-cdm <- generateDrugUtilisationCohortSet(
-  cdm = cdm,
-  name = hcqTableName,
-  conceptSetList = conceptList_hcq,
-  summariseMode = "AllEras", 
-  daysPriorHistory = 0,
-  gapEra = 30,
-  priorUseWashout = 365,
-  imputeDuration = "eliminate",  ### ?
-  durationRange = c(0, Inf)      ### ?
+# Medications ----
+medications_concept_list <- readConceptList(
+  cdm,
+  path = here("1_InstantiateCohorts", "Cohorts", "TableCharacteristics", "MedicationsConceptSet")
 )
 
+cdm <- generateConceptCohortSet(cdm,
+                                medications_table_name,
+                                medications_concept_list)
+# General conditions ----
+conditions_concept_list <- readConceptList(
+  cdm,
+  path = here("1_InstantiateCohorts", "Cohorts", "TableCharacteristics", "GeneralConditionsConceptSet")
+)
 
-# Instantiate population cohorts ----
+cdm <- generateConceptCohortSet(cdm,
+                                conditions_table_name,
+                                conditions_concept_list)
+
+## Instantiate hydroxychloroquine ----
+# Package: DrugUtilisation
+hcq_concept_list <- getDrugIngredientCodes(cdm, "hydroxychloroquine")
+
+# Users
+cdm <- generateDrugUtilisationCohortSet(
+  cdm = cdm,
+  name = hcq_users_table_name,
+  conceptSetList = hcq_concept_list,
+  summariseMode = "AllEras", 
+  gapEra = 30
+)
+
+# New users
+cdm <- generateDrugUtilisationCohortSet(
+  cdm = cdm,
+  name = hcq_new_users_table_name,
+  conceptSetList = hcq_concept_list,
+  summariseMode = "FirstEra",
+  daysPriorHistory = 365,
+  gapEra = 30,
+  priorUseWashout = 365,
+  cohortDateRange = as.Date(c(study.start, study.end))
+)
+
+exportAttrition(cdm[[hcq_new_users_table_name]], here(output_folder, "attrition_new_users_hcq.csv"))
+
+## Instantiate methotrexate ----
+# Package: DrugUtilisation
+mtx_concept_list <- getDrugIngredientCodes(cdm, "methotrexate")
+
+# Users
+cdm <- generateDrugUtilisationCohortSet(
+  cdm = cdm,
+  name = mtx_users_table_name,
+  conceptSetList = mtx_concept_list,
+  summariseMode = "AllEras", 
+  gapEra = 30
+)
+
+# New users
+cdm <- generateDrugUtilisationCohortSet(
+  cdm = cdm,
+  name = mtx_new_users_table_name,
+  conceptSetList = mtx_concept_list,
+  summariseMode = "FirstEra",
+  daysPriorHistory = 365,
+  gapEra = 30,
+  priorUseWashout = 365,
+  cohortDateRange = as.Date(c(study.start, study.end))
+)
+
+exportAttrition(cdm[[mtx_new_users_table_name]], here(output_folder, "attrition_new_users_mtx.csv"))
+
+# Instantiate denominator cohorts for incidence and prevalence estimation ----
 # Package: IncidencePrevalence
-
 # General denominator 
 cdm <- generateDenominatorCohortSet(
   cdm = cdm,
-  name = generalDenTableName,
+  name = ip_general_table_name,
   cohortDateRange = c(study.start, study.end),
   ageGroup = age_groups, 
   sex = c("Both", "Female", "Male"),
@@ -68,183 +117,49 @@ cdm <- generateDenominatorCohortSet(
   temporary = FALSE
 )
 
-exportAttrition(cdm[[generalDenTableName]], here(output_folder, "attrition_general_population.csv"))
+exportAttrition(cdm[[ip_general_table_name]], here(output_folder, "attrition_ip_general_population.csv"))
 
 # Covid denominator
 cdm <- generateDenominatorCohortSet(
   cdm = cdm,
-  name = covidDenTableName,
+  name = ip_covid_table_name,
   cohortDateRange = c(study.start, study.end),
   ageGroup = age_groups, 
   sex = c("Both", "Female", "Male"),
   daysPriorHistory = 365,                                           
-  strataTable = strataTableName,
+  strataTable = study_table_name,
   strataCohortId = json_covid_id,
   temporary = FALSE
 )
 
-exportAttrition(cdm[[covidDenTableName]], here(output_folder, "attrition_covid_population.csv"))
+exportAttrition(cdm[[ip_covid_table_name]], here(output_folder, "attrition_ip_covid_population.csv"))
 
 # RA denominator
 cdm <- generateDenominatorCohortSet(
   cdm = cdm,
-  name = raDenTableName,
+  name = ip_ra_table_name,
   cohortDateRange = c(study.start, study.end),
   ageGroup = age_groups, 
   sex = c("Both", "Female", "Male"),
   daysPriorHistory = 365,                                           
-  strataTable = strataTableName,
+  strataTable = study_table_name,
   strataCohortId = json_ra_id,
   temporary = FALSE
 )
 
-exportAttrition(cdm[[raDenTableName]], here(output_folder, "attrition_ra_population.csv"))
+exportAttrition(cdm[[ip_ra_table_name]], here(output_folder, "attrition_ip_ra_population.csv"))
 
 # Malaria denominator
 cdm <- generateDenominatorCohortSet(
   cdm = cdm,
-  name = malariaDenTableName,
+  name = ip_malaria_table_name,
   cohortDateRange = c(study.start, study.end),
   ageGroup = age_groups, 
   sex = c("Both", "Female", "Male"),
   daysPriorHistory = 365,                                           
-  strataTable = strataTableName,
+  strataTable = study_table_name,
   strataCohortId = json_malaria_id,
   temporary = FALSE
 )
 
-exportAttrition(cdm[[malariaDenTableName]], here(output_folder, "attrition_malaria_population.csv"))
-
-
-# Instantiate denominators (general, covid, ra, malaria) without age and sex strata ----
-age_group <- "0;150"
-sex       <- "Both"
-
-# cohort reference
-population_cohort_reference <- cdm[[generalDenTableName]] %>% # general pop
-  inner_join(cdm[[generalDenTableName]] %>%
-               cohort_set() %>% 
-               filter(.data$age_group == .env$age_group & .data$sex == .env$sex) %>%
-               select("cohort_definition_id"),
-             copy = TRUE,
-             by = "cohort_definition_id") %>%
-  mutate(cohort_definition_id = 1) %>%
-  union_all(cdm[[covidDenTableName]] %>% # covid pop
-              inner_join(cdm[[covidDenTableName]] %>%
-                           cohort_set() %>% 
-                           filter(.data$age_group == .env$age_group & .data$sex == .env$sex) %>%
-                           select("cohort_definition_id"),
-                         copy = TRUE,
-                         by = "cohort_definition_id") %>%
-              mutate(cohort_definition_id = 2)) %>%
-  union_all(cdm[[raDenTableName]] %>% # ra pop
-              inner_join(cdm[[raDenTableName]] %>%
-                           cohort_set() %>% 
-                           filter(.data$age_group == .env$age_group & .data$sex == .env$sex) %>%
-                           select("cohort_definition_id"),
-                         copy = TRUE,
-                         by = "cohort_definition_id") %>%
-              mutate(cohort_definition_id = 3)) %>%
-  union_all(cdm[[malariaDenTableName]] %>% # malaria pop
-              inner_join(cdm[[malariaDenTableName]] %>%
-                           cohort_set() %>% 
-                           filter(.data$age_group == .env$age_group & .data$sex == .env$sex) %>%
-                           select("cohort_definition_id"),
-                         copy = TRUE,
-                         by = "cohort_definition_id") %>%
-              mutate(cohort_definition_id = 4)) %>%
-  compute()
-  
-# cohort set
-population_cohort_set <- tibble(
-  cohort_definition_id = 1:4,
-  cohort_name = c("general", "covid", "ra", "malaria")
-)
-
-# cohort count
-population_cohort_count <- population_cohort_reference %>%
-  group_by(cohort_definition_id) %>%
-  mutate(number_records = n()) %>%
-  ungroup() %>%
-  select(-cohort_start_date, -cohort_end_date) %>%
-  distinct() %>%
-  group_by(cohort_definition_id) %>%
-  mutate(number_subjects = n()) %>%
-  ungroup() %>%
-  select(-subject_id) %>%
-  distinct()
-
-# cohort attrition
-population_cohort_attrition <- cdm[[generalDenTableName]] %>% # general pop
-  inner_join(cdm[[generalDenTableName]] %>%
-               cohort_set() %>% 
-               filter(.data$age_group == .env$age_group & .data$sex == .env$sex) %>%
-               select("cohort_definition_id"),
-             copy = TRUE,
-             by = "cohort_definition_id") %>%
-  inner_join(cdm[[generalDenTableName]] %>% 
-               cohort_attrition(),
-             copy = TRUE,
-             by = "cohort_definition_id") %>%
-  mutate(cohort_definition_id = 1) %>%
-  union_all(cdm[[covidDenTableName]] %>% # covid pop
-              inner_join(cdm[[covidDenTableName]] %>%
-                           cohort_set() %>% 
-                           filter(.data$age_group == .env$age_group & .data$sex == .env$sex) %>%
-                           select("cohort_definition_id"),
-                         copy = TRUE,
-                         by = "cohort_definition_id") %>%
-              inner_join(cdm[[generalDenTableName]] %>% 
-                           cohort_attrition(),
-                         copy = TRUE,
-                         by = "cohort_definition_id") %>%
-              mutate(cohort_definition_id = 2)) %>%
-  union_all(cdm[[raDenTableName]] %>% # ra pop
-              inner_join(cdm[[raDenTableName]] %>%
-                           cohort_set() %>% 
-                           filter(.data$age_group == .env$age_group & .data$sex == .env$sex) %>%
-                           select("cohort_definition_id"),
-                         copy = TRUE,
-                         by = "cohort_definition_id") %>%
-              inner_join(cdm[[generalDenTableName]] %>% 
-                           cohort_attrition(),
-                         copy = TRUE,
-                         by = "cohort_definition_id") %>%
-              mutate(cohort_definition_id = 3)) %>%
-  union_all(cdm[[malariaDenTableName]] %>% # malaria pop
-              inner_join(cdm[[malariaDenTableName]] %>%
-                           cohort_set() %>% 
-                           filter(.data$age_group == .env$age_group & .data$sex == .env$sex) %>%
-                           select("cohort_definition_id"),
-                         copy = TRUE,
-                         by = "cohort_definition_id") %>%
-              inner_join(cdm[[generalDenTableName]] %>% 
-                           cohort_attrition(),
-                         copy = TRUE,
-                         by = "cohort_definition_id") %>%
-              mutate(cohort_definition_id = 4)) %>%
-  select(-subject_id, -cohort_start_date, -cohort_end_date) %>%
-  distinct() %>%
-  compute()
-  
-## instantiate ----
-# write cohort_set table
-DBI::dbWriteTable(db, 
-                  DBI::Id(schema = results_database_schema,
-                          table = paste0(populationCohortName, "_set")),
-                  population_cohort_set,
-                  overwrite = TRUE)
-
-# instantiate cohort
-cdm[[populationCohortName]] <- newGeneratedCohortSet(
-  cohortRef = computeQuery(population_cohort_reference, 
-                           populationCohortName, 
-                           FALSE, 
-                           results_database_schema, 
-                           TRUE))
-
-attr(cdm[[populationCohortName]], "cohort_set")       <- tbl(db, 
-                                                            sql(paste0("SELECT*FROM ", results_database_schema, ".", populationCohortName, "_set")))
-attr(cdm[[populationCohortName]], "cohort_count")     <- population_cohort_count
-attr(cdm[[populationCohortName]], "cohort_attrition") <- population_cohort_attrition
-
+exportAttrition(cdm[[ip_malaria_table_name]], here(output_folder, "attrition_ip_malaria_population.csv"))

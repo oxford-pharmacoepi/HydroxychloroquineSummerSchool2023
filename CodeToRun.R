@@ -1,24 +1,26 @@
 # ADD NECESSARY PACKAGES
 library(DBI)
 library(CDMConnector)
-library(CodelistGenerator)
 library(dplyr)
 library(dbplyr)
 library(here)
 library(readr)
-library(IncidencePrevalence)
 library(stringr)
 library(log4r)
 library(remotes)
 library(testthat)
 
 # Install PaitentProfiles and DrugUtilisation packages from GutHub (order matters):
-install_github("ohdsi/CirceR")
-install_github("darwin-eu-dev/PatientProfiles")
-install_github("darwin-eu-dev/DrugUtilisation")
-library(DrugUtilisation)
+# install_github("ohdsi/CirceR")
+# install_github("darwin-eu-dev/PatientProfiles")
+# install_github("darwin-eu-dev/DrugUtilisation")
+# install_github("darwin-eu-dev/CodelistGenerator")
+# install_github("darwin-eu-dev/IncidencePrevalence@strata_prior_hist")
+library(CirceR)
 library(PatientProfiles)
-library(CircleR)
+library(DrugUtilisation)
+library(CodelistGenerator)
+library(IncidencePrevalence)
 
 # database metadata and connection details -----
 # The name/ acronym for the database
@@ -67,7 +69,7 @@ results_database_schema <- "results"
 #   will be overwritten
 # - more than one cohort will be created
 # - name must be lower case
-stem_table <- "hcq"
+stem_table <- "nmb"
 
 # minimum counts that can be displayed according to data governance
 minimum_counts <- 5
@@ -82,7 +84,8 @@ study.end   <- as.Date("2022-06-01")
 cdm <- CDMConnector::cdm_from_con(
   con = db,
   cdm_schema = cdm_database_schema,
-  write_schema = results_database_schema
+  write_schema = results_database_schema,
+  cdm_name = db_name
 )
 
 # check database connection
@@ -92,12 +95,14 @@ cdm$person %>%
 
 # jobs to run
 instantiate_cohorts  <- TRUE
-incidence_prevalence <- FALSE
-plot_ip_results      <- FALSE
+incidence_prevalence <- TRUE
+characterisation     <- FALSE
 
 # Run the study ------
 source(here("RunAnalysis.R"))
 # after the study is run you should have a zip folder in your output folder to share
+
+dbDisconnect(db)
 
 print("Done!")
 print("-- If all has worked, there should now be a zip folder with your results in the output folder to share")
