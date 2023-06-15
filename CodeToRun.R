@@ -11,11 +11,11 @@ library(remotes)
 library(testthat)
 
 # Install PaitentProfiles and DrugUtilisation packages from GutHub (order matters):
-# install_github("ohdsi/CirceR")
-# install_github("darwin-eu-dev/PatientProfiles")
-# install_github("darwin-eu-dev/DrugUtilisation")
-# install_github("darwin-eu-dev/CodelistGenerator")
-# install_github("darwin-eu-dev/IncidencePrevalence@strata_prior_hist")
+install_github("ohdsi/CirceR")
+install_github("darwin-eu-dev/PatientProfiles")
+install_github("darwin-eu-dev/DrugUtilisation")
+install_github("darwin-eu-dev/CodelistGenerator")
+install_github("darwin-eu-dev/IncidencePrevalence@strata_prior_hist")
 library(CirceR)
 library(PatientProfiles)
 library(DrugUtilisation)
@@ -94,15 +94,15 @@ cdm$person %>%
   tally()
 
 # jobs to run
-instantiate_cohorts  <- TRUE
-incidence_prevalence <- TRUE
+instantiate_cohorts  <- FALSE
+incidence_prevalence <- FALSE
 characterisation     <- FALSE
 
 # Run the study ------
 source(here("RunAnalysis.R"))
 # after the study is run you should have a zip folder in your output folder to share
 
-dbDisconnect(db)
+# dbDisconnect(db)
 
 print("Done!")
 print("-- If all has worked, there should now be a zip folder with your results in the output folder to share")
