@@ -1,5 +1,5 @@
 ## Variables ----
-# NAMES FOR COHORT TABLES
+# Names for cohort tables
 stem_table               <- "ss"
 study_table_name         <- paste0(stem_table, "_study")
 hcq_new_users_table_name <- paste0(stem_table, "_hcq_new")
@@ -10,7 +10,7 @@ mtx_users_table_name     <- paste0(stem_table, "_mtx")
 table_names <- c(study_table_name, hcq_new_users_table_name, hcq_users_table_name,
                  mtx_new_users_table_name, mtx_users_table_name)
 
-# STUDY DATES
+# Study dates
 study.start <- as.Date("2019-01-01")
 covid.start <- as.Date("2020-02-01")
 hcq.end     <- as.Date("2020-06-15")
@@ -20,7 +20,7 @@ study.end   <- as.Date("2022-06-01")
 ## Instantiate JSON files----
 # Package: CDMConnector
 json_cohort_set <- readCohortSet(
-  path = here("1_InstantiateCohorts", "Cohorts")
+  path = here("Day_1", "Cohorts")
 )
 
 # Instantiate cohorts from json
