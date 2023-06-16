@@ -1,6 +1,5 @@
 ## Variables ----
 # Names for cohort tables
-stem_table               <- "ss"
 study_table_name         <- paste0(stem_table, "_study")
 hcq_new_users_table_name <- paste0(stem_table, "_hcq_new")
 hcq_users_table_name     <- paste0(stem_table, "_hcq")
@@ -12,8 +11,6 @@ table_names <- c(study_table_name, hcq_new_users_table_name, hcq_users_table_nam
 
 # Study dates
 study.start <- as.Date("2019-01-01")
-covid.start <- as.Date("2020-02-01")
-hcq.end     <- as.Date("2020-06-15")
 study.end   <- as.Date("2022-06-01")
 
 

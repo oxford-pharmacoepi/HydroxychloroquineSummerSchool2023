@@ -2,12 +2,8 @@
 # Names of already insatiated cohort tables
 study_table_name         <- paste0(stem_table, "_study")
 hcq_new_users_table_name <- paste0(stem_table, "_hcq_new")
-hcq_users_table_name     <- paste0(stem_table, "_hcq")
-mtx_new_users_table_name <- paste0(stem_table, "_mtx_new")
-mtx_users_table_name     <- paste0(stem_table, "_mtx")
 
-table_names <- c(study_table_name, hcq_new_users_table_name, hcq_users_table_name,
-                 mtx_new_users_table_name, mtx_users_table_name)
+table_names <- c(study_table_name, hcq_new_users_table_name)
 
 # Connect to the database and call the cohorts:
 cdm <- cdmFromCon(
@@ -17,20 +13,6 @@ cdm <- cdmFromCon(
   cdmName = db_name,
   cohortTables = table_names
 )
-
-# STUDY DATES
-study.start <- as.Date("2019-01-01")
-covid.start <- as.Date("2020-02-01")
-hcq.end     <- as.Date("2020-06-15")
-study.end   <- as.Date("2022-06-01")
-
-# Windows for characterisation
-window.before <- c(study.start, covid.start - 1)
-window.hcq <- c(covid.start, hcq.end)
-window.after <- c(hcq.end + 1, study.end)
-
-# Age groups for characterisation
-age_groups <- list(c(0,19), c(20,39), c(40,59), c(60,79), c(80,150))
 
 
 ## Prepare data ----

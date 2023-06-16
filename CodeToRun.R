@@ -71,10 +71,7 @@ results_database_schema <- "results"
 #   will be overwritten
 # - more than one cohort will be created
 # - name must be lower case
-stem_table <- "nmb"
-
-# minimum counts that can be displayed according to data governance
-minimum_counts <- 5
+stem_table <- "ss"
 
 # create cdm reference ----
 cdm <- CDMConnector::cdm_from_con(
@@ -88,6 +85,25 @@ cdm <- CDMConnector::cdm_from_con(
 # running the next line should give you a count of your person table
 cdm$person %>% 
   tally()
+
+
+# Study parameters:
+# minimum counts that can be displayed according to data governance
+minimum_counts <- 5
+
+# Study dates
+study.start <- as.Date("2019-01-01")
+covid.start <- as.Date("2020-02-01")
+hcq.end     <- as.Date("2020-06-15")
+study.end   <- as.Date("2022-06-01")
+
+# Windows 
+window.before <- c(study.start, covid.start - 1)
+window.hcq <- c(covid.start, hcq.end)
+window.after <- c(hcq.end + 1, study.end)
+
+# Age groups
+age_groups <- list(c(0,19), c(20,39), c(40,59), c(60,79), c(80,150))
 
 # Jobs to Run
 source(here("Day_1", "InstantiateCohorts.R"))

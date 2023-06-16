@@ -28,13 +28,6 @@ malaria_id <- study_cohort_set %>%
   pull(cohort_definition_id)
 
 
-# Study dates
-study.start <- as.Date("2019-01-01")
-study.end   <- as.Date("2022-06-01")
-
-# Age groups (stratification)
-age_groups <- list(c(0,19), c(20,39), c(40,59), c(60,79), c(80,150))
-
 # Names of denominator cohort tables to generate
 hcq_users_table_name     <- paste0(stem_table, "_hcq")          # Outcome table
 ip_general_table_name    <- paste0(stem_table, "_ip_general")   # Denominator table
