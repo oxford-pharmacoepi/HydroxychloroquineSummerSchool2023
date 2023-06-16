@@ -4,7 +4,7 @@ if (file.exists(log_file)) {
   unlink(log_file)
 }
 
-logger <- create.logger()
+logger          <- create.logger()
 logfile(logger) <- log_file
 level(logger)   <- "INFO"
 info(logger, "CREATE LOGGER")

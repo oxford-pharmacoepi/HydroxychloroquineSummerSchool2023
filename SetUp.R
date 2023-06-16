@@ -10,17 +10,19 @@ library(log4r)
 library(remotes)
 library(testthat)
 
-# Install PaitentProfiles and DrugUtilisation packages from GutHub (order matters):
-install_github("ohdsi/CirceR")
-install_github("darwin-eu-dev/PatientProfiles")
-install_github("darwin-eu-dev/DrugUtilisation")
-install_github("darwin-eu-dev/CodelistGenerator")
-install_github("darwin-eu-dev/IncidencePrevalence@strata_prior_hist")
+# Install packages from GitHub:
+# install_github("ohdsi/CirceR")
+# install_github("darwin-eu-dev/PatientProfiles")
+# install_github("darwin-eu-dev/DrugUtilisation")
+# install_github("darwin-eu-dev/CodelistGenerator")
+# install_github("darwin-eu-dev/IncidencePrevalence@strata_prior_hist")
+# install_github("ohdsi/Capr")
 library(CirceR)
 library(PatientProfiles)
 library(DrugUtilisation)
 library(CodelistGenerator)
 library(IncidencePrevalence)
+library(Capr)
 
 # database metadata and connection details -----
 # The name/ acronym for the database
@@ -57,7 +59,7 @@ db <- dbConnect(
 )
 
 # The name of the schema that contains the OMOP CDM with patient-level data
-cdm_database_schema <- "public"
+cdm_database_schema <- "public_100k"
 
 # The name of the schema where results tables will be created 
 results_database_schema <- "results"
@@ -74,12 +76,6 @@ stem_table <- "nmb"
 # minimum counts that can be displayed according to data governance
 minimum_counts <- 5
 
-# Study dates
-study.start <- as.Date("2019-01-01")
-covid.start <- as.Date("2020-02-01")
-hcq.end     <- as.Date("2020-06-15")
-study.end   <- as.Date("2022-06-01")
-
 # create cdm reference ----
 cdm <- CDMConnector::cdm_from_con(
   con = db,
@@ -93,17 +89,3 @@ cdm <- CDMConnector::cdm_from_con(
 cdm$person %>% 
   tally()
 
-# jobs to run
-instantiate_cohorts  <- FALSE
-incidence_prevalence <- FALSE
-characterisation     <- FALSE
-
-# Run the study ------
-source(here("RunAnalysis.R"))
-# after the study is run you should have a zip folder in your output folder to share
-
-# dbDisconnect(db)
-
-print("Done!")
-print("-- If all has worked, there should now be a zip folder with your results in the output folder to share")
-print("-- Thank you for running the study!")
