@@ -1,65 +1,135 @@
 library(shiny)
+library(shinydashboard)
 library(here)
 library(dplyr)
 library(ggplot2)
+library(shinythemes)
+library(shinyWidgets)
+library(shinycssloaders)
+library(DT)
 
-source(here("4_Shiny", "functionsSG.R"))
+readr::read_csv(
+  here::here("Results_PHARMETRICS", "characteristics_atc_hcq.csv"), 
+  col_types = readr::cols(.default = readr::col_character())
+) %>%
+  dplyr::mutate(generated_by = "DrugUtilisation_0.2.0_summariseCodelistATC") %>%
+  readr::write_csv(
+    here::here("Results_PHARMETRICS", "characteristics_atc_hcq.csv")
+  )
 
-fileZip <- here("Results.zip")
+readr::read_csv(
+  here::here("Results_PHARMETRICS", "characteristics_icd10_hcq.csv"), 
+  col_types = readr::cols(.default = readr::col_character())
+) %>%
+  dplyr::mutate(generated_by = "DrugUtilisation_0.2.0_summariseCodelistICD10") %>%
+  readr::write_csv(
+    here::here("Results_PHARMETRICS", "characteristics_icd10_hcq.csv")
+  )
 
-listFiles <- unzip(fileZip, list = TRUE)
-files <- list()
-for (k in 1:nrow(listFiles)) {
-  fileName <- listFiles$Name[k]
-  if (tools::file_ext(fileName) == "csv") {
-    x <- readr::read_csv(unzip(fileZip, fileName), show_col_types = FALSE, n_max = 1)
-    x <- 
-  }
-  df <- read_csv(unzip("my_data.zip", "data1.csv"))
-  x <- 
-}
+source(here("Shiny", "functionsSG.R"))
 
-df <- readr::read_csv("penguins.csv")
+elements <- readFiles(here::here("Results_PHARMETRICS"))
+settings <- attr(elements, "settings")
 
-ui <- page_fillable(theme = bs_theme(bootswatch = "minty"),
-                    layout_sidebar(fillable = TRUE,
-                                   sidebar(
-                                     varSelectInput("xvar", "X variable", df_num, selected = "Bill Length (mm)"),
-                                     varSelectInput("yvar", "Y variable", df_num, selected = "Bill Depth (mm)"),
-                                     checkboxGroupInput("species", "Filter by species",
-                                                        choices = unique(df$Species), selected = unique(df$Species)
-                                     ),
-                                     hr(), # Add a horizontal rule
-                                     checkboxInput("by_species", "Show species", TRUE),
-                                     checkboxInput("show_margins", "Show marginal plots", TRUE),
-                                     checkboxInput("smooth", "Add smoother"),
-                                   ),
-                                   plotOutput("scatter")
-                    )
+# ui ----
+ui <- dashboardPage(
+  dashboardHeader(title = "Hydroxicloroquine"),
+  ## menu ----
+  dashboardSidebar(
+    sidebarMenu(
+      menuItem(
+        "Databases details", tabName = "database_details",
+        menuSubItem("CDM snapshot", tabName = "cdm_snapshot")
+      ),
+      menuItem(
+        "Cohort details", tabName = "cohort_details",
+        menuSubItem("Cohort counts", tabName = "cohort_counts"),
+        menuSubItem("Cohort attrition", tabName = "cohort_attrition")
+      ),
+      menuItem(
+        "Incidence Prevalence", tabName = "incidence_prevalence",
+        menuSubItem("Denominator population", tabName = "denomiator_population"),
+        menuSubItem("Incidence estimates", tabName = "incidence_estimates"),
+        menuSubItem("Prevalence estimates", tabName = "prevalence_estimates")
+      ),
+      menuItem(
+        "Characterization", tabName = "characterization",
+        menuSubItem("Table characteristics", tabName = "table_characteristics"),
+        menuSubItem("ATC characterization", tabName = "atc_characterization"),
+        menuSubItem("ICD10 characterization", tabName = "icd10_characterization")
+      )
+    )
+  ),
+  ## body ----
+  dashboardBody(
+    tabItems(
+      ### cdm_snapshot ----
+      tabItem(
+        tabName = "cdm_snapshot", 
+        h3("Details of the databases that participated in the study"),
+        p("Identifier 'cdm_name' is the one used in the multiple selection panels of the shiny"),
+        DTOutput("cdm_snapshot")
+      ),
+      ### cohort_counts ----
+      tabItem(
+        tabName = "cohort_counts", 
+        h3("Details of the databases that participated in the study")
+      ),
+      ### cohort_attrition -----
+      tabItem(
+        tabName = "cohort_attrition", 
+        h3("Details of the databases that participated in the study")
+      ),
+      ### denomiator_population ----
+      tabItem(
+        tabName = "denomiator_population", 
+        h3("Details of the databases that participated in the study")
+      ),
+      ### incidence_estimates ----
+      tabItem(
+        tabName = "incidence_estimates", 
+        h3("Details of the databases that participated in the study")
+      ),
+      ### prevalence_estimates ----
+      tabItem(
+        tabName = "prevalence_estimates", 
+        h3("Details of the databases that participated in the study")
+      ),
+      ### table_characteristics ----
+      tabItem(
+        tabName = "table_characteristics", 
+        h3("Details of the databases that participated in the study")
+      ),
+      ### atc_characterization ----
+      tabItem(
+        tabName = "atc_characterization", 
+        h3("Details of the databases that participated in the study")
+      ),
+      ### icd10_characterization ----
+      tabItem(
+        tabName = "icd10_characterization", 
+        h3("Details of the databases that participated in the study")
+      )
+    )
+  ),
+  ## parameters ----
+  "Hydroxychloroquine study"
 )
 
+# server ----
 server <- function(input, output, session) {
-  subsetted <- reactive({
-    req(input$species)
-    df |> filter(Species %in% input$species)
-  })
-  
-  output$scatter <- renderPlot({
-    p <- ggplot(subsetted(), aes(!!input$xvar, !!input$yvar)) + list(
-      theme(legend.position = "bottom"),
-      if (input$by_species) aes(color=Species),
-      geom_point(),
-      if (input$smooth) geom_smooth()
+  output$cdm_snapshot <- renderDataTable({
+    DT::datatable(
+      displayCdmSnapshot(elements), 
+      options = list(
+        lengthChange = FALSE, 
+        searching = FALSE, 
+        ordering = FALSE, 
+        paging = FALSE
+      )
     )
-    
-    if (input$show_margins) {
-      margin_type <- if (input$by_species) "density" else "histogram"
-      p <- p |> ggExtra::ggMarginal(type = margin_type, margins = "both",
-                                    size = 8, groupColour = input$by_species, groupFill = input$by_species)
-    }
-    
-    p
-  }, res = 100)
+  })
 }
 
+# app ----
 shinyApp(ui, server)
