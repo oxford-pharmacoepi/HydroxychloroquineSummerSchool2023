@@ -84,5 +84,3 @@ write_csv(
     mutate(cohort_name = "hydroxychloriquine new users"), 
   file = here(output_folder, "cohort_attrition_new.csv")
 )
-
-
