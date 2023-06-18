@@ -43,7 +43,7 @@ if (!dir.exists(output_folder)) {
 # you may need to install another package for this 
 # eg for postgres 
 
-server_dbi <- Sys.getenv("DB_SERVER_DBI_ph")
+server_dbi <- "cdm_iqvia_pharmetrics_plus_202203"
 user       <- Sys.getenv("DB_USER")
 password   <- Sys.getenv("DB_PASSWORD")
 port       <- Sys.getenv("DB_PORT")
@@ -59,7 +59,7 @@ db <- dbConnect(
 )
 
 # The name of the schema that contains the OMOP CDM with patient-level data
-cdm_database_schema <- "public"
+cdm_database_schema <- "public_100k"
 
 # The name of the schema where results tables will be created 
 results_database_schema <- "results"
@@ -71,7 +71,7 @@ results_database_schema <- "results"
 #   will be overwritten
 # - more than one cohort will be created
 # - name must be lower case
-stem_table <- "ss"
+stem_table <- "ss_mc"
 
 # create cdm reference ----
 cdm <- CDMConnector::cdm_from_con(
@@ -103,9 +103,9 @@ window.hcq <- c(covid.start, hcq.end)
 window.after <- c(hcq.end + 1, study.end)
 
 # Age groups
-age_groups <- list(c(0,19), c(20,39), c(40,59), c(60,79), c(80,150))
+age_groups <- list(c(0,19), c(20,39), c(40,59), c(60,79), c(80,150), c(0, 150))
 
 # Jobs to Run
 source(here("Day_1", "InstantiateCohorts.R"))
-source(here("Day_2", "Characterisation.R"))
 source(here("Day_3", "EstimateIncidencePrevalence.R"))
+source(here("Day_2", "Characterisation.R"))

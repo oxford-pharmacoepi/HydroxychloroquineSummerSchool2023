@@ -17,10 +17,10 @@ cdm <- cdmFromCon(
 
 ## Prepare data ----
 # Subset of cdm (we are characterising new users of HCQ)
-cdm_hcq <- CDMConnector::cdm_subset_cohort(cdm, hcq_new_users_table_name)
+cdm <- CDMConnector::cdm_subset_cohort(cdm, hcq_new_users_table_name)
 
-# Add calendar windows to new user cohorts:
-cdm_hcq[[hcq_new_users_table_name]] <- cdm_hcq[[hcq_new_users_table_name]] %>%
+# Add calendar windows to new user cohorts
+cdm[[hcq_new_users_table_name]] <- cdm[[hcq_new_users_table_name]] %>%
   mutate(window = case_when(
     .data$cohort_start_date >= !! window.before[1] & .data$cohort_start_date <= !! window.before[2] ~
       "before",
@@ -39,20 +39,20 @@ conditions_table_name_hcq  <- paste0(stem_table, "_conditions_hcq")
 
 # Get concept sets
 medications_concept_list <- readConceptList(
-  cdm_hcq,
+  cdm,
   path = here("Day_2", "TableCharacteristics", "MedicationsConceptSet")
 )
 conditions_concept_list <- readConceptList(
-  cdm_hcq,
+  cdm,
   path = here("Day_2", "TableCharacteristics", "GeneralConditionsConceptSet")
 )
 
 # Generate cohorts in cdm
-cdm_hcq <- generateConceptCohortSet(cdm_hcq,
+cdm <- generateConceptCohortSet(cdm,
                                     medications_table_name_hcq,
                                     medications_concept_list)
 
-cdm_hcq <- generateConceptCohortSet(cdm_hcq,
+cdm <- generateConceptCohortSet(cdm,
                                     conditions_table_name_hcq,
                                     conditions_concept_list)
 
@@ -73,17 +73,17 @@ write_csv(result_indication_hcq, here(output_folder, "indication_hcq.csv"))
 
 ## 2. Table One ----
 # Package: PatientProfiles
-hcq_new_users_table_one <- cdm_hcq[[hcq_new_users_table_name]] %>% 
+hcq_new_users_table_one <- cdm[[hcq_new_users_table_name]] %>% 
   select(
     "cohort_definition_id", "subject_id", "cohort_start_date",
     "cohort_end_date", "window"
   ) %>%
   addDemographics(
-    cdm = cdm_hcq, 
+    cdm = cdm, 
     ageGroup = age_groups
     ) %>%
   addIntersect(
-    cdm = cdm_hcq, 
+    cdm = cdm, 
     tableName = "visit_occurrence", 
     value = "flag", 
     window = c(-365,0),
@@ -91,16 +91,16 @@ hcq_new_users_table_one <- cdm_hcq[[hcq_new_users_table_name]] %>%
     nameStyle = "number_visits"
   ) %>%
   addCohortIntersectFlag(
-    cdm = cdm_hcq,
+    cdm = cdm,
     targetCohortTable = medications_table_name_hcq,
     window = c(-365, 0),
   ) %>%
   addCohortIntersectFlag(
-    cdm = cdm_hcq,
+    cdm = cdm,
     targetCohortTable = conditions_table_name_hcq,
     window = c(-Inf, 0),
   ) %>%
-  left_join(cdm_hcq[[hcq_new_users_table_name]] %>%
+  left_join(cdm[[hcq_new_users_table_name]] %>%
               cohort_set(), 
             by = "cohort_definition_id", 
             copy = TRUE)
@@ -146,14 +146,14 @@ write_csv(hcq_new_users_table_one, here(output_folder, "table_one_hcq.csv"))
 
 ## 3. Large Scale Characteristics ----
 # Get ATC and ICD10 codes (package CodelistGenerator)
-atc_codes   <- getATCCodes(cdm_hcq, "ATC 3rd")
-icd10_codes <- getICD10StandardCodes(cdm_hcq, "ICD10 SubChapter")
+atc_codes   <- getATCCodes(cdm, "ATC 3rd")
+icd10_codes <- getICD10StandardCodes(cdm, "ICD10 SubChapter")
 
 # Characteristics (package DrugUtilisation)
 # ATC
 result_ATC_hcq <- summariseCharacteristicsFromCodelist(
-  cohort = cdm_hcq[[hcq_new_users_table_name]],
-  cdm = cdm_hcq,
+  cohort = cdm[[hcq_new_users_table_name]],
+  cdm = cdm,
   conceptSetList = atc_codes,
   strata = list("Calendar time" = "window"),
   window = list(c(-365, -1), c(-30, -1), c(0, 0), c(1, 30), c(1, 365)),
@@ -164,8 +164,8 @@ write_csv(result_ATC_hcq, here(output_folder, "characteristics_atc_hcq.csv"))
 
 # ICD10:
 result_ICD10_hcq <- summariseCharacteristicsFromCodelist(
-  cohort = cdm_hcq[[hcq_new_users_table_name]],
-  cdm = cdm_hcq,
+  cohort = cdm[[hcq_new_users_table_name]],
+  cdm = cdm,
   conceptSetList = icd10_codes,
   strata = list("Calendar time" = "window"),
   window = list(c(-Inf, -1), c(-365, -1), c(-30, -1), c(0, 0), c(1, 30), c(1, 365), c(1, Inf)),
