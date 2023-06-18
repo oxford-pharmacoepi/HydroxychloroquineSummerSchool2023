@@ -202,7 +202,24 @@ displayIncidence <- function(incidence,
     dplyr::filter(.data$denominator_sex %in% .env$sex) %>%
     dplyr::filter(.data$denominator_days_prior_history %in% .env$daysPriorHistory) %>%
     dplyr::filter(.data$denominator_strata_cohort_name %in% .env$strataCohortName) %>%
-    dplyr::filter(.data$incidence_start_date %in% .env$incidenceStartDate)
+    dplyr::filter(.data$incidence_start_date %in% .env$incidenceStartDate) %>%
+    dplyr::mutate(
+      incidence_100000_pys = as.numeric(incidence_100000_pys),
+      incidence_100000_pys_95CI_lower = as.numeric(incidence_100000_pys_95CI_lower),
+      incidence_100000_pys_95CI_upper = as.numeric(incidence_100000_pys_95CI_upper)
+    ) %>%
+    dplyr::mutate(
+      Incidence = paste0(
+        round(incidence_100000_pys), " [", 
+        round(incidence_100000_pys_95CI_lower), " - ", 
+        round(incidence_100000_pys_95CI_upper), "]"
+      )
+    ) %>%
+    dplyr::select(c(
+      "incidence_start_date", "incidence_end_date", "Number individuals" = "n_persons",
+      "Number events" = "n_events", "Incidence", "denominator_age_group",
+      "denominator_sex", "denominator_strata_cohort_name"
+    ))
 }
 displayTableOne <- function(elements) {
   x <- getElementType(elements, "table_characteristics") %>%

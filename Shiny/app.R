@@ -8,6 +8,7 @@ library(shinyWidgets)
 library(shinycssloaders)
 library(DT)
 library(plotly)
+library(scales)
 
 readr::read_csv(
   here::here("Results_PHARMETRICS", "characteristics_atc_hcq.csv"), 
@@ -37,7 +38,7 @@ incidence <- getElementType(elements, "incidence_estimates") %>%
   dplyr::mutate(
     denominator_strata_cohort_name = dplyr::if_else(
       is.na(.data$denominator_strata_cohort_name),
-      "Whole population",
+      "general",
       .data$denominator_strata_cohort_name
     ),
     n_persons = niceNum(.data$n_persons),
@@ -54,7 +55,7 @@ denominatorAttrition <- getElementType(elements, "denominator_attrition") %>%
   dplyr::mutate(
     strata_cohort_name = dplyr::if_else(
       is.na(.data$strata_cohort_name),
-      "Whole population",
+      "general",
       .data$strata_cohort_name
     ),
     excluded_records = dplyr::if_else(
@@ -329,8 +330,8 @@ ui <- dashboardPage(
           pickerInput(
             inputId = "incidence_estimates_denominator_strata_cohort_name",
             label = "Strata",
-            choices = unique(incidence$strata_cohort_name),
-            selected = unique(incidence$strata_cohort_name)[1],
+            choices = unique(incidence$denominator_strata_cohort_name),
+            selected = unique(incidence$denominator_strata_cohort_name)[1],
             options = list(
               `actions-box` = TRUE,
               size = 10,
@@ -658,6 +659,96 @@ server <- function(input, output, session) {
         tidyr::pivot_wider(names_from = "strata_level", values_from = "percentage")
     ) %>%
       formatPercentage(c("Overall", "before", "after", "during"), 0)
+  })
+  output$plot_incidence_estimates <- renderPlotly({ 
+    
+    table <- incidence %>%
+      dplyr::filter(.data$denominator_age_group %in% input$incidence_estimates_denominator_age_group) %>%
+      dplyr::filter(.data$denominator_sex %in% input$incidence_estimates_denominator_sex) %>%
+      dplyr::filter(.data$denominator_days_prior_history %in% input$incidence_estimates_denominator_days_prior_history) %>%
+      dplyr::filter(.data$denominator_strata_cohort_name %in% input$incidence_estimates_denominator_strata_cohort_name) %>%
+      dplyr::filter(.data$incidence_start_date %in% input$incidence_estimates_incidence_start_date) %>%
+      dplyr::mutate(
+        incidence_100000_pys = as.numeric(incidence_100000_pys),
+        incidence_100000_pys_95CI_lower = as.numeric(incidence_100000_pys_95CI_lower),
+        incidence_100000_pys_95CI_upper = as.numeric(incidence_100000_pys_95CI_upper)
+      )
+    
+    validate(need(ncol(table)>1, 
+                  "No results for selected inputs"))
+    
+    if(is.null(input$incidence_plot_group)){
+      if(!is.null(input$incidence_plot_facet)){
+        p<-table %>% 
+          unite("facet_var", 
+                c(all_of(input$incidence_plot_facet)), remove = FALSE, sep = "; ") %>% 
+          ggplot(aes_string(x=input$incidence_x_axis, y="incidence_100000_pys",
+                            ymin = "incidence_100000_pys_95CI_lower",
+                            ymax = "incidence_100000_pys_95CI_upper")) +
+          geom_point(position=position_dodge(width=1))+
+          geom_errorbar(width=0) +
+          facet_wrap(vars(facet_var),ncol = 2)+
+          scale_y_continuous(
+            limits = c(0, NA)
+          ) +
+          theme_bw()
+      } else{
+        p<-table %>% 
+          ggplot(aes_string(x=input$incidence_x_axis, y="incidence_100000_pys",
+                            ymin = "incidence_100000_pys_95CI_lower",
+                            ymax = "incidence_100000_pys_95CI_upper")) +
+          geom_point(position=position_dodge(width=1))+
+          geom_errorbar(width=0) +
+          scale_y_continuous(
+            limits = c(0, NA)
+          ) +
+          theme_bw()        
+      }
+    } 
+    
+    
+    if(!is.null(input$incidence_plot_group) ){ 
+      
+      if(is.null(input$incidence_plot_facet) ){ 
+        p<-table %>% 
+          unite("Group", 
+                c(all_of(input$incidence_plot_group)), remove = FALSE, sep = "; ") %>% 
+          ggplot(aes_string(x=input$incidence_x_axis, y="incidence_100000_pys",
+                            ymin = "incidence_100000_pys_95CI_lower",
+                            ymax = "incidence_100000_pys_95CI_upper",
+                            group="Group",
+                            colour="Group")) +
+          geom_point(position=position_dodge(width=1))+
+          geom_errorbar(width=0, position=position_dodge(width=1)) +
+          theme_bw()
+      }
+      
+      if(!is.null(input$incidence_plot_facet) ){
+        if(!is.null(input$incidence_plot_group) ){ 
+          p<-table %>% 
+            unite("Group", 
+                  c(all_of(input$incidence_plot_group)), remove = FALSE, sep = "; ") %>% 
+            unite("facet_var", 
+                  c(all_of(input$incidence_plot_facet)), remove = FALSE, sep = "; ") %>% 
+            ggplot(aes_string(x=input$incidence_x_axis, y="incidence_100000_pys",
+                              ymin = "incidence_100000_pys_95CI_lower",
+                              ymax = "incidence_100000_pys_95CI_upper",
+                              group="Group",
+                              colour="Group")) +
+            geom_point(position=position_dodge(width=1))+
+            geom_errorbar(width=0, position=position_dodge(width=1)) +
+            facet_wrap(vars(facet_var),ncol = 2)+  
+            scale_y_continuous(
+              limits = c(0, NA)
+            )  +
+            theme_bw()
+        }
+      }
+      
+    }
+    
+    p
+    
   })
 }
 
