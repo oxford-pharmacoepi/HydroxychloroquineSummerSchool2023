@@ -80,7 +80,7 @@ hcq_new_users_table_one <- cdm[[hcq_new_users_table_name]] %>%
   ) %>%
   addDemographics(
     cdm = cdm, 
-    ageGroup = age_groups
+    ageGroup = list(c(0,19), c(20,39), c(40,59), c(60,79), c(80,150))
     ) %>%
   addIntersect(
     cdm = cdm, 
