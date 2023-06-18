@@ -17,7 +17,7 @@ cdm <- cdmFromCon(
 
 ## Prepare data ----
 # Subset of cdm (we are characterising new users of HCQ)
-cdm <- CDMConnector::cdm_subset_cohort(cdm, hcq_new_users_table_name)
+cdm <- cdmSubsetCohort(cdm, hcq_new_users_table_name)
 
 # Add calendar windows to new user cohorts
 cdm[[hcq_new_users_table_name]] <- cdm[[hcq_new_users_table_name]] %>%
