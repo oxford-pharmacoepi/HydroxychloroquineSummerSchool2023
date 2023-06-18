@@ -147,6 +147,102 @@ displayCdmSnapshot <- function(elements) {
       "Number observation periods" = "observation_period_cnt"
     )
 }
+displayCohortCount <- function(elements) {
+  getElementType(elements, "cohort_count") %>%
+    dplyr::bind_rows() %>%
+    dplyr::mutate(
+      number_records = niceNum(.data$number_records),
+      number_subjects = niceNum(.data$number_subjects)
+    ) %>%
+    dplyr::select("cohort_name", "number_records", "number_subjects")
+}
+displayCohortAttrition <- function(elements) {
+  getElementType(elements, "cohort_attrition") %>%
+    dplyr::bind_rows() %>%
+    dplyr::mutate(
+      number_records = niceNum(.data$number_records),
+      number_subjects = niceNum(.data$number_subjects),
+      excluded_records = niceNum(.data$excluded_records),
+      excluded_subjects = niceNum(.data$excluded_subjects)
+    ) %>%
+    dplyr::arrange(.data$cohort_name, .data$reason_id) %>%
+    dplyr::select(
+      "cohort_name", "number_records", "number_subjects", "reason_id", "reason",
+      "excluded_records", "excluded_subjects"
+    )
+}
+displayDenominatorAttrition <- function(denominatorAttrition, 
+                                        ageGroup, 
+                                        sex, 
+                                        daysPriorHistory, 
+                                        startDate,
+                                        endDate,
+                                        strataCohortName) {
+  denominatorAttrition %>%
+    dplyr::filter(.data$age_group == .env$ageGroup) %>%
+    dplyr::filter(.data$sex == .env$sex) %>%
+    dplyr::filter(.data$days_prior_history == .env$daysPriorHistory) %>%
+    dplyr::filter(.data$start_date == .env$startDate) %>%
+    dplyr::filter(.data$end_date == .env$endDate) %>%
+    dplyr::filter(.data$strata_cohort_name == .env$strataCohortName) %>%
+    dplyr::arrange(as.numeric(.data$reason_id)) %>%
+    dplyr::select(
+      "reason_id", "reason", "number_records", "number_subjects", 
+      "excluded_records", "excluded_subjects"
+    )
+}
+displayIncidence <- function(incidence, 
+                             ageGroup,
+                             sex,
+                             daysPriorHistory,
+                             strataCohortName,
+                             incidenceStartDate) {
+  incidence %>%
+    dplyr::filter(.data$denominator_age_group %in%.env$ageGroup) %>%
+    dplyr::filter(.data$denominator_sex %in% .env$sex) %>%
+    dplyr::filter(.data$denominator_days_prior_history %in% .env$daysPriorHistory) %>%
+    dplyr::filter(.data$denominator_strata_cohort_name %in% .env$strataCohortName) %>%
+    dplyr::filter(.data$incidence_start_date %in% .env$incidenceStartDate)
+}
+displayTableOne <- function(elements) {
+  x <- getElementType(elements, "table_characteristics") %>%
+    dplyr::bind_rows() %>%
+    dplyr::select(-c("group_name", "group_level", "strata_name", "cdm_name")) %>%
+    dplyr::mutate(estimate = niceNum(.data$estimate, significativeDecimals = 0)) %>%
+    dplyr::mutate(estimate = gsub(" ", "", .data$estimate)) %>%
+    tidyr::pivot_wider(names_from = "estimate_type", values_from = "estimate") %>%
+    dplyr::mutate(
+      "count (%)" = dplyr::if_else(!is.na(.data[["%"]]), paste0(count, " (", `%`, "%)"), as.character(NA)),
+      "median [Q25 - Q75]" = dplyr::if_else(!is.na(.data$median), paste0(median, " [", q25, " - ", q75, "]"), as.character(NA)),
+      count = dplyr::if_else(!is.na(.data[["%"]]), as.character(NA), count)
+    ) %>%
+    dplyr::select(-c("median", "q25", "q75", "%")) %>%
+    tidyr::pivot_longer(c("count", "count (%)", "median [Q25 - Q75]"), names_to = "estimate_type", values_to = "estimate") %>%
+    dplyr::filter(!is.na(.data$estimate)) %>%
+    tidyr::pivot_wider(names_from = "strata_level", values_from = "estimate")
+  x1 <- x %>%
+    dplyr::filter(!grepl("_m365_to_0|_minf_to_0", .data$variable))
+  x2 <- x %>%
+    dplyr::filter(grepl("_minf_to_0", .data$variable))
+  x3 <- x %>%
+    dplyr::filter(grepl("_m365_to_0", .data$variable))
+  x <- x1 %>%
+    dplyr::bind_rows(dplyr::tibble(variable = "Conditions any time prior")) %>%
+    dplyr::union_all(
+      x2 %>%
+        dplyr::mutate(variable = gsub("_minf_to_0", "", .data$variable))
+    ) %>%
+    dplyr::bind_rows(dplyr::tibble(variable = "Medications prior year")) %>%
+    dplyr::union_all(
+      x3 %>%
+        dplyr::mutate(variable = gsub("_m365_to_0", "", .data$variable))
+    ) %>%
+    dplyr::select(
+      c("variable", "variable_level", "estimate_type", "Overall", "before", "during", "after")
+    )
+  return(x)
+}
+
 getElementType <- function(elements, type) {
   elementsType <- attr(elements, "settings") %>%
     dplyr::filter(.data$class == .env$type) %>%
@@ -154,14 +250,13 @@ getElementType <- function(elements, type) {
   return(elements[names(elements) %in% elementsType])
 }
 niceNum <- function(x, bigMark = ",", decimalMark = ".", significativeDecimals = 0) {
-  suppressWarnings(x <- as.numeric(x))
-  if (all(x %% 1 == 0)) {
-    significativeDecimals <- 0
-  }
-  base::format(
-    round(x, significativeDecimals),
+  suppressWarnings(y <- as.numeric(x))
+  xnew <- base::format(
+    round(y, significativeDecimals),
     big.mark = bigMark,
     decimal.mark = decimalMark,
     nsmall = significativeDecimals
   )
+  x[!is.na(y)] <- xnew[!is.na(y)]
+  return(x)
 }

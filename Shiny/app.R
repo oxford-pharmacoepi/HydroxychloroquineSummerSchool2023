@@ -7,6 +7,7 @@ library(shinythemes)
 library(shinyWidgets)
 library(shinycssloaders)
 library(DT)
+library(plotly)
 
 readr::read_csv(
   here::here("Results_PHARMETRICS", "characteristics_atc_hcq.csv"), 
@@ -30,6 +31,84 @@ source(here("Shiny", "functionsSG.R"))
 
 elements <- readFiles(here::here("Results_PHARMETRICS"))
 settings <- attr(elements, "settings")
+
+incidence <- getElementType(elements, "incidence_estimates") %>%
+  dplyr::bind_rows() %>%
+  dplyr::mutate(
+    denominator_strata_cohort_name = dplyr::if_else(
+      is.na(.data$denominator_strata_cohort_name),
+      "Whole population",
+      .data$denominator_strata_cohort_name
+    ),
+    n_persons = niceNum(.data$n_persons),
+    person_days = niceNum(.data$person_days),
+    n_events = niceNum(.data$n_events),
+    person_years = niceNum(.data$person_years, significativeDecimals = 2),
+    incidence_100000_pys = niceNum(.data$incidence_100000_pys, significativeDecimals = 2),
+    incidence_100000_pys_95CI_lower = niceNum(.data$incidence_100000_pys_95CI_lower, significativeDecimals = 2),
+    incidence_100000_pys_95CI_upper = niceNum(.data$incidence_100000_pys_95CI_upper, significativeDecimals = 2)
+  )
+
+denominatorAttrition <- getElementType(elements, "denominator_attrition") %>%
+  dplyr::bind_rows() %>%
+  dplyr::mutate(
+    strata_cohort_name = dplyr::if_else(
+      is.na(.data$strata_cohort_name),
+      "Whole population",
+      .data$strata_cohort_name
+    ),
+    excluded_records = dplyr::if_else(
+      is.na(.data$excluded_records), "0", .data$excluded_records
+    ),
+    excluded_subjects = dplyr::if_else(
+      is.na(.data$excluded_subjects), "0", .data$excluded_subjects
+    )
+  ) %>%
+  dplyr::mutate(
+    number_records = niceNum(.data$number_records),
+    number_subjects = niceNum(.data$number_subjects),
+    excluded_records = niceNum(.data$excluded_records),
+    excluded_subjects = niceNum(.data$excluded_subjects)
+  )
+
+atc <- getElementType(elements, "atc_summary") %>%
+  dplyr::bind_rows() %>%
+  dplyr::select(-c("group_name", "group_level", "strata_name", "cdm_name", "variable_type", "variable_level", "estimate_type", "generated_by"))
+atc <- atc %>%
+  filter(variable != "denominator") %>%
+  left_join(
+    atc %>%
+      filter(variable == "denominator") %>%
+      mutate(denominator = estimate) %>%
+      select(-c("variable", "estimate")),
+    by = c("strata_level", "window_name")
+  ) %>%
+  mutate(
+    percentage = as.numeric(estimate)/as.numeric(denominator),
+    variable = gsub("ATC 3rd: ", "", variable)
+  ) %>%
+  mutate(percentage = if_else(percentage>1, 1, percentage)) %>%
+  select(-c("estimate", "denominator")) %>%
+  rename("ATC 3rd" = "variable")
+
+icd10 <- getElementType(elements, "icd10_summary") %>%
+  dplyr::bind_rows() %>%
+  dplyr::select(-c("group_name", "group_level", "strata_name", "cdm_name", "variable_type", "variable_level", "estimate_type", "generated_by"))
+icd10 <- icd10 %>%
+  filter(variable != "denominator") %>%
+  left_join(
+    icd10 %>%
+      filter(variable == "denominator") %>%
+      mutate(denominator = estimate) %>%
+      select(-c("variable", "estimate")),
+    by = c("strata_level", "window_name")
+  ) %>%
+  mutate(
+    percentage = as.numeric(estimate)/as.numeric(denominator)
+  ) %>%
+  mutate(percentage = if_else(percentage>1, 1, percentage)) %>%
+  select(-c("estimate", "denominator")) %>%
+  rename("ICD10 Subchapter" = "variable")
 
 # ui ----
 ui <- dashboardPage(
@@ -70,25 +149,287 @@ ui <- dashboardPage(
         p("Identifier 'cdm_name' is the one used in the multiple selection panels of the shiny"),
         DTOutput("cdm_snapshot")
       ),
-      ### cohort_counts ----
+      ### cohort_count ----
       tabItem(
         tabName = "cohort_counts", 
-        h3("Details of the databases that participated in the study")
+        h3("Counts for the cohorts instantiated in the study"),
+        DTOutput("cohort_count")
       ),
       ### cohort_attrition -----
       tabItem(
         tabName = "cohort_attrition", 
-        h3("Details of the databases that participated in the study")
+        h3("Attrition for the different cohorts in the study"),
+        DTOutput("cohort_attrition")
       ),
       ### denomiator_population ----
       tabItem(
         tabName = "denomiator_population", 
-        h3("Details of the databases that participated in the study")
+        h3("Attrition for the denominator population"),
+        div(
+          style = "display: inline-block;vertical-align:top; width: 150px;",
+          pickerInput(
+            inputId = "denominator_attrition_age_group",
+            label = "Age group",
+            choices = unique(denominatorAttrition$age_group),
+            selected = unique(denominatorAttrition$age_group)[1],
+            options = list(
+              `actions-box` = TRUE,
+              size = 10,
+              `selected-text-format` = "count > 3"
+            ),
+            multiple = FALSE
+          )
+        ),
+        div(
+          style = "display: inline-block;vertical-align:top; width: 150px;",
+          pickerInput(
+            inputId = "denominator_attrition_sex",
+            label = "Sex",
+            choices = unique(denominatorAttrition$sex),
+            selected = unique(denominatorAttrition$sex)[1],
+            options = list(
+              `actions-box` = TRUE,
+              size = 10,
+              `selected-text-format` = "count > 3"
+            ),
+            multiple = FALSE
+          )
+        ),
+        div(
+          style = "display: inline-block;vertical-align:top; width: 150px;",
+          pickerInput(
+            inputId = "denominator_attrition_days_prior_history",
+            label = "Days prior history",
+            choices = unique(denominatorAttrition$days_prior_history),
+            selected = unique(denominatorAttrition$days_prior_history)[1],
+            options = list(
+              `actions-box` = TRUE,
+              size = 10,
+              `selected-text-format` = "count > 3"
+            ),
+            multiple = FALSE
+          )
+        ),
+        div(
+          style = "display: inline-block;vertical-align:top; width: 150px;",
+          pickerInput(
+            inputId = "denominator_attrition_start_date",
+            label = "Start date",
+            choices = unique(denominatorAttrition$start_date),
+            selected = unique(denominatorAttrition$start_date)[1],
+            options = list(
+              `actions-box` = TRUE,
+              size = 10,
+              `selected-text-format` = "count > 3"
+            ),
+            multiple = FALSE
+          )
+        ),
+        div(
+          style = "display: inline-block;vertical-align:top; width: 150px;",
+          pickerInput(
+            inputId = "denominator_attrition_end_date",
+            label = "End date",
+            choices = unique(denominatorAttrition$end_date),
+            selected = unique(denominatorAttrition$end_date)[1],
+            options = list(
+              `actions-box` = TRUE,
+              size = 10,
+              `selected-text-format` = "count > 3"
+            ),
+            multiple = FALSE
+          )
+        ),
+        div(
+          style = "display: inline-block;vertical-align:top; width: 150px;",
+          pickerInput(
+            inputId = "denominator_attrition_strata_cohort_name",
+            label = "Strata",
+            choices = unique(denominatorAttrition$strata_cohort_name),
+            selected = unique(denominatorAttrition$strata_cohort_name)[1],
+            options = list(
+              `actions-box` = TRUE,
+              size = 10,
+              `selected-text-format` = "count > 3"
+            ),
+            multiple = FALSE
+          )
+        ),
+        DTOutput("denominator_attrition")
       ),
       ### incidence_estimates ----
       tabItem(
         tabName = "incidence_estimates", 
-        h3("Details of the databases that participated in the study")
+        h3("Incidence estimates and plots"),
+        hr(),
+        h3("Outcome"),
+        div(
+          style = "display: inline-block;vertical-align:top; width: 150px;",
+          pickerInput(
+            inputId = "incidence_estimates_outcome_cohort_name",
+            label = "Age group",
+            choices = unique(incidence$outcome_cohort_name),
+            selected = unique(incidence$outcome_cohort_name)[1],
+            options = list(
+              `actions-box` = TRUE,
+              size = 10,
+              `selected-text-format` = "count > 3"
+            ),
+            multiple = TRUE
+          )
+        ),
+        h3("Denominator population"),
+        div(
+          style = "display: inline-block;vertical-align:top; width: 150px;",
+          pickerInput(
+            inputId = "incidence_estimates_denominator_age_group",
+            label = "Age group",
+            choices = unique(incidence$denominator_age_group),
+            selected = unique(incidence$denominator_age_group)[1],
+            options = list(
+              `actions-box` = TRUE,
+              size = 10,
+              `selected-text-format` = "count > 3"
+            ),
+            multiple = TRUE
+          )
+        ),
+        div(
+          style = "display: inline-block;vertical-align:top; width: 150px;",
+          pickerInput(
+            inputId = "incidence_estimates_denominator_sex",
+            label = "Sex",
+            choices = unique(incidence$denominator_sex),
+            selected = unique(incidence$denominator_sex)[1],
+            options = list(
+              `actions-box` = TRUE,
+              size = 10,
+              `selected-text-format` = "count > 3"
+            ),
+            multiple = TRUE
+          )
+        ),
+        div(
+          style = "display: inline-block;vertical-align:top; width: 150px;",
+          pickerInput(
+            inputId = "incidence_estimates_denominator_days_prior_history",
+            label = "Days prior history",
+            choices = unique(incidence$denominator_days_prior_history),
+            selected = unique(incidence$denominator_days_prior_history)[1],
+            options = list(
+              `actions-box` = TRUE,
+              size = 10,
+              `selected-text-format` = "count > 3"
+            ),
+            multiple = TRUE
+          )
+        ),
+        div(
+          style = "display: inline-block;vertical-align:top; width: 150px;",
+          pickerInput(
+            inputId = "incidence_estimates_denominator_strata_cohort_name",
+            label = "Strata",
+            choices = unique(incidence$strata_cohort_name),
+            selected = unique(incidence$strata_cohort_name)[1],
+            options = list(
+              `actions-box` = TRUE,
+              size = 10,
+              `selected-text-format` = "count > 3"
+            ),
+            multiple = TRUE
+          )
+        ),
+        hr(),
+        h3("Dates estimates"),
+        div(
+          style = "display: inline-block;vertical-align:top; width: 150px;",
+          pickerInput(
+            inputId = "incidence_estimates_incidence_start_date",
+            label = "Incidence date",
+            choices = unique(incidence$incidence_start_date),
+            selected = unique(incidence$incidence_start_date),
+            options = list(
+              `actions-box` = TRUE,
+              size = 10,
+              `selected-text-format` = "count > 3"
+            ),
+            multiple = TRUE
+          )
+        ),
+        tabsetPanel(
+          type = "tabs",
+          tabPanel(
+            "Table of estimates", 
+            DTOutput('tbl_incidence_estimates') %>% withSpinner()
+          ), 
+          tabPanel(
+            "Plot of estimates",
+            tags$h5("Plotting options"),
+            div(
+              style="display: inline-block;vertical-align:top; width: 150px;",
+              pickerInput(
+                inputId = "incidence_x_axis",
+                label = "X axis",
+                choices = c(
+                  "denominator_age_group", 
+                  "denominator_sex",
+                  "denominator_days_prior_history",
+                  "outcome_cohort_name",
+                  "incidence_start_date"
+                ),
+                selected = "incidence_start_date",
+                options = list(
+                  `actions-box` = TRUE,
+                  size = 10,
+                  `selected-text-format` = "count > 3"),
+                multiple = FALSE
+              )
+            ),
+            div(
+              style="display: inline-block;vertical-align:top; width: 150px;",
+              pickerInput(
+                inputId = "incidence_plot_facet",
+                label = "Facet by",
+                choices = c(
+                  "denominator_age_group", 
+                  "denominator_sex",
+                  "denominator_days_prior_history",
+                  "outcome_cohort_name",
+                  "incidence_start_date"
+                ),
+                selected = c("outcome_cohort_name"),
+                options = list(
+                  `actions-box` = TRUE,
+                  size = 10,
+                  `selected-text-format` = "count > 3"
+                ),
+                multiple = TRUE
+              )
+            ),
+            div(
+              style="display: inline-block;vertical-align:top; width: 150px;",
+              pickerInput(
+                inputId = "incidence_plot_group",
+                label = "Colour by",
+                choices = c(
+                  "denominator_age_group", 
+                  "denominator_sex",
+                  "denominator_days_prior_history",
+                  "outcome_cohort_name",
+                  "incidence_start_date"
+                ),
+                selected="database_name",
+                options = list(
+                  `actions-box` = TRUE,
+                  size = 10,
+                  `selected-text-format` = "count > 3"
+                ),
+                multiple = TRUE
+              )
+            ),
+            plotlyOutput('plot_incidence_estimates', height = "800px") %>% withSpinner(), 
+          )
+        )
       ),
       ### prevalence_estimates ----
       tabItem(
@@ -98,17 +439,100 @@ ui <- dashboardPage(
       ### table_characteristics ----
       tabItem(
         tabName = "table_characteristics", 
-        h3("Details of the databases that participated in the study")
+        h3("Characteristics of new users of hydroxychloroquine"),
+        DTOutput("table_characteristics")
       ),
       ### atc_characterization ----
       tabItem(
         tabName = "atc_characterization", 
-        h3("Details of the databases that participated in the study")
+        h3("Explore the ATC characterisation"),
+        tabsetPanel(
+          type = "tabs",
+          tabPanel(
+            "Compare windows",
+            div(
+              style = "display: inline-block;vertical-align:top; width: 150px;",
+              pickerInput(
+                inputId = "atc_strata_level",
+                label = "Choose calendar time",
+                choices = unique(atc$strata_level),
+                selected = unique(atc$strata_level)[1],
+                options = list(
+                  `actions-box` = TRUE,
+                  size = 10,
+                  `selected-text-format` = "count > 3"
+                ),
+                multiple = FALSE
+              )
+            ),
+            DTOutput('atc_window') %>% withSpinner()
+          ),
+          tabPanel(
+            "Compare calendar times",
+            div(
+              style = "display: inline-block;vertical-align:top; width: 150px;",
+              pickerInput(
+                inputId = "atc_window_name",
+                label = "Choose window",
+                choices = unique(atc$window_name),
+                selected = unique(atc$window_name)[1],
+                options = list(
+                  `actions-box` = TRUE,
+                  size = 10,
+                  `selected-text-format` = "count > 3"
+                ),
+                multiple = FALSE
+              )
+            ),
+            DTOutput('atc_calendar') %>% withSpinner()
+          )
+        )
       ),
       ### icd10_characterization ----
       tabItem(
         tabName = "icd10_characterization", 
-        h3("Details of the databases that participated in the study")
+        h3("Explore the ICD10 characterisation"),
+        tabsetPanel(
+          type = "tabs",
+          tabPanel(
+            "Compare windows",
+            div(
+              style = "display: inline-block;vertical-align:top; width: 150px;",
+              pickerInput(
+                inputId = "icd10_strata_level",
+                label = "Choose calendar time",
+                choices = unique(icd10$strata_level),
+                selected = unique(icd10$strata_level)[1],
+                options = list(
+                  `actions-box` = TRUE,
+                  size = 10,
+                  `selected-text-format` = "count > 3"
+                ),
+                multiple = FALSE
+              )
+            ),
+            DTOutput('icd10_window') %>% withSpinner()
+          ),
+          tabPanel(
+            "Compare calendar times",
+            div(
+              style = "display: inline-block;vertical-align:top; width: 150px;",
+              pickerInput(
+                inputId = "icd10_window_name",
+                label = "Choose window",
+                choices = unique(icd10$window_name),
+                selected = unique(icd10$window_name)[1],
+                options = list(
+                  `actions-box` = TRUE,
+                  size = 10,
+                  `selected-text-format` = "count > 3"
+                ),
+                multiple = FALSE
+              )
+            ),
+            DTOutput('icd10_calendar') %>% withSpinner()
+          )
+        )
       )
     )
   ),
@@ -128,6 +552,112 @@ server <- function(input, output, session) {
         paging = FALSE
       )
     )
+  })
+  output$cohort_count <- renderDataTable({
+    DT::datatable(
+      displayCohortCount(elements), 
+      options = list(
+        lengthChange = FALSE, 
+        searching = FALSE, 
+        ordering = FALSE, 
+        paging = FALSE
+      )
+    )
+  })
+  output$cohort_attrition <- renderDataTable({
+    DT::datatable(
+      displayCohortAttrition(elements), 
+      options = list(
+        lengthChange = FALSE, 
+        searching = FALSE, 
+        ordering = FALSE, 
+        paging = FALSE
+      )
+    )
+  })
+  output$denominator_attrition <- renderDataTable({
+    DT::datatable(
+      displayDenominatorAttrition(
+        denominatorAttrition = denominatorAttrition, 
+        ageGroup = input$denominator_attrition_age_group,
+        sex = input$denominator_attrition_sex,
+        daysPriorHistory = input$denominator_attrition_days_prior_history,
+        startDate = input$denominator_attrition_start_date,
+        endDate = input$denominator_attrition_end_date,
+        strataCohortName = input$denominator_attrition_strata_cohort_name
+      ), 
+      options = list(
+        lengthChange = FALSE, 
+        searching = FALSE, 
+        ordering = FALSE, 
+        paging = FALSE
+      )
+    )
+  })
+  output$tbl_incidence_estimates <- renderDataTable({
+    DT::datatable(
+      displayIncidence(
+        incidence = incidence, 
+        ageGroup = input$incidence_estimates_denominator_age_group,
+        sex = input$incidence_estimates_denominator_sex,
+        daysPriorHistory = input$incidence_estimates_denominator_days_prior_history,
+        strataCohortName = input$incidence_estimates_denominator_strata_cohort_name,
+        incidenceStartDate = input$incidence_estimates_incidence_start_date
+      ), 
+      options = list(
+        lengthChange = FALSE, 
+        searching = FALSE, 
+        ordering = FALSE, 
+        paging = FALSE
+      )
+    )
+  })
+  output$table_characteristics <- renderDataTable({
+    DT::datatable(
+      displayTableOne(elements), 
+      options = list(
+        lengthChange = FALSE, 
+        searching = FALSE, 
+        ordering = FALSE, 
+        paging = FALSE
+      )
+    )
+  })
+  output$atc_window <- renderDataTable({
+    DT::datatable(
+      atc %>%
+        dplyr::filter(.data$strata_level == input$atc_strata_level) %>%
+        dplyr::select(-"strata_level") %>%
+        tidyr::pivot_wider(names_from = "window_name", values_from = "percentage")
+    ) %>%
+      formatPercentage(c("-365 to -1", "-30 to -1", "0 to 0", "1 to 30", "1 to 365"), 0)
+  })
+  output$atc_calendar <- renderDataTable({
+    DT::datatable(
+      atc %>%
+        dplyr::filter(.data$window_name == input$atc_window_name) %>%
+        dplyr::select(-"window_name") %>%
+        tidyr::pivot_wider(names_from = "strata_level", values_from = "percentage")
+    ) %>%
+      formatPercentage(c("Overall", "before", "after", "during"), 0)
+  })
+  output$icd10_window <- renderDataTable({
+    DT::datatable(
+      icd10 %>%
+        dplyr::filter(.data$strata_level == input$icd10_strata_level) %>%
+        dplyr::select(-"strata_level") %>%
+        tidyr::pivot_wider(names_from = "window_name", values_from = "percentage")
+    ) %>%
+      formatPercentage(c("-Inf to -1", "-365 to -1", "-30 to -1", "0 to 0", "1 to 30", "1 to 365", "1 to Inf"), 0)
+  })
+  output$icd10_calendar <- renderDataTable({
+    DT::datatable(
+      icd10 %>%
+        dplyr::filter(.data$window_name == input$icd10_window_name) %>%
+        dplyr::select(-"window_name") %>%
+        tidyr::pivot_wider(names_from = "strata_level", values_from = "percentage")
+    ) %>%
+      formatPercentage(c("Overall", "before", "after", "during"), 0)
   })
 }
 
