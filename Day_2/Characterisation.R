@@ -60,13 +60,13 @@ cdm_hcq <- generateConceptCohortSet(cdm_hcq,
 
 ## Characterisation ----
 ## 1. Indication ----
-hcq_indication_table <- cdm[[hcq_new_users_table_name]] %>%
-  addIndication(cdm = cdm, 
+hcq_indication_table <- cdm_hcq[[hcq_new_users_table_name]] %>%
+  addIndication(cdm = cdm_hcq, 
                 indicationCohortName = study_table_name, 
                 indicationGap = c(0, 7, 30)) # Indication at 0, 7, and 30 days
 
 result_indication_hcq <- summariseIndication(cohort = hcq_indication_table, 
-                                             cdm = cdm, 
+                                             cdm = cdm_hcq, 
                                              strata = list("Calendar time" = "window"))
 
 write_csv(result_indication_hcq, here(output_folder, "indication_hcq.csv"))
