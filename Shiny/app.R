@@ -9,28 +9,31 @@ library(shinycssloaders)
 library(DT)
 library(plotly)
 library(scales)
+library(tidyr)
+
+resultsFolder <- "Results_PHARMETRICS"
 
 readr::read_csv(
-  here::here("Results_PHARMETRICS", "characteristics_atc_hcq.csv"), 
+  here::here(resultsFolder, "characteristics_atc_hcq.csv"), 
   col_types = readr::cols(.default = readr::col_character())
 ) %>%
   dplyr::mutate(generated_by = "DrugUtilisation_0.2.0_summariseCodelistATC") %>%
   readr::write_csv(
-    here::here("Results_PHARMETRICS", "characteristics_atc_hcq.csv")
+    here::here(resultsFolder, "characteristics_atc_hcq.csv")
   )
 
 readr::read_csv(
-  here::here("Results_PHARMETRICS", "characteristics_icd10_hcq.csv"), 
+  here::here(resultsFolder, "characteristics_icd10_hcq.csv"), 
   col_types = readr::cols(.default = readr::col_character())
 ) %>%
   dplyr::mutate(generated_by = "DrugUtilisation_0.2.0_summariseCodelistICD10") %>%
   readr::write_csv(
-    here::here("Results_PHARMETRICS", "characteristics_icd10_hcq.csv")
+    here::here(resultsFolder, "characteristics_icd10_hcq.csv")
   )
 
 source(here("Shiny", "functionsSG.R"))
 
-elements <- readFiles(here::here("Results_PHARMETRICS"))
+elements <- readFiles(here::here(resultsFolder))
 settings <- attr(elements, "settings")
 
 incidence <- getElementType(elements, "incidence_estimates") %>%
@@ -111,6 +114,51 @@ icd10 <- icd10 %>%
   select(-c("estimate", "denominator")) %>%
   rename("ICD10 Subchapter" = "variable")
 
+indication <- getElementType(elements, "indication") %>%
+  bind_rows() %>%
+  filter(estimate_type == "%") %>%
+  select(-c("group_name", "group_level", "strata_name", "variable_level", "variable_type", "cdm_name", "generated_by", "estimate_type")) %>%
+  mutate(variable = gsub("indication_gap_", "", variable), estimate = as.numeric(estimate)/100) %>%
+  separate_wider_delim(variable, delim = "_", names = c("gap", "Indication"), too_many = "merge")
+
+incidence_estimates <- getElementType(elements, "incidence_estimates") %>%
+  bind_rows() %>%
+  mutate(
+    denominator_age_group = gsub(";", " to ", denominator_age_group),
+    denominator_age_group = if_else(denominator_age_group == "0 to 150", "All ages", denominator_age_group),
+    denominator_age_group = if_else(denominator_age_group == "80 to 150", ">=80", denominator_age_group),
+    denominator_age_group = factor(denominator_age_group, levels = c("All ages", "0 to 19", "20 to 39", "40 to 59", "60 to 79", ">=80")),
+    incidence_100000_pys = as.numeric(incidence_100000_pys), 
+    incidence_100000_pys_95CI_lower = as.numeric(incidence_100000_pys_95CI_lower),
+    incidence_100000_pys_95CI_upper = as.numeric(incidence_100000_pys_95CI_upper),
+    incidence_start_date = as.Date(incidence_start_date),
+    incidence_end_date = as.Date(incidence_end_date)
+  ) %>%
+  select(
+    "incidence_start_date", "incidence_end_date", "incidence_100000_pys", "incidence_100000_pys_95CI_lower", "incidence_100000_pys_95CI_upper", 
+    "outcome_cohort_name", "denominator_age_group", "denominator_sex", "denominator_strata_cohort_name",
+    "n_persons", "n_events"
+  )
+
+prevalence_estimates <- getElementType(elements, "prevalence_estimates") %>%
+  bind_rows() %>%
+  mutate(
+    denominator_age_group = gsub(";", " to ", denominator_age_group),
+    denominator_age_group = if_else(denominator_age_group == "0 to 150", "All ages", denominator_age_group),
+    denominator_age_group = if_else(denominator_age_group == "80 to 150", ">=80", denominator_age_group),
+    denominator_age_group = factor(denominator_age_group, levels = c("All ages", "0 to 19", "20 to 39", "40 to 59", "60 to 79", ">=80")),
+    prevalence = as.numeric(prevalence), 
+    prevalence_95CI_lower  = as.numeric(prevalence_95CI_lower ),
+    prevalence_95CI_upper  = as.numeric(prevalence_95CI_upper ),
+    prevalence_start_date  = as.Date(prevalence_start_date ),
+    prevalence_end_date  = as.Date(prevalence_end_date )
+  ) %>%
+  select(
+    "prevalence_start_date ", "prevalence_end_date ", "incidence_100000_pys", "incidence_100000_pys_95CI_lower", "incidence_100000_pys_95CI_upper", 
+    "outcome_cohort_name", "denominator_age_group", "denominator_sex", "denominator_strata_cohort_name",
+    "n_persons", "n_events"
+  )
+
 # ui ----
 ui <- dashboardPage(
   dashboardHeader(title = "Hydroxicloroquine"),
@@ -134,6 +182,7 @@ ui <- dashboardPage(
       ),
       menuItem(
         "Characterization", tabName = "characterization",
+        menuSubItem("Indication", tabName = "indication"),
         menuSubItem("Table characteristics", tabName = "table_characteristics"),
         menuSubItem("ATC characterization", tabName = "atc_characterization"),
         menuSubItem("ICD10 characterization", tabName = "icd10_characterization")
@@ -269,8 +318,8 @@ ui <- dashboardPage(
           pickerInput(
             inputId = "incidence_estimates_outcome_cohort_name",
             label = "Age group",
-            choices = unique(incidence$outcome_cohort_name),
-            selected = unique(incidence$outcome_cohort_name)[1],
+            choices = unique(incidence_estimates$outcome_cohort_name),
+            selected = unique(incidence_estimates$outcome_cohort_name)[1],
             options = list(
               `actions-box` = TRUE,
               size = 10,
@@ -285,8 +334,8 @@ ui <- dashboardPage(
           pickerInput(
             inputId = "incidence_estimates_denominator_age_group",
             label = "Age group",
-            choices = unique(incidence$denominator_age_group),
-            selected = unique(incidence$denominator_age_group)[1],
+            choices = levels(incidence_estimates$denominator_age_group),
+            selected = "All ages",
             options = list(
               `actions-box` = TRUE,
               size = 10,
@@ -300,23 +349,8 @@ ui <- dashboardPage(
           pickerInput(
             inputId = "incidence_estimates_denominator_sex",
             label = "Sex",
-            choices = unique(incidence$denominator_sex),
-            selected = unique(incidence$denominator_sex)[1],
-            options = list(
-              `actions-box` = TRUE,
-              size = 10,
-              `selected-text-format` = "count > 3"
-            ),
-            multiple = TRUE
-          )
-        ),
-        div(
-          style = "display: inline-block;vertical-align:top; width: 150px;",
-          pickerInput(
-            inputId = "incidence_estimates_denominator_days_prior_history",
-            label = "Days prior history",
-            choices = unique(incidence$denominator_days_prior_history),
-            selected = unique(incidence$denominator_days_prior_history)[1],
+            choices = unique(incidence_estimates$denominator_sex),
+            selected = "Both",
             options = list(
               `actions-box` = TRUE,
               size = 10,
@@ -330,8 +364,8 @@ ui <- dashboardPage(
           pickerInput(
             inputId = "incidence_estimates_denominator_strata_cohort_name",
             label = "Strata",
-            choices = unique(incidence$denominator_strata_cohort_name),
-            selected = unique(incidence$denominator_strata_cohort_name)[1],
+            choices = unique(incidence_estimates$denominator_strata_cohort_name),
+            selected = "general",
             options = list(
               `actions-box` = TRUE,
               size = 10,
@@ -347,8 +381,8 @@ ui <- dashboardPage(
           pickerInput(
             inputId = "incidence_estimates_incidence_start_date",
             label = "Incidence date",
-            choices = unique(incidence$incidence_start_date),
-            selected = unique(incidence$incidence_start_date),
+            choices = as.character(unique(incidence_estimates$incidence_start_date)),
+            selected = as.character(unique(incidence_estimates$incidence_start_date)),
             options = list(
               `actions-box` = TRUE,
               size = 10,
@@ -372,11 +406,11 @@ ui <- dashboardPage(
                 inputId = "incidence_x_axis",
                 label = "X axis",
                 choices = c(
+                  "incidence_start_date",
+                  "outcome_cohort_name",
                   "denominator_age_group", 
                   "denominator_sex",
-                  "denominator_days_prior_history",
-                  "outcome_cohort_name",
-                  "incidence_start_date"
+                  "denominator_strata_cohort_name"
                 ),
                 selected = "incidence_start_date",
                 options = list(
@@ -392,11 +426,10 @@ ui <- dashboardPage(
                 inputId = "incidence_plot_facet",
                 label = "Facet by",
                 choices = c(
-                  "denominator_age_group", 
+                  "outcome_cohort_name", 
+                  "denominator_age_group",
                   "denominator_sex",
-                  "denominator_days_prior_history",
-                  "outcome_cohort_name",
-                  "incidence_start_date"
+                  "denominator_strata_cohort_name"
                 ),
                 selected = c("outcome_cohort_name"),
                 options = list(
@@ -413,13 +446,12 @@ ui <- dashboardPage(
                 inputId = "incidence_plot_group",
                 label = "Colour by",
                 choices = c(
-                  "denominator_age_group", 
+                  "outcome_cohort_name", 
+                  "denominator_age_group",
                   "denominator_sex",
-                  "denominator_days_prior_history",
-                  "outcome_cohort_name",
-                  "incidence_start_date"
+                  "denominator_strata_cohort_name"
                 ),
-                selected="database_name",
+                selected="outcome_cohort_name",
                 options = list(
                   `actions-box` = TRUE,
                   size = 10,
@@ -435,12 +467,149 @@ ui <- dashboardPage(
       ### prevalence_estimates ----
       tabItem(
         tabName = "prevalence_estimates", 
-        h3("Details of the databases that participated in the study")
+        h3("Details of the databases that participated in the study"),
+        tags$hr(),
+        tags$h5("Population settings"),
+        div(
+          style="display: inline-block;vertical-align:top; width: 150px;",
+          pickerInput(
+            inputId = "prevalence_denominator_age_group_selector",
+            label = "Age group",
+            choices = levels(prevalence_estimates$denominator_age_group),
+            selected = "All ages",
+            options = list(
+              `actions-box` = TRUE,
+              size = 10,
+              `selected-text-format` = "count > 3"),
+            multiple = TRUE)
+        ),
+        div(
+          style="display: inline-block;vertical-align:top; width: 150px;",
+          pickerInput(
+            inputId = "prevalence_denominator_sex_selector",
+            label = "Sex",
+            choices = unique(prevalence_estimates$denominator_sex),
+            selected = "Both",
+            options = list(
+              `actions-box` = TRUE,
+              size = 10,
+              `selected-text-format` = "count > 3"),
+            multiple = TRUE)
+        ),
+        div(
+          style="display: inline-block;vertical-align:top; width: 150px;",
+          pickerInput(
+            inputId = "prevalence_denominator_strata_cohort_name",
+            label = "Strata cohort",
+            choices = unique(prevalence_estimates$denominator_strata_cohort_name),
+            selected = "general",
+            options = list(
+              `actions-box` = TRUE,
+              size = 10,
+              `selected-text-format` = "count > 3"),
+            multiple = TRUE)
+        ),
+        tags$hr(),
+        tags$h5("Analysis settings"),
+        div(
+          style="display: inline-block;vertical-align:top; width: 150px;",
+          pickerInput(
+            inputId = "prevalence_start_date_selector",
+            label = "Prevalence start date",
+            choices = as.character(unique(prevalence_estimates$prevalence_start_date)),
+            selected = as.character(unique(prevalence_estimates$prevalence_start_date)),
+            options = list(
+              `actions-box` = TRUE,
+              size = 10,
+              `selected-text-format` = "count > 3"),
+            multiple = TRUE)
+        ),
+        tabsetPanel(
+          type = "tabs",
+          tabPanel(
+            "Table of estimates", 
+            DTOutput('tbl_prevalence_estimates') %>% withSpinner()
+          ), 
+          tabPanel(
+            "Plot of estimates",
+            tags$hr(),
+            tags$h5("Plotting options"),
+            div(
+              style="display: inline-block;vertical-align:top; width: 150px;",
+              pickerInput(
+                inputId = "prevalence_x_axis",
+                label = "X axis",
+                choices = c("denominator_age_group", 
+                            "denominator_sex",
+                            "denominator_days_prior_history",
+                            "prevalence_start_date"),
+                selected = "prevalence_start_date",
+                options = list(
+                  `actions-box` = TRUE,
+                  size = 10,
+                  `selected-text-format` = "count > 3"),
+                multiple = FALSE,)
+            ),
+            div(
+              style="display: inline-block;vertical-align:top; width: 150px;",
+              pickerInput(
+                inputId = "prevalence_plot_facet",
+                label = "Facet by",
+                choices = c("denominator_age_group", 
+                            "denominator_sex",
+                            "denominator_days_prior_history",
+                            "prevalence_start_date"),
+                options = list(
+                  `actions-box` = TRUE,
+                  size = 10,
+                  `selected-text-format` = "count > 3"),
+                multiple = TRUE,)
+            ),
+            div(
+              style="display: inline-block;vertical-align:top; width: 150px;",
+              pickerInput(
+                inputId = "prevalence_plot_group",
+                label = "Colour by",
+                choices = c("denominator_age_group", 
+                            "denominator_sex",
+                            "denominator_days_prior_history",
+                            "outcome_cohort_name",
+                            "database_name",
+                            "prevalence_start_date"),
+                options = list(
+                  `actions-box` = TRUE,
+                  size = 10,
+                  `selected-text-format` = "count > 3"),
+                multiple = TRUE,)
+            ),
+            plotlyOutput('plot_prevalence_estimates', height = "800px") %>% withSpinner() 
+          )
+        )
+      ),
+      ### indication ----
+      tabItem(
+        tabName = "indication",
+        h3("Characterisation of the indication"),
+        hr(),
+        pickerInput(
+          inputId = "indication_gap",
+          label = "Indication gap",
+          choices = c(0, 7, 30),
+          selected = 0,
+          options = list(
+            `actions-box` = TRUE,
+            size = 10,
+            `selected-text-format` = "count > 3"
+          ),
+          multiple = FALSE
+        ),
+        hr(),
+        DTOutput("indication")
       ),
       ### table_characteristics ----
       tabItem(
         tabName = "table_characteristics", 
-        h3("Characteristics of new users of hydroxychloroquine"),
+        h3("Baseline characteristics of new users of hydroxychloroquine"),
         DTOutput("table_characteristics")
       ),
       ### atc_characterization ----
@@ -595,24 +764,6 @@ server <- function(input, output, session) {
       )
     )
   })
-  output$tbl_incidence_estimates <- renderDataTable({
-    DT::datatable(
-      displayIncidence(
-        incidence = incidence, 
-        ageGroup = input$incidence_estimates_denominator_age_group,
-        sex = input$incidence_estimates_denominator_sex,
-        daysPriorHistory = input$incidence_estimates_denominator_days_prior_history,
-        strataCohortName = input$incidence_estimates_denominator_strata_cohort_name,
-        incidenceStartDate = input$incidence_estimates_incidence_start_date
-      ), 
-      options = list(
-        lengthChange = FALSE, 
-        searching = FALSE, 
-        ordering = FALSE, 
-        paging = FALSE
-      )
-    )
-  })
   output$table_characteristics <- renderDataTable({
     DT::datatable(
       displayTableOne(elements), 
@@ -660,14 +811,30 @@ server <- function(input, output, session) {
     ) %>%
       formatPercentage(c("Overall", "before", "after", "during"), 0)
   })
+  output$tbl_incidence_estimates <- renderDataTable({
+    DT::datatable(
+      displayIncidence(
+        incidence = incidence_estimates, 
+        ageGroup = input$incidence_estimates_denominator_age_group,
+        sex = input$incidence_estimates_denominator_sex,
+        strataCohortName = input$incidence_estimates_denominator_strata_cohort_name,
+        incidenceStartDate = input$incidence_estimates_incidence_start_date
+      ), 
+      options = list(
+        lengthChange = FALSE, 
+        searching = FALSE, 
+        ordering = FALSE, 
+        paging = FALSE
+      )
+    )
+  })
   output$plot_incidence_estimates <- renderPlotly({ 
     
-    table <- incidence %>%
+    table <- incidence_estimates %>%
       dplyr::filter(.data$denominator_age_group %in% input$incidence_estimates_denominator_age_group) %>%
       dplyr::filter(.data$denominator_sex %in% input$incidence_estimates_denominator_sex) %>%
-      dplyr::filter(.data$denominator_days_prior_history %in% input$incidence_estimates_denominator_days_prior_history) %>%
       dplyr::filter(.data$denominator_strata_cohort_name %in% input$incidence_estimates_denominator_strata_cohort_name) %>%
-      dplyr::filter(.data$incidence_start_date %in% input$incidence_estimates_incidence_start_date) %>%
+      dplyr::filter(as.character(.data$incidence_start_date) %in% input$incidence_estimates_incidence_start_date) %>%
       dplyr::mutate(
         incidence_100000_pys = as.numeric(incidence_100000_pys),
         incidence_100000_pys_95CI_lower = as.numeric(incidence_100000_pys_95CI_lower),
@@ -750,6 +917,17 @@ server <- function(input, output, session) {
     p
     
   })
+  output$indication <- renderDataTable({
+    DT::datatable(
+      indication %>%
+        dplyr::filter(gap == input$indication_gap) %>%
+        select(-"gap") %>%
+        pivot_wider(names_from = "strata_level", values_from = "estimate") %>%
+        select(c("Indication", "Overall", "before", "after", "during"))
+    ) %>%
+      formatPercentage(c("Overall", "before", "after", "during"), 0)
+  })
+
 }
 
 # app ----

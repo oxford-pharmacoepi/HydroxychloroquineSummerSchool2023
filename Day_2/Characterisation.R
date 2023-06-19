@@ -101,7 +101,8 @@ hcq_new_users_table_one <- cdm[[hcq_new_users_table_name]] %>%
     window = c(-Inf, 0),
   ) %>%
   left_join(cdm[[hcq_new_users_table_name]] %>%
-              cohort_set(), 
+              cohort_set() %>%
+              select("cohort_definition_id", "cohort_name"), 
             by = "cohort_definition_id", 
             copy = TRUE)
 
@@ -112,15 +113,14 @@ variables <- list(
     "age", "number_visits", "prior_history",
     "future_observation"
   ),
-  categorical = c("sex", "age_group")
+  categorical = c("sex", "age_group", "window")
 )
 
 variables$covariates <- colnames(hcq_new_users_table_one)[!c(colnames(hcq_new_users_table_one) %in% 
                                                                c("subject_id", 
-                                                                 "cohort_definition_id", 
-                                                                 unlist(variables), 
-                                                                 medications_table_name_hcq,
-                                                                 conditions_table_name_hcq))]
+                                                                 "cohort_definition_id",
+                                                                 "cohort_name",
+                                                                 unlist(variables)))]
 
 # set functions
 functions <- list(

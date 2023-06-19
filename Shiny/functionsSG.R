@@ -18,6 +18,14 @@ classes <- dplyr::tibble(
     )
   )) %>%
   dplyr::union_all(dplyr::tibble(
+    primary_class = "indication",
+    column_name = c(
+      "cdm_name", "estimate", "estimate_type", "generated_by", "group_level",
+      "group_name", "strata_level", "strata_name", "variable", "variable_level",
+      "variable_type" 
+    )
+  )) %>%
+  dplyr::union_all(dplyr::tibble(
     primary_class = "denominator_attrition",
     column_name = c(
       "cohort_definition_id", "age_group", "sex", "days_prior_history", 
@@ -194,15 +202,13 @@ displayDenominatorAttrition <- function(denominatorAttrition,
 displayIncidence <- function(incidence, 
                              ageGroup,
                              sex,
-                             daysPriorHistory,
                              strataCohortName,
                              incidenceStartDate) {
   incidence %>%
     dplyr::filter(.data$denominator_age_group %in%.env$ageGroup) %>%
     dplyr::filter(.data$denominator_sex %in% .env$sex) %>%
-    dplyr::filter(.data$denominator_days_prior_history %in% .env$daysPriorHistory) %>%
     dplyr::filter(.data$denominator_strata_cohort_name %in% .env$strataCohortName) %>%
-    dplyr::filter(.data$incidence_start_date %in% .env$incidenceStartDate) %>%
+    dplyr::filter(as.character(.data$incidence_start_date) %in% .env$incidenceStartDate) %>%
     dplyr::mutate(
       incidence_100000_pys = as.numeric(incidence_100000_pys),
       incidence_100000_pys_95CI_lower = as.numeric(incidence_100000_pys_95CI_lower),
@@ -216,8 +222,8 @@ displayIncidence <- function(incidence,
       )
     ) %>%
     dplyr::select(c(
-      "incidence_start_date", "incidence_end_date", "Number individuals" = "n_persons",
-      "Number events" = "n_events", "Incidence", "denominator_age_group",
+      "incidence_start_date", "incidence_end_date", "Number events" = "n_events", "Number individuals" = "n_persons",
+       "Incidence", "denominator_age_group",
       "denominator_sex", "denominator_strata_cohort_name"
     ))
 }
