@@ -3,8 +3,8 @@
 study_table_name         <- paste0(stem_table, "_study")
 hcq_new_users_table_name <- paste0(stem_table, "_hcq_new")
 hcq_users_table_name     <- paste0(stem_table, "_hcq")
-mtx_new_users_table_name <- paste0(stem_table, "_mtx_new")
-mtx_users_table_name     <- paste0(stem_table, "_mtx")
+#mtx_new_users_table_name <- paste0(stem_table, "_mtx_new")
+#mtx_users_table_name     <- paste0(stem_table, "_mtx")
 
 table_names <- c(study_table_name, hcq_new_users_table_name, hcq_users_table_name,
                  mtx_new_users_table_name, mtx_users_table_name)
@@ -29,6 +29,16 @@ cdm <- generateCohortSet(
   overwrite = TRUE
 )
 
+write_csv(
+  cohortCount(cdm[[study_table_name]]) %>%
+    left_join(cohortSet(cdm[[study_table_name]]), by = "cohort_definition_id"), 
+  file = here(output_folder, "cohort_count_json.csv")
+)
+write_csv(
+  cohortAttrition(cdm[[study_table_name]]) %>%
+    left_join(cohortSet(cdm[[study_table_name]]), by = "cohort_definition_id"), 
+  file = here(output_folder, "cohort_attrition_json.csv")
+)
 
 ## Instantiate hydroxychloroquine ----
 # Package: CodelistGenerator + DrugUtilisation
@@ -42,6 +52,16 @@ cdm <- generateDrugUtilisationCohortSet(
   summariseMode = "AllEras", 
   gapEra = 30
 )
+write_csv(
+  cohortCount(cdm[[hcq_users_table_name]]) %>%
+    mutate(cohort_name = "hydroxychloriquine prevalent users"), 
+  file = here(output_folder, "cohort_count_prevalent.csv")
+)
+write_csv(
+  cohortAttrition(cdm[[hcq_users_table_name]]) %>%
+    mutate(cohort_name = "hydroxychloriquine prevalent users"), 
+  file = here(output_folder, "cohort_attrition_prevalent.csv")
+)
 
 # New users
 cdm <- generateDrugUtilisationCohortSet(
@@ -54,7 +74,13 @@ cdm <- generateDrugUtilisationCohortSet(
   priorUseWashout = 365,
   cohortDateRange = as.Date(c(study.start, study.end))
 )
-
-
-
-
+write_csv(
+  cohortCount(cdm[[hcq_new_users_table_name]]) %>%
+    mutate(cohort_name = "hydroxychloriquine new users"), 
+  file = here(output_folder, "cohort_count_new.csv")
+)
+write_csv(
+  cohortAttrition(cdm[[hcq_new_users_table_name]]) %>%
+    mutate(cohort_name = "hydroxychloriquine new users"), 
+  file = here(output_folder, "cohort_attrition_new.csv")
+)

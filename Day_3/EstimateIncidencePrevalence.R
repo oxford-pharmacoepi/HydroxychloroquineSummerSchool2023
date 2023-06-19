@@ -20,7 +20,7 @@ covid_id <- study_cohort_set %>%
   pull(cohort_definition_id)
 
 ra_id <- study_cohort_set %>% 
-  filter(cohort_name == "RA") %>%
+  filter(cohort_name == "rheumatoid_arthritis") %>%
   pull(cohort_definition_id)
 
 malaria_id <- study_cohort_set %>% 

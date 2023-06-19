@@ -43,7 +43,7 @@ if (!dir.exists(output_folder)) {
 # you may need to install another package for this 
 # eg for postgres 
 
-server_dbi <- Sys.getenv("DB_SERVER_DBI_ph")
+server_dbi <- "cdm_iqvia_pharmetrics_plus_202203"
 user       <- Sys.getenv("DB_USER")
 password   <- Sys.getenv("DB_PASSWORD")
 port       <- Sys.getenv("DB_PORT")
@@ -71,7 +71,7 @@ results_database_schema <- "results"
 #   will be overwritten
 # - more than one cohort will be created
 # - name must be lower case
-stem_table <- "ss"
+stem_table <- "ss_mc"
 
 # create cdm reference ----
 cdm <- CDMConnector::cdm_from_con(
@@ -82,7 +82,7 @@ cdm <- CDMConnector::cdm_from_con(
 )
 
 # check database connection
-# running the next line should give you a count of your person table
+# running the next line should give you a count of your person table====++
 cdm$person %>% 
   tally()
 
@@ -103,9 +103,13 @@ window.hcq <- c(covid.start, hcq.end)
 window.after <- c(hcq.end + 1, study.end)
 
 # Age groups
-age_groups <- list(c(0,19), c(20,39), c(40,59), c(60,79), c(80,150))
+age_groups <- list(c(0,19), c(20,39), c(40,59), c(60,79), c(80,150), c(0, 150))
+
+write_csv(snapshot(cdm), here(output_folder, "cdm_snapshot.csv"))
 
 # Jobs to Run
 source(here("Day_1", "InstantiateCohorts.R"))
-source(here("Day_2", "Characterisation.R"))
 source(here("Day_3", "EstimateIncidencePrevalence.R"))
+source(here("Day_2", "Characterisation.R"))
+
+

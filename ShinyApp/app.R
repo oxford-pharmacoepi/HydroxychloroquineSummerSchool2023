@@ -31,7 +31,7 @@ readr::read_csv(
     here::here(resultsFolder, "characteristics_icd10_hcq.csv")
   )
 
-source(here("Shiny", "functionsSG.R"))
+source(here("functionsSG.R"))
 
 elements <- readFiles(here::here(resultsFolder))
 settings <- attr(elements, "settings")
