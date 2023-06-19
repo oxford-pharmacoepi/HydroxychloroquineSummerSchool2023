@@ -11,7 +11,7 @@ library(plotly)
 library(scales)
 library(tidyr)
 
-resultsFolder <- "Results_PHARMETRICS_100k"
+resultsFolder <- "Results_PHARMETRICS"
 
 readr::read_csv(
   here::here(resultsFolder, "characteristics_atc_hcq.csv"), 
@@ -104,6 +104,13 @@ indication <- getElementType(elements, "indication") %>%
   mutate(variable = gsub("indication_gap_", "", variable), estimate = as.numeric(estimate)/100) %>%
   separate_wider_delim(variable, delim = "_", names = c("gap", "Indication"), too_many = "merge")
 
+drug_use <- getElementType(elements, "drug_use") %>%
+  bind_rows() %>%
+  select(-c("group_name", "group_level", "strata_name", "variable_level", "variable_type", "cdm_name", "generated_by")) %>%
+  mutate(estimate = round(as.numeric(estimate))) %>%
+  pivot_wider(names_from = "strata_level", values_from = "estimate") %>%
+  select(variable, estimate_type, Overall, before, during, after)
+
 incidence_estimates <- getElementType(elements, "incidence_estimates") %>%
   bind_rows() %>%
   mutate(
@@ -166,6 +173,7 @@ ui <- dashboardPage(
       menuItem(
         "Characterization", tabName = "characterization",
         menuSubItem("Indication", tabName = "indication"),
+        menuSubItem("Drug Use", tabName = "drug_use"),
         menuSubItem("Table characteristics", tabName = "table_characteristics"),
         menuSubItem("ATC characterization", tabName = "atc_characterization"),
         menuSubItem("ICD10 characterization", tabName = "icd10_characterization")
@@ -623,6 +631,18 @@ ui <- dashboardPage(
         ),
         hr(),
         DTOutput("indication")
+      ),
+      ### drug use ----
+      tabItem(
+        tabName = "drug_use",
+        h3("Characterisation of the drug use"),
+        hr(),
+        DT::datatable(
+          drug_use,
+          options = list(
+            lengthChange = FALSE, searching = FALSE, ordering = FALSE, paging = FALSE
+          )
+        )
       ),
       ### table_characteristics ----
       tabItem(

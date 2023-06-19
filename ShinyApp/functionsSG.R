@@ -18,7 +18,7 @@ classes <- dplyr::tibble(
     )
   )) %>%
   dplyr::union_all(dplyr::tibble(
-    primary_class = "indication",
+    primary_class = "summary",
     column_name = c(
       "cdm_name", "estimate", "estimate_type", "generated_by", "group_level",
       "group_name", "strata_level", "strata_name", "variable", "variable_level",
@@ -83,9 +83,9 @@ classes <- dplyr::tibble(
   )) 
 
 subClasses <- dplyr::tibble(
-  primary_class = "summary_codelist",
-  secondary_class = c("atc_summary", "icd10_summary"),
-  distinguish_content = c("summariseCodelistATC", "summariseCodelistICD10"),
+  primary_class = c("summary_codelist", "summary_codelist", "summary", "summary"),
+  secondary_class = c("atc_summary", "icd10_summary", "indication", "drug_use"),
+  distinguish_content = c("summariseCodelistATC", "summariseCodelistICD10", "summariseIndication", "summariseDrugUse"),
   distinguish_variable = "generated_by"
 )
 
