@@ -1,20 +1,3 @@
-## Variables ----
-# Names of already insatiated cohort tables
-study_table_name         <- paste0(stem_table, "_study")
-hcq_users_table_name     <- paste0(stem_table, "_hcq")
-mtx_users_table_name     <- paste0(stem_table, "_mtx")
-
-table_names <- c(study_table_name, hcq_users_table_name, mtx_users_table_name)
-
-# Connect to the database and call the cohorts:
-cdm <- cdmFromCon(
-  con = db, 
-  cdmSchema = cdm_database_schema,
-  writeSchema = results_database_schema,
-  cdmName = db_name,
-  cohortTables = table_names
-)
-
 # Get cohort definition IDs:
 study_cohort_set <- cdm[[study_table_name]] %>%
   cohort_set()
@@ -37,7 +20,6 @@ ip_general_table_name    <- paste0(stem_table, "_ip_general")   # Denominator ta
 ip_covid_table_name      <- paste0(stem_table, "_ip_covid")     # Denominator table
 ip_ra_table_name         <- paste0(stem_table, "_ip_ra")        # Denominator table
 ip_malaria_table_name    <- paste0(stem_table, "_ip_malaria")   # Denominator table
-
 
 ## Instantiate denominator cohorts ----
 # function to generate .csv of the cohort's attrition (+ cohort set)
@@ -131,52 +113,22 @@ getIncidencePrevalence <- function(denominator_table_name, outcome_table_name) {
   return(list("incidence" = inc, "prevalence" = prev))
 }
 
-# HCQ
-hcq_general <- getIncidencePrevalence(ip_general_table_name, hcq_users_table_name) # general pop
-hcq_covid   <- getIncidencePrevalence(ip_covid_table_name, hcq_users_table_name)   # covid pop
-hcq_ra      <- getIncidencePrevalence(ip_ra_table_name, hcq_users_table_name)      # ra pop
-hcq_malaria <- getIncidencePrevalence(ip_malaria_table_name, hcq_users_table_name) # malaria pop
+ip_general <- getIncidencePrevalence(ip_general_table_name, prevalent_users_table_name) # general pop
+ip_covid   <- getIncidencePrevalence(ip_covid_table_name, prevalent_users_table_name)   # covid pop
+ip_ra      <- getIncidencePrevalence(ip_ra_table_name, prevalent_users_table_name)      # ra pop
+ip_malaria <- getIncidencePrevalence(ip_malaria_table_name, prevalent_users_table_name) # malaria pop
 
-# MTX
-mtx_general <- getIncidencePrevalence(ip_general_table_name, mtx_users_table_name) # general pop
-mtx_ra      <- getIncidencePrevalence(ip_ra_table_name, mtx_users_table_name)      # ra pop
-
-
-# Export HCQ results 
-# hcq incidence results 
-incidence_hcq <- hcq_general$incidence %>%
+# Export incidence results
+incidence <- ip_general$incidence %>%
   mutate(denominator_strata_cohort_name = "general") %>%
-  union_all(hcq_covid$incidence) %>%
-  union_all(hcq_ra$incidence) %>%
-  union_all(hcq_malaria$incidence) 
-# export to csv 
-write_csv(incidence_hcq, 
-          file = here(output_folder, "incidence_hcq.csv"))
+  union_all(ip_covid$incidence) %>%
+  union_all(ip_ra$incidence) %>%
+  union_all(ip_malaria$incidence) 
+write_csv(incidence, file = here(output_folder, "incidence.csv"))
 
-# hcq prevalence results 
-prevalence_hcq <- hcq_general$prevalence %>%
+prevalence <- ip_general$prevalence %>%
   mutate(denominator_strata_cohort_name = "general") %>%
-  union_all(hcq_covid$prevalence) %>%
-  union_all(hcq_ra$prevalence) %>%
-  union_all(hcq_malaria$prevalence) 
-# export to csv 
-write_csv(prevalence_hcq, 
-          file = here(output_folder, "prevalence_hcq.csv"))
-
-
-# Export MTX results 
-# hcq incidence results 
-incidence_mtx <- mtx_general$incidence %>%
-  mutate(denominator_strata_cohort_name = "general") %>%
-  union_all(mtx_ra$incidence) 
-# export to csv 
-write_csv(incidence_mtx, 
-          file = here(output_folder, "incidence_mtx.csv"))
-
-# hcq prevalence results 
-prevalence_mtx <- mtx_general$prevalence %>%
-  mutate(denominator_strata_cohort_name = "general") %>%
-  union_all(mtx_ra$prevalence)
-# export to csv 
-write_csv(prevalence_mtx, 
-          file = here(output_folder, "prevalence_mtx.csv"))
+  union_all(ip_covid$prevalence) %>%
+  union_all(ip_ra$prevalence) %>%
+  union_all(ip_malaria$prevalence) 
+write_csv(prevalence, file = here(output_folder, "prevalence.csv"))

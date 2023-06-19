@@ -1,11 +1,8 @@
 ## Variables ----
 # Names for cohort tables
 study_table_name         <- paste0(stem_table, "_study")
-hcq_new_users_table_name <- paste0(stem_table, "_hcq_new")
-hcq_users_table_name     <- paste0(stem_table, "_hcq")
-mtx_new_users_table_name <- paste0(stem_table, "_mtx_new")
-mtx_users_table_name     <- paste0(stem_table, "_mtx")
-
+new_users_table_name <- paste0(stem_table, "_new")
+prevalent_users_table_name     <- paste0(stem_table, "_prevalent")
 
 # Study dates
 study.start <- as.Date("2019-01-01")
@@ -43,49 +40,43 @@ write_csv(
 
 ## Instantiate hydroxychloroquine and methotrexate ----
 # Package: CodelistGenerator + DrugUtilisation
-hcq_concept_list <- getDrugIngredientCodes(cdm, "hydroxychloroquine")
-mtx_concept_list <- getDrugIngredientCodes(cdm, "methotrexate")
+cl <- getDrugIngredientCodes(cdm, c("hydroxychloroquine", "methotrexate"))
 
-# Users hcq
+conceptList <- list()
+conceptList$prevalent_users_hydroxychloroquine <- cl$`Ingredient: hydroxychloroquine (1777087)`
+conceptList$prevalent_users_methotrexate <- cl$`Ingredient: methotrexate (1305058)`
+
+# prevalent users
 cdm <- generateDrugUtilisationCohortSet(
   cdm = cdm,
-  name = hcq_users_table_name,
-  conceptSetList = hcq_concept_list,
-  summariseMode = "AllEras", 
-  gapEra = 30
-)
-
-# Users mtx
-cdm <- generateDrugUtilisationCohortSet(
-  cdm = cdm,
-  name = mtx_users_table_name,
-  conceptSetList = mtx_concept_list,
+  name = prevalent_users_table_name,
+  conceptSetList = conceptList,
   summariseMode = "AllEras", 
   gapEra = 30
 )
 
 # Export cohort counts
 write_csv(
-  cohortCount(cdm[[hcq_users_table_name]]) %>%
-    mutate(cohort_name = "hydroxychloriquine prevalent users") %>%
-    union_all(cohortCount(cdm[[mtx_users_table_name]]) %>%
-                mutate(cohort_name = "methotrexate prevalent users")), 
+  cohortCount(cdm[[prevalent_users_table_name]]) %>%
+    left_join(cohortSet(cdm[[prevalent_users_table_name]])), 
   file = here(output_folder, "cohort_count_prevalent.csv")
 )
 # Export attrition
 write_csv(
-  cohortAttrition(cdm[[hcq_users_table_name]]) %>%
-    mutate(cohort_name = "hydroxychloriquine prevalent users") %>%
-    union_all(cohortAttrition(cdm[[mtx_users_table_name]]) %>%
-                mutate(cohort_name = "methotrexate prevalent users")), 
+  cohortAttrition(cdm[[prevalent_users_table_name]]) %>%
+    left_join(cohortSet(cdm[[prevalent_users_table_name]])), 
   file = here(output_folder, "cohort_attrition_prevalent.csv")
 )
 
-# New users hcq
+conceptList <- list()
+conceptList$new_users_hydroxychloroquine <- cl$`Ingredient: hydroxychloroquine (1777087)`
+conceptList$new_users_methotrexate <- cl$`Ingredient: methotrexate (1305058)`
+
+# New users
 cdm <- generateDrugUtilisationCohortSet(
   cdm = cdm,
-  name = hcq_new_users_table_name,
-  conceptSetList = hcq_concept_list,
+  name = new_users_table_name,
+  conceptSetList = conceptList,
   summariseMode = "FirstEra",
   daysPriorHistory = 365,
   gapEra = 30,
@@ -93,31 +84,15 @@ cdm <- generateDrugUtilisationCohortSet(
   cohortDateRange = as.Date(c(study.start, study.end))
 )
 
-# New users mtx
-cdm <- generateDrugUtilisationCohortSet(
-  cdm = cdm,
-  name = mtx_new_users_table_name,
-  conceptSetList = mtx_concept_list,
-  summariseMode = "FirstEra",
-  daysPriorHistory = 365,
-  gapEra = 30,
-  priorUseWashout = 365,
-  cohortDateRange = as.Date(c(study.start, study.end))
-)
-
-# Export cohort count
+# Export cohort counts
 write_csv(
-  cohortCount(cdm[[hcq_new_users_table_name]]) %>%
-    mutate(cohort_name = "hydroxychloriquine new users") %>%
-    union_all(cohortCount(cdm[[mtx_new_users_table_name]]) %>%
-                mutate(cohort_name = "methotrexate new users")), 
+  cohortCount(cdm[[new_users_table_name]]) %>%
+    left_join(cohortSet(cdm[[new_users_table_name]])), 
   file = here(output_folder, "cohort_count_new.csv")
 )
 # Export attrition
 write_csv(
-  cohortAttrition(cdm[[hcq_new_users_table_name]]) %>%
-    mutate(cohort_name = "hydroxychloriquine new users") %>%
-    union_all(cohortAttrition(cdm[[mtx_new_users_table_name]]) %>%
-                mutate(cohort_name = "methotrexate new users")), 
+  cohortAttrition(cdm[[new_users_table_name]]) %>%
+    left_join(cohortSet(cdm[[new_users_table_name]])), 
   file = here(output_folder, "cohort_attrition_new.csv")
 )
