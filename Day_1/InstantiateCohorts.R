@@ -96,3 +96,5 @@ write_csv(
     left_join(cohortSet(cdm[[new_users_table_name]])), 
   file = here(output_folder, "cohort_attrition_new.csv")
 )
+
+
