@@ -71,15 +71,15 @@ result_indication_hcq <- summariseIndication(cohort = hcq_indication_table,
 
 write_csv(result_indication_hcq, here(output_folder, "indication_hcq.csv"))
 
-## 2. Duration ---
-hcq_duration_table <- cdm[[hcq_new_users_table_name]] %>%
+## 2. Drug use ---
+hcq_drug_use_table <- cdm[[hcq_new_users_table_name]] %>%
   addDrugUse(cdm = cdm, ingredientConceptId = 1777087) %>%
   summariseDrugUse(
     cdm = cdm, drugUseEstimates = c("median", "q25", "q75", "mean", "sd"), 
     strata = list("Calendar time" = "window")
   )
 
-write_csv(hcq_duration_table, here(output_folder, "duration_hcq.csv"))
+write_csv(hcq_drug_use_table, here(output_folder, "drug_use_hcq.csv"))
 
 ## 2. Table One ----
 # Package: PatientProfiles
