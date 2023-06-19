@@ -1,0 +1,11 @@
+attribute,value
+cdm_source_name,PharMetrics Plus
+cdm_version,v5.3.1
+cdm_holder,OMOP
+cdm_release_date,2022-08-31
+vocabulary_version,v5.0 22-JUN-22
+person_cnt,100000
+observation_period_cnt,106564
+cdm_schema,public_100k
+write_schema,results
+cdm_name,PHARMETRICS

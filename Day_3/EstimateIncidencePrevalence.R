@@ -1,6 +1,10 @@
 ## Variables ----
 # Names of already insatiated cohort tables
 study_table_name         <- paste0(stem_table, "_study")
+hcq_users_table_name     <- paste0(stem_table, "_hcq")
+mtx_users_table_name     <- paste0(stem_table, "_mtx")
+
+table_names <- c(study_table_name, hcq_users_table_name, mtx_users_table_name)
 
 # Connect to the database and call the cohorts:
 cdm <- cdmFromCon(
@@ -8,7 +12,7 @@ cdm <- cdmFromCon(
   cdmSchema = cdm_database_schema,
   writeSchema = results_database_schema,
   cdmName = db_name,
-  cohortTables = study_table_name
+  cohortTables = table_names
 )
 
 # Get cohort definition IDs:
@@ -28,8 +32,7 @@ malaria_id <- study_cohort_set %>%
   pull(cohort_definition_id)
 
 
-# Names of denominator cohort tables to generate
-hcq_users_table_name     <- paste0(stem_table, "_hcq")          # Outcome table
+# Names of denominator tables cohort tables to generate
 ip_general_table_name    <- paste0(stem_table, "_ip_general")   # Denominator table
 ip_covid_table_name      <- paste0(stem_table, "_ip_covid")     # Denominator table
 ip_ra_table_name         <- paste0(stem_table, "_ip_ra")        # Denominator table
@@ -37,7 +40,7 @@ ip_malaria_table_name    <- paste0(stem_table, "_ip_malaria")   # Denominator ta
 
 
 ## Instantiate denominator cohorts ----
-# generate .csv of the cohort's attrition (+ cohort set)
+# function to generate .csv of the cohort's attrition (+ cohort set)
 exportAttrition <- function(cohort, path) {
   cohort %>%
     cohort_set() %>%
@@ -102,27 +105,14 @@ cdm <- generateDenominatorCohortSet(
 )
 exportAttrition(cdm[[ip_malaria_table_name]], here(output_folder, "attrition_ip_malaria_population.csv"))
 
-## Instantiate outcome cohort ----
-# Get concept list (package: CodelistGenerator)
-hcq_concept_list <- getDrugIngredientCodes(cdm, "hydroxychloroquine")
-
-# Create cohort (package: DrugUtilisation)
-cdm <- generateDrugUtilisationCohortSet(
-  cdm = cdm,
-  name = hcq_users_table_name,
-  conceptSetList = hcq_concept_list,
-  summariseMode = "AllEras", 
-  gapEra = 30
-)
-
 ## Estimate incidence prevalence ----
-getIncidencePrevalence <- function(denominator_table_name) {
+getIncidencePrevalence <- function(denominator_table_name, outcome_table_name) {
   
   # estimate incidence
   inc <- estimateIncidence(
     cdm = cdm,
     denominatorTable = denominator_table_name,
-    outcomeTable = hcq_users_table_name,
+    outcomeTable = outcome_table_name,
     interval = "months",
     outcomeWashout = 365,
     repeatedEvents = FALSE,
@@ -133,7 +123,7 @@ getIncidencePrevalence <- function(denominator_table_name) {
   prev <- estimatePeriodPrevalence(
     cdm = cdm,
     denominatorTable = denominator_table_name,
-    outcomeTable = hcq_users_table_name,
+    outcomeTable = outcome_table_name,
     interval = "months",
     minCellCount = minimum_counts
   )
@@ -141,10 +131,16 @@ getIncidencePrevalence <- function(denominator_table_name) {
   return(list("incidence" = inc, "prevalence" = prev))
 }
 
-hcq_general <- getIncidencePrevalence(ip_general_table_name) # general pop
-hcq_covid   <- getIncidencePrevalence(ip_covid_table_name)   # covid pop
-hcq_ra      <- getIncidencePrevalence(ip_ra_table_name)      # ra pop
-hcq_malaria <- getIncidencePrevalence(ip_malaria_table_name) # malaria pop
+# HCQ
+hcq_general <- getIncidencePrevalence(ip_general_table_name, hcq_users_table_name) # general pop
+hcq_covid   <- getIncidencePrevalence(ip_covid_table_name, hcq_users_table_name)   # covid pop
+hcq_ra      <- getIncidencePrevalence(ip_ra_table_name, hcq_users_table_name)      # ra pop
+hcq_malaria <- getIncidencePrevalence(ip_malaria_table_name, hcq_users_table_name) # malaria pop
+
+# MTX
+mtx_general <- getIncidencePrevalence(ip_general_table_name, mtx_users_table_name) # general pop
+mtx_ra      <- getIncidencePrevalence(ip_ra_table_name, mtx_users_table_name)      # ra pop
+
 
 # Export HCQ results 
 # hcq incidence results 
@@ -168,3 +164,19 @@ write_csv(prevalence_hcq,
           file = here(output_folder, "prevalence_hcq.csv"))
 
 
+# Export MTX results 
+# hcq incidence results 
+incidence_mtx <- mtx_general$incidence %>%
+  mutate(denominator_strata_cohort_name = "general") %>%
+  union_all(mtx_ra$incidence) 
+# export to csv 
+write_csv(incidence_mtx, 
+          file = here(output_folder, "incidence_mtx.csv"))
+
+# hcq prevalence results 
+prevalence_mtx <- mtx_general$prevalence %>%
+  mutate(denominator_strata_cohort_name = "general") %>%
+  union_all(mtx_ra$prevalence)
+# export to csv 
+write_csv(prevalence_mtx, 
+          file = here(output_folder, "prevalence_mtx.csv"))
