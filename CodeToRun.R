@@ -15,7 +15,7 @@ library(testthat)
 # install_github("darwin-eu-dev/PatientProfiles")
 # install_github("darwin-eu-dev/DrugUtilisation")
 # install_github("darwin-eu-dev/CodelistGenerator")
-install_github("darwin-eu-dev/IncidencePrevalence@strata_prior_hist")
+# install_github("darwin-eu-dev/IncidencePrevalence@strata_prior_hist")
 # install_github("ohdsi/Capr")
 library(CirceR)
 library(PatientProfiles)
@@ -59,7 +59,7 @@ db <- dbConnect(
 )
 
 # The name of the schema that contains the OMOP CDM with patient-level data
-cdm_database_schema <- "public_100k"
+cdm_database_schema <- "public"
 
 # The name of the schema where results tables will be created 
 results_database_schema <- "results"
