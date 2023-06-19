@@ -82,7 +82,7 @@ cdm <- CDMConnector::cdm_from_con(
 )
 
 # check database connection
-# running the next line should give you a count of your person table
+# running the next line should give you a count of your person table====++
 cdm$person %>% 
   tally()
 
@@ -105,9 +105,11 @@ window.after <- c(hcq.end + 1, study.end)
 # Age groups
 age_groups <- list(c(0,19), c(20,39), c(40,59), c(60,79), c(80,150), c(0, 150))
 
+write_csv(snapshot(cdm), here(output_folder, "cdm_snapshot.csv"))
+
 # Jobs to Run
 source(here("Day_1", "InstantiateCohorts.R"))
 source(here("Day_3", "EstimateIncidencePrevalence.R"))
 source(here("Day_2", "Characterisation.R"))
 
-write_csv(snapshot(cdm), here(output_folder, "cdm_snapshot.csv"))
+

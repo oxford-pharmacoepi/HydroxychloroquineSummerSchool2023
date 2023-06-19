@@ -3,8 +3,8 @@
 study_table_name         <- paste0(stem_table, "_study")
 hcq_new_users_table_name <- paste0(stem_table, "_hcq_new")
 hcq_users_table_name     <- paste0(stem_table, "_hcq")
-mtx_new_users_table_name <- paste0(stem_table, "_mtx_new")
-mtx_users_table_name     <- paste0(stem_table, "_mtx")
+#mtx_new_users_table_name <- paste0(stem_table, "_mtx_new")
+#mtx_users_table_name     <- paste0(stem_table, "_mtx")
 
 table_names <- c(study_table_name, hcq_new_users_table_name, hcq_users_table_name,
                  mtx_new_users_table_name, mtx_users_table_name)
