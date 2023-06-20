@@ -60,7 +60,7 @@ db <- dbConnect(
 )
 
 # The name of the schema that contains the OMOP CDM with patient-level data
-cdm_database_schema <- "public_100k"
+cdm_database_schema <- "public"
 
 # The name of the schema where results tables will be created 
 results_database_schema <- "results"
