@@ -1,0 +1,818 @@
+{
+  "ConceptSets": [
+    {
+      "id": 0,
+      "name": "Rheumatoid arthritis",
+      "expression": {
+        "items": [
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "402431009",
+              "CONCEPT_ID": 4297650,
+              "CONCEPT_NAME": "Cutaneous atrophy due to rheumatoid arthritis",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "433228003",
+              "CONCEPT_ID": 4334806,
+              "CONCEPT_NAME": "Deformity of foot due to rheumatoid arthritis",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "96531000119109",
+              "CONCEPT_ID": 46273442,
+              "CONCEPT_NAME": "Deformity of hand due to rheumatoid arthritis",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "CPT4",
+              "CONCEPT_CODE": "3476F",
+              "CONCEPT_ID": 2107572,
+              "CONCEPT_NAME": "Disease prognosis for rheumatoid arthritis assessed, good prognosis documented (RA)",
+              "DOMAIN_ID": "Observation",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "CPT4"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "CPT4",
+              "CONCEPT_CODE": "3475F",
+              "CONCEPT_ID": 2107561,
+              "CONCEPT_NAME": "Disease prognosis for rheumatoid arthritis assessed, poor prognosis documented (RA)",
+              "DOMAIN_ID": "Observation",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "CPT4"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "193250002",
+              "CONCEPT_ID": 4107913,
+              "CONCEPT_NAME": "Myopathy due to rheumatoid arthritis",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "CPT4",
+              "CONCEPT_CODE": "4195F",
+              "CONCEPT_ID": 2108721,
+              "CONCEPT_NAME": "Patient receiving first-time biologic disease modifying anti-rheumatic drug therapy for rheumatoid arthritis (RA)",
+              "DOMAIN_ID": "Observation",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "CPT4"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "193180002",
+              "CONCEPT_ID": 4102493,
+              "CONCEPT_NAME": "Polyneuropathy in rheumatoid arthritis",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "69896004",
+              "CONCEPT_ID": 80809,
+              "CONCEPT_NAME": "Rheumatoid arthritis",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "CPT4",
+              "CONCEPT_CODE": "3472F",
+              "CONCEPT_ID": 2107560,
+              "CONCEPT_NAME": "Rheumatoid arthritis (RA) disease activity, high (RA)",
+              "DOMAIN_ID": "Observation",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "CPT4"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "CPT4",
+              "CONCEPT_CODE": "3470F",
+              "CONCEPT_ID": 2107558,
+              "CONCEPT_NAME": "Rheumatoid arthritis (RA) disease activity, low (RA)",
+              "DOMAIN_ID": "Observation",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "CPT4"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "CPT4",
+              "CONCEPT_CODE": "3471F",
+              "CONCEPT_ID": 2107559,
+              "CONCEPT_NAME": "Rheumatoid arthritis (RA) disease activity, moderate (RA)",
+              "DOMAIN_ID": "Observation",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "CPT4"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "239792003",
+              "CONCEPT_ID": 4083556,
+              "CONCEPT_NAME": "Seronegative rheumatoid arthritis",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "239791005",
+              "CONCEPT_ID": 4035611,
+              "CONCEPT_NAME": "Seropositive rheumatoid arthritis",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            },
+            "includeDescendants": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "name": "covid diagnosis broad",
+      "expression": {
+        "items": [
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "138389411000119105",
+              "CONCEPT_ID": 3661405,
+              "CONCEPT_NAME": "Acute bronchitis caused by SARS-CoV-2",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "870590002",
+              "CONCEPT_ID": 3655976,
+              "CONCEPT_NAME": "Acute hypoxemic respiratory failure due to disease caused by Severe acute respiratory syndrome coronavirus 2",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "870589006",
+              "CONCEPT_ID": 3661748,
+              "CONCEPT_NAME": "Acute kidney injury due to disease caused by Severe acute respiratory syndrome coronavirus 2",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "674814021000119106",
+              "CONCEPT_ID": 3661406,
+              "CONCEPT_NAME": "Acute respiratory distress syndrome due to disease caused by Severe acute respiratory syndrome coronavirus 2",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "189486241000119100",
+              "CONCEPT_ID": 3662381,
+              "CONCEPT_NAME": "Asymptomatic SARS-CoV-2",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "OMOP4873909",
+              "CONCEPT_ID": 756031,
+              "CONCEPT_NAME": "Bronchitis caused by COVID-19",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "OMOP Extension"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "119731000146105",
+              "CONCEPT_ID": 3656667,
+              "CONCEPT_NAME": "Cardiomyopathy due to disease caused by Severe acute respiratory syndrome coronavirus 2",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "119741000146102",
+              "CONCEPT_ID": 3656668,
+              "CONCEPT_NAME": "Conjunctivitis due to disease caused by Severe acute respiratory syndrome coronavirus 2",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "186747009",
+              "CONCEPT_ID": 439676,
+              "CONCEPT_NAME": "Coronavirus infection",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "840539006",
+              "CONCEPT_ID": 37311061,
+              "CONCEPT_NAME": "COVID-19",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "27619001",
+              "CONCEPT_ID": 4100065,
+              "CONCEPT_NAME": "Disease due to Coronaviridae",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "119981000146107",
+              "CONCEPT_ID": 3656669,
+              "CONCEPT_NAME": "Dyspnea caused by Severe acute respiratory syndrome coronavirus 2",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "1240561000000108",
+              "CONCEPT_ID": 37310284,
+              "CONCEPT_NAME": "Encephalopathy due to disease caused by Severe acute respiratory syndrome coronavirus 2",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "119751000146104",
+              "CONCEPT_ID": 3661885,
+              "CONCEPT_NAME": "Fever caused by Severe acute respiratory syndrome coronavirus 2",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "1240571000000101",
+              "CONCEPT_ID": 37310283,
+              "CONCEPT_NAME": "Gastroenteritis caused by SARS-CoV-2 (severe acute respiratory syndrome coronavirus 2)",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "1240541000000107",
+              "CONCEPT_ID": 37310286,
+              "CONCEPT_NAME": "Infection of upper respiratory tract caused by Severe acute respiratory syndrome coronavirus 2",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "880529761000119102",
+              "CONCEPT_ID": 3663281,
+              "CONCEPT_NAME": "Lower respiratory infection caused by SARS-CoV-2",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "866151004",
+              "CONCEPT_ID": 3661631,
+              "CONCEPT_NAME": "Lymphocytopenia due to Severe acute respiratory syndrome coronavirus 2",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "1240531000000103",
+              "CONCEPT_ID": 37310287,
+              "CONCEPT_NAME": "Myocarditis due to disease caused by Severe acute respiratory syndrome coronavirus 2",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "1240521000000100",
+              "CONCEPT_ID": 37310254,
+              "CONCEPT_NAME": "Otitis media due to disease caused by Severe acute respiratory syndrome coronavirus 2",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "OMOP4912977",
+              "CONCEPT_ID": 704995,
+              "CONCEPT_NAME": "Patient meets COVID-19 clinical diagnostic criteria",
+              "DOMAIN_ID": "Observation",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "OMOP Extension"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "OMOP4912988",
+              "CONCEPT_ID": 700297,
+              "CONCEPT_NAME": "Patient meets COVID-19 laboratory confirmation criterion (detection of specific RNA in a clinical specimen using a molecular amplification detection test)",
+              "DOMAIN_ID": "Observation",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "OMOP Extension"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "OMOP4912978",
+              "CONCEPT_ID": 704996,
+              "CONCEPT_NAME": "Patient meets COVID-19 laboratory diagnostic criteria",
+              "DOMAIN_ID": "Observation",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "OMOP Extension"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "OMOP4912987",
+              "CONCEPT_ID": 700296,
+              "CONCEPT_NAME": "Patient meets COVID-19 presumptive laboratory evidence criteria (detection of specific antigen in a clinical specimen, OR detection of specific antibody in serum, plasma, or whole blood indicative of a new or recent infection)",
+              "DOMAIN_ID": "Observation",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "OMOP Extension"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "713084008",
+              "CONCEPT_ID": 37016927,
+              "CONCEPT_NAME": "Pneumonia caused by Human coronavirus",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "882784691000119100",
+              "CONCEPT_ID": 3661408,
+              "CONCEPT_NAME": "Pneumonia caused by SARS-CoV-2",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "441590008",
+              "CONCEPT_ID": 40479642,
+              "CONCEPT_NAME": "Pneumonia due to Severe acute respiratory syndrome coronavirus",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "OMOP4873907",
+              "CONCEPT_ID": 756039,
+              "CONCEPT_NAME": "Respiratory infection caused by COVID-19",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "OMOP Extension"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "870591003",
+              "CONCEPT_ID": 3655977,
+              "CONCEPT_NAME": "Rhabdomyolysis due to disease caused by Severe acute respiratory syndrome coronavirus 2",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "870588003",
+              "CONCEPT_ID": 3655975,
+              "CONCEPT_NAME": "Sepsis due to disease caused by Severe acute respiratory syndrome coronavirus 2",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "398447004",
+              "CONCEPT_ID": 320651,
+              "CONCEPT_NAME": "Severe acute respiratory syndrome",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "715882005",
+              "CONCEPT_ID": 37396171,
+              "CONCEPT_NAME": "Severe acute respiratory syndrome of upper respiratory tract",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Context-dependent",
+              "CONCEPT_CODE": "840544004",
+              "CONCEPT_ID": 37311060,
+              "CONCEPT_NAME": "Suspected COVID-19",
+              "DOMAIN_ID": "Observation",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "866152006",
+              "CONCEPT_ID": 3661632,
+              "CONCEPT_NAME": "Thrombocytopenia due to Severe acute respiratory syndrome coronavirus 2",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Context-dependent",
+              "CONCEPT_CODE": "700217006",
+              "CONCEPT_ID": 45763724,
+              "CONCEPT_NAME": "Suspected coronavirus infection",
+              "DOMAIN_ID": "Observation",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "PrimaryCriteria": {
+    "CriteriaList": [
+      {
+        "ConditionOccurrence": {
+          "CodesetId": 0
+        }
+      },
+      {
+        "Observation": {
+          "CodesetId": 0
+        }
+      }
+    ],
+    "ObservationWindow": {
+      "PriorDays": 0,
+      "PostDays": 0
+    },
+    "PrimaryCriteriaLimit": {
+      "Type": "First"
+    }
+  },
+  "QualifiedLimit": {
+    "Type": "First"
+  },
+  "ExpressionLimit": {
+    "Type": "First"
+  },
+  "InclusionRules": [
+    {
+      "name": "no covid before",
+      "expression": {
+        "Type": "ALL",
+        "CriteriaList": [
+          {
+            "Criteria": {
+              "ConditionOccurrence": {
+                "CodesetId": 1
+              }
+            },
+            "StartWindow": {
+              "Start": {
+                "Coeff": -1
+              },
+              "End": {
+                "Days": 0,
+                "Coeff": 1
+              },
+              "UseEventEnd": false
+            },
+            "Occurrence": {
+              "Type": 0,
+              "Count": 0
+            }
+          },
+          {
+            "Criteria": {
+              "Observation": {
+                "CodesetId": 1
+              }
+            },
+            "StartWindow": {
+              "Start": {
+                "Coeff": -1
+              },
+              "End": {
+                "Coeff": 1
+              },
+              "UseEventEnd": false
+            },
+            "Occurrence": {
+              "Type": 0,
+              "Count": 0
+            }
+          }
+        ],
+        "DemographicCriteriaList": [],
+        "Groups": []
+      }
+    }
+  ],
+  "CensoringCriteria": [
+    {
+      "ConditionOccurrence": {
+        "CodesetId": 1
+      }
+    },
+    {
+      "Observation": {
+        "CodesetId": 1
+      }
+    }
+  ],
+  "CollapseSettings": {
+    "CollapseType": "ERA",
+    "EraPad": 0
+  },
+  "CensorWindow": {},
+  "cdmVersionRange": ">=5.0.0"
+}

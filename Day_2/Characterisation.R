@@ -10,6 +10,10 @@ ra_id <- study_cohort_set %>%
   filter(cohort_name == "rheumatoid_arthritis") %>%
   pull(cohort_definition_id)
 
+ra_id_no_cov <- study_cohort_set %>% 
+  filter(cohort_name == "rheumatoid_arthristis_no_covid") %>%
+  pull(cohort_definition_id)
+
 malaria_id <- study_cohort_set %>% 
   filter(cohort_name == "malaria") %>%
   pull(cohort_definition_id)
@@ -35,30 +39,33 @@ cdm_subset[[new_users_table_name]] <- cdm_subset[[new_users_table_name]] %>%
     targetCohortTable = study_table_name,
     targetCohortId = covid_id,
     window = c(-21,0),
-    nameStyle = "{cohort_name}"
+    nameStyle = "covid"
   ) %>%
   addCohortIntersectFlag(
     cdm = cdm_subset,
     targetCohortTable = study_table_name,
     targetCohortId = ra_id,
     window = c(-Inf,0),
-    nameStyle = "{cohort_name}"
+    nameStyle = "rheumatoid_arthritis"
   ) %>%
   addCohortIntersectFlag(
     cdm = cdm_subset,
     targetCohortTable = study_table_name,
     targetCohortId = malaria_id,
     window = c(-Inf,0),
-    nameStyle = "{cohort_name}"
+    nameStyle = "malaria"
   ) %>%
-  mutate(indications = covid + rheumatoid_arthritis + malaria) %>%
-  filter(indications == 1) %>%
-  pivot_longer(cols = c("covid", "rheumatoid_arthritis", "malaria"), names_to = "indication") %>%
-  filter(value == 1) %>%
-  select(-value)
+  mutate(
+    indication = case_when(
+      covid == 1 & rheumatoid_arthritis == 0 & malaria == 0 ~ "covid",
+      covid == 0 & rheumatoid_arthritis == 1 & malaria == 0 ~ "rheumatoid_arthritis",
+      covid == 0 & rheumatoid_arthritis == 0 & malaria == 1 ~ "malaria",
+      covid == 0 & rheumatoid_arthritis == 0 & malaria == 0 ~ "none",
+      .default = "multiple"
+    )
+  ) %>%
+  select(-c("covid", "rheumatoid_arthritis", "malaria"))
   
-  
-
 # Instantiate medications and general conditions for Table One
 # Names for the instantiated cohorts
 medications_table_name <- paste0(stem_table, "_medications")
@@ -195,8 +202,7 @@ table_one <- table_one %>%
     functions = functions, 
     minCellCount = minimum_counts
   ) %>%
-  mutate(
-    cdm_subset_name = cdm_subsetName(cdm_subset))
+  mutate(cdm_name = cdmName(cdm_subset))
 
 # Export
 write_csv(table_one, here(output_folder, "table_one.csv"))
