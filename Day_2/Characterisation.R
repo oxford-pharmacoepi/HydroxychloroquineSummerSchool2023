@@ -119,7 +119,6 @@ write_csv(drug_use_table, here(output_folder, "drug_use.csv"))
 
 ## 2. Table One ----
 # Package: PatientProfiles
-
 #  2.1. HCQ new users
 table_one <- cdm_subset[[new_users_table_name]] %>% 
   select(
