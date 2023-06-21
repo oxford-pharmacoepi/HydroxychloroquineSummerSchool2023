@@ -1,23 +1,4 @@
-# Get cohort definition IDs:
-study_cohort_set <- cdm[[study_table_name]] %>%
-  cohort_set()
-
-covid_id <- study_cohort_set %>% 
-  filter(cohort_name == "covid") %>%
-  pull(cohort_definition_id)
-
-ra_id <- study_cohort_set %>% 
-  filter(cohort_name == "rheumatoid_arthritis") %>%
-  pull(cohort_definition_id)
-
-ra_id_no_cov <- study_cohort_set %>% 
-  filter(cohort_name == "rheumatoid_arthristis_no_covid") %>%
-  pull(cohort_definition_id)
-
-malaria_id <- study_cohort_set %>% 
-  filter(cohort_name == "malaria") %>%
-  pull(cohort_definition_id)
-
+# Subset of the cdm
 cdm_subset <- cdmSubsetCohort(cdm, new_users_table_name)
 
 ## Prepare data ----
@@ -83,12 +64,12 @@ conditions_concept_list <- readConceptList(
 
 # Generate cohorts in cdm_subset
 cdm_subset <- generateConceptCohortSet(cdm_subset,
-                                medications_table_name,
-                                medications_concept_list)
+                                       medications_table_name,
+                                       medications_concept_list)
 
 cdm_subset <- generateConceptCohortSet(cdm_subset,
-                                conditions_table_name,
-                                conditions_concept_list)
+                                       conditions_table_name,
+                                       conditions_concept_list)
 
 
 ## Characterisation ----
@@ -113,9 +94,8 @@ drug_use_table_mtx <- cdm_subset[[new_users_table_name]] %>%
                   "Indication" = "indication")
   )
 
-drug_use_table <- drug_use_table_hcq %>% union_all(drug_use_table_mtx)
-
-write_csv(drug_use_table, here(output_folder, "drug_use.csv"))
+write_csv(drug_use_table_hcq %>% 
+            union_all(drug_use_table_mtx), here(output_folder, "drug_use.csv"))
 
 ## 2. Table One ----
 # Package: PatientProfiles

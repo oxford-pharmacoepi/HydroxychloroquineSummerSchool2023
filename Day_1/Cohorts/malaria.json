@@ -1,0 +1,212 @@
+{
+  "ConceptSets": [
+    {
+      "id": 0,
+      "name": "Malaria_wide",
+      "expression": {
+        "items": [
+          {
+            "concept": {
+              "CONCEPT_ID": 437215,
+              "CONCEPT_NAME": "",
+              "STANDARD_CONCEPT": "",
+              "STANDARD_CONCEPT_CAPTION": "",
+              "INVALID_REASON": "",
+              "INVALID_REASON_CAPTION": "",
+              "CONCEPT_CODE": "",
+              "DOMAIN_ID": "",
+              "VOCABULARY_ID": "",
+              "CONCEPT_CLASS_ID": ""
+            },
+            "isExcluded": false,
+            "includeDescendants": false,
+            "includeMapped": false
+          },
+          {
+            "concept": {
+              "CONCEPT_ID": 4087616,
+              "CONCEPT_NAME": "",
+              "STANDARD_CONCEPT": "",
+              "STANDARD_CONCEPT_CAPTION": "",
+              "INVALID_REASON": "",
+              "INVALID_REASON_CAPTION": "",
+              "CONCEPT_CODE": "",
+              "DOMAIN_ID": "",
+              "VOCABULARY_ID": "",
+              "CONCEPT_CLASS_ID": ""
+            },
+            "isExcluded": false,
+            "includeDescendants": false,
+            "includeMapped": false
+          },
+          {
+            "concept": {
+              "CONCEPT_ID": 4087615,
+              "CONCEPT_NAME": "",
+              "STANDARD_CONCEPT": "",
+              "STANDARD_CONCEPT_CAPTION": "",
+              "INVALID_REASON": "",
+              "INVALID_REASON_CAPTION": "",
+              "CONCEPT_CODE": "",
+              "DOMAIN_ID": "",
+              "VOCABULARY_ID": "",
+              "CONCEPT_CLASS_ID": ""
+            },
+            "isExcluded": false,
+            "includeDescendants": false,
+            "includeMapped": false
+          },
+          {
+            "concept": {
+              "CONCEPT_ID": 438067,
+              "CONCEPT_NAME": "",
+              "STANDARD_CONCEPT": "",
+              "STANDARD_CONCEPT_CAPTION": "",
+              "INVALID_REASON": "",
+              "INVALID_REASON_CAPTION": "",
+              "CONCEPT_CODE": "",
+              "DOMAIN_ID": "",
+              "VOCABULARY_ID": "",
+              "CONCEPT_CLASS_ID": ""
+            },
+            "isExcluded": false,
+            "includeDescendants": false,
+            "includeMapped": false
+          },
+          {
+            "concept": {
+              "CONCEPT_ID": 433960,
+              "CONCEPT_NAME": "",
+              "STANDARD_CONCEPT": "",
+              "STANDARD_CONCEPT_CAPTION": "",
+              "INVALID_REASON": "",
+              "INVALID_REASON_CAPTION": "",
+              "CONCEPT_CODE": "",
+              "DOMAIN_ID": "",
+              "VOCABULARY_ID": "",
+              "CONCEPT_CLASS_ID": ""
+            },
+            "isExcluded": false,
+            "includeDescendants": false,
+            "includeMapped": false
+          },
+          {
+            "concept": {
+              "CONCEPT_ID": 4089973,
+              "CONCEPT_NAME": "",
+              "STANDARD_CONCEPT": "",
+              "STANDARD_CONCEPT_CAPTION": "",
+              "INVALID_REASON": "",
+              "INVALID_REASON_CAPTION": "",
+              "CONCEPT_CODE": "",
+              "DOMAIN_ID": "",
+              "VOCABULARY_ID": "",
+              "CONCEPT_CLASS_ID": ""
+            },
+            "isExcluded": false,
+            "includeDescendants": false,
+            "includeMapped": false
+          },
+          {
+            "concept": {
+              "CONCEPT_ID": 4197823,
+              "CONCEPT_NAME": "",
+              "STANDARD_CONCEPT": "",
+              "STANDARD_CONCEPT_CAPTION": "",
+              "INVALID_REASON": "",
+              "INVALID_REASON_CAPTION": "",
+              "CONCEPT_CODE": "",
+              "DOMAIN_ID": "",
+              "VOCABULARY_ID": "",
+              "CONCEPT_CLASS_ID": ""
+            },
+            "isExcluded": false,
+            "includeDescendants": false,
+            "includeMapped": false
+          },
+          {
+            "concept": {
+              "CONCEPT_ID": 438343,
+              "CONCEPT_NAME": "",
+              "STANDARD_CONCEPT": "",
+              "STANDARD_CONCEPT_CAPTION": "",
+              "INVALID_REASON": "",
+              "INVALID_REASON_CAPTION": "",
+              "CONCEPT_CODE": "",
+              "DOMAIN_ID": "",
+              "VOCABULARY_ID": "",
+              "CONCEPT_CLASS_ID": ""
+            },
+            "isExcluded": false,
+            "includeDescendants": false,
+            "includeMapped": false
+          },
+          {
+            "concept": {
+              "CONCEPT_ID": 438353,
+              "CONCEPT_NAME": "",
+              "STANDARD_CONCEPT": "",
+              "STANDARD_CONCEPT_CAPTION": "",
+              "INVALID_REASON": "",
+              "INVALID_REASON_CAPTION": "",
+              "CONCEPT_CODE": "",
+              "DOMAIN_ID": "",
+              "VOCABULARY_ID": "",
+              "CONCEPT_CLASS_ID": ""
+            },
+            "isExcluded": false,
+            "includeDescendants": false,
+            "includeMapped": false
+          },
+          {
+            "concept": {
+              "CONCEPT_ID": 4092697,
+              "CONCEPT_NAME": "",
+              "STANDARD_CONCEPT": "",
+              "STANDARD_CONCEPT_CAPTION": "",
+              "INVALID_REASON": "",
+              "INVALID_REASON_CAPTION": "",
+              "CONCEPT_CODE": "",
+              "DOMAIN_ID": "",
+              "VOCABULARY_ID": "",
+              "CONCEPT_CLASS_ID": ""
+            },
+            "isExcluded": false,
+            "includeDescendants": false,
+            "includeMapped": false
+          }
+        ]
+      }
+    }
+  ],
+  "PrimaryCriteria": {
+    "CriteriaList": [
+      {
+        "ConditionOccurrence": {
+          "CodesetId": 0
+        }
+      }
+    ],
+    "ObservationWindow": {
+      "PriorDays": 0,
+      "PostDays": 0
+    },
+    "PrimaryCriteriaLimit": {
+      "Type": "First"
+    }
+  },
+  "QualifiedLimit": {
+    "Type": "First"
+  },
+  "ExpressionLimit": {
+    "Type": "First"
+  },
+  "InclusionRules": [],
+  "CensoringCriteria": [],
+  "CollapseSettings": {
+    "CollapseType": "ERA",
+    "EraPad": 0
+  },
+  "CensorWindow": {},
+  "cdmVersionRange": ">=5.0.0"
+}
