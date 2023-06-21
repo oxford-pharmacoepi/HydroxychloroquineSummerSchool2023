@@ -203,12 +203,16 @@ displayIncidence <- function(incidence,
                              ageGroup,
                              sex,
                              strataCohortName,
-                             incidenceStartDate) {
+                             incidenceStartDate,
+                             analysisInterval,
+                             outcome) {
   incidence %>%
     dplyr::filter(.data$denominator_age_group %in%.env$ageGroup) %>%
     dplyr::filter(.data$denominator_sex %in% .env$sex) %>%
     dplyr::filter(.data$denominator_strata_cohort_name %in% .env$strataCohortName) %>%
     dplyr::filter(as.character(.data$incidence_start_date) %in% .env$incidenceStartDate) %>%
+    dplyr::filter(.data$analysis_interval %in% .env$analysisInterval) %>%
+    dplyr::filter(.data$outcome_cohort_name %in% .env$outcome) %>%
     dplyr::mutate(
       incidence_100000_pys = as.numeric(incidence_100000_pys),
       incidence_100000_pys_95CI_lower = as.numeric(incidence_100000_pys_95CI_lower),
@@ -231,12 +235,16 @@ displayPrevalence <- function(prevalence,
                              ageGroup,
                              sex,
                              strataCohortName,
-                             prevalenceStartDate) {
+                             prevalenceStartDate,
+                             analysisInterval,
+                             outcome) {
   prevalence %>%
     dplyr::filter(.data$denominator_age_group %in%.env$ageGroup) %>%
     dplyr::filter(.data$denominator_sex %in% .env$sex) %>%
     dplyr::filter(.data$denominator_strata_cohort_name %in% .env$strataCohortName) %>%
     dplyr::filter(as.character(.data$prevalence_start_date) %in% .env$prevalenceStartDate) %>%
+    dplyr::filter(.data$analysis_interval %in% .env$analysisInterval) %>%
+    dplyr::filter(.data$outcome_cohort_name %in% .env$outcome) %>%
     dplyr::mutate(
       prevalence = as.numeric(prevalence),
       prevalence_95CI_lower = as.numeric(prevalence_95CI_lower),
@@ -255,10 +263,12 @@ displayPrevalence <- function(prevalence,
       "denominator_sex", "denominator_strata_cohort_name"
     ))
 }
-displayTableOne <- function(elements) {
+displayTableOne <- function(elements, drug_type) {
   x <- getElementType(elements, "table_characteristics") %>%
     dplyr::bind_rows() %>%
-    dplyr::select(-c("group_name", "group_level", "strata_name", "cdm_name")) %>%
+    dplyr::select(-c("group_name", "strata_name", "cdm_name")) %>%
+    dplyr::filter(.data$group_level == .env$drug_type) %>%
+    dplyr::select(-"group_level") %>%
     dplyr::mutate(estimate = niceNum(.data$estimate, significativeDecimals = 0)) %>%
     dplyr::mutate(estimate = gsub(" ", "", .data$estimate)) %>%
     tidyr::pivot_wider(names_from = "estimate_type", values_from = "estimate") %>%
@@ -287,10 +297,21 @@ displayTableOne <- function(elements) {
     dplyr::union_all(
       x3 %>%
         dplyr::mutate(variable = gsub("_m365_to_0", "", .data$variable))
-    ) %>%
-    dplyr::select(
-      c("variable", "variable_level", "estimate_type", "Overall", "before", "during", "after")
     )
+  
+  if (drug_type == "new_users_methotrexate") {
+    x <- x %>%
+      dplyr::select(
+        c("variable", "variable_level", "estimate_type", "Overall", "before_pandemic", "during_hcq_use_for_covid", 
+          "after_fda_retraction", "rheumatoid_arthritis", "covid")
+      )
+  } else {
+    x <- x %>%
+      dplyr::select(
+      c("variable", "variable_level", "estimate_type", "Overall", "before_pandemic", "during_hcq_use_for_covid", 
+        "after_fda_retraction", "rheumatoid_arthritis", "covid", "malaria")
+    )
+  }
   return(x)
 }
 

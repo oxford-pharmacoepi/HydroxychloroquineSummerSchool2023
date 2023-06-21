@@ -761,7 +761,6 @@
                 "Coeff": -1
               },
               "End": {
-                "Days": 0,
                 "Coeff": 1
               },
               "UseEventEnd": false

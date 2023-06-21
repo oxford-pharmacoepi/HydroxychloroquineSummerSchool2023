@@ -21,7 +21,7 @@ malaria_id <- study_cohort_set %>%
 cdm_subset <- cdmSubsetCohort(cdm, new_users_table_name)
 
 ## Prepare data ----
-# Add calendar windows to new user cohorts
+# Add calendar windows + indication to new user cohorts
 cdm_subset[[new_users_table_name]] <- cdm_subset[[new_users_table_name]] %>%
   mutate(window = case_when(
     .data$cohort_start_date >= !! window.before[1] & .data$cohort_start_date <= !! window.before[2] ~
@@ -92,23 +92,8 @@ cdm_subset <- generateConceptCohortSet(cdm_subset,
 
 
 ## Characterisation ----
-## 1. Indication ----
-indication_table <- cdm_subset[[new_users_table_name]] %>%
-  addIndication(
-    cdm = cdm_subset, 
-    indicationCohortName = study_table_name, 
-    indicationGap = c(0, 7, 30, 365)
-  ) %>%
-  summariseIndication(
-    cdm = cdm_subset, 
-    strata = list("Calendar time" = "window",
-                  "Indication" = "indication")
-  )
-
-write_csv(indication_table, here(output_folder, "indication.csv"))
-
-## 2. Drug use ----
-#  2.1. HCQ drug use
+## 1. Drug use ----
+#  1.1. HCQ drug use
 drug_use_table_hcq <- cdm_subset[[new_users_table_name]] %>%
   filter(cohort_definition_id == 1) %>%
   addDrugUse(cdm = cdm_subset, ingredientConceptId = 1777087) %>%
@@ -132,10 +117,10 @@ drug_use_table <- drug_use_table_hcq %>% union_all(drug_use_table_mtx)
 
 write_csv(drug_use_table, here(output_folder, "drug_use.csv"))
 
-## 3. Table One ----
+## 2. Table One ----
 # Package: PatientProfiles
 
-#  3.1. HCQ new users
+#  2.1. HCQ new users
 table_one <- cdm_subset[[new_users_table_name]] %>% 
   select(
     "cohort_definition_id", "subject_id", "cohort_start_date",
@@ -207,13 +192,13 @@ table_one <- table_one %>%
 # Export
 write_csv(table_one, here(output_folder, "table_one.csv"))
 
-## 4. Large Scale Characteristics ----
+## 3. Large Scale Characteristics ----
 # Get ATC and ICD10 codes (package CodelistGenerator)
 atc_codes   <- getATCCodes(cdm_subset, "ATC 3rd")
 icd10_codes <- getICD10StandardCodes(cdm_subset, "ICD10 SubChapter")
 
 # Characteristics (package DrugUtilisation)
-#  4.1. ATC 
+#  3.1. ATC 
 result_ATC <- summariseCharacteristicsFromCodelist(
   cohort = cdm_subset[[new_users_table_name]],
   cdm = cdm_subset,
@@ -226,7 +211,7 @@ result_ATC <- summariseCharacteristicsFromCodelist(
 )
 write_csv(result_ATC, here(output_folder, "characteristics_atc.csv"))
 
-#  4.2. ICD10 
+#  3.2. ICD10 
 result_ICD10 <- summariseCharacteristicsFromCodelist(
   cohort = cdm_subset[[new_users_table_name]],
   cdm = cdm_subset,
