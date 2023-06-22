@@ -1,157 +1,157 @@
 cohort_definition_id,cohort_name,number_records,number_subjects,reason_id,reason,excluded_records,excluded_subjects
-1,Denominator cohort 1,222159,222159,1,Starting population,NA,NA
-1,Denominator cohort 1,222159,222159,2,Missing year of birth,0,0
-1,Denominator cohort 1,222159,222159,3,Missing sex,0,0
-1,Denominator cohort 1,222159,222159,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
-1,Denominator cohort 1,155794,155794,5,No observation time available during study period,66365,66365
-1,Denominator cohort 1,155794,155794,6,Doesn't satisfy age criteria during the study period,0,0
-1,Denominator cohort 1,135259,135259,7,Prior history requirement not fulfilled during study period,20535,20535
-1,Denominator cohort 1,1523,1523,10,No observation time available after applying age and prior history criteria,133736,133736
-2,Denominator cohort 2,222159,222159,1,Starting population,NA,NA
-2,Denominator cohort 2,222159,222159,2,Missing year of birth,0,0
-2,Denominator cohort 2,222159,222159,3,Missing sex,0,0
-2,Denominator cohort 2,222159,222159,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
-2,Denominator cohort 2,155794,155794,5,No observation time available during study period,66365,66365
-2,Denominator cohort 2,155794,155794,6,Doesn't satisfy age criteria during the study period,0,0
-2,Denominator cohort 2,135259,135259,7,Prior history requirement not fulfilled during study period,20535,20535
-2,Denominator cohort 2,100067,100067,8,Not Female,35192,35192
-2,Denominator cohort 2,1008,1008,10,No observation time available after applying age and prior history criteria,99059,99059
-3,Denominator cohort 3,222159,222159,1,Starting population,NA,NA
-3,Denominator cohort 3,222159,222159,2,Missing year of birth,0,0
-3,Denominator cohort 3,222159,222159,3,Missing sex,0,0
-3,Denominator cohort 3,222159,222159,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
-3,Denominator cohort 3,155794,155794,5,No observation time available during study period,66365,66365
-3,Denominator cohort 3,155794,155794,6,Doesn't satisfy age criteria during the study period,0,0
-3,Denominator cohort 3,135259,135259,7,Prior history requirement not fulfilled during study period,20535,20535
-3,Denominator cohort 3,35192,35192,8,Not Male,100067,100067
-3,Denominator cohort 3,515,515,10,No observation time available after applying age and prior history criteria,34677,34677
-4,Denominator cohort 4,222159,222159,1,Starting population,NA,NA
-4,Denominator cohort 4,222159,222159,2,Missing year of birth,0,0
-4,Denominator cohort 4,222159,222159,3,Missing sex,0,0
-4,Denominator cohort 4,222159,222159,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
-4,Denominator cohort 4,155794,155794,5,No observation time available during study period,66365,66365
-4,Denominator cohort 4,155794,155794,6,Doesn't satisfy age criteria during the study period,0,0
-4,Denominator cohort 4,135259,135259,7,Prior history requirement not fulfilled during study period,20535,20535
-4,Denominator cohort 4,9476,9476,10,No observation time available after applying age and prior history criteria,125783,125783
-5,Denominator cohort 5,222159,222159,1,Starting population,NA,NA
-5,Denominator cohort 5,222159,222159,2,Missing year of birth,0,0
-5,Denominator cohort 5,222159,222159,3,Missing sex,0,0
-5,Denominator cohort 5,222159,222159,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
-5,Denominator cohort 5,155794,155794,5,No observation time available during study period,66365,66365
-5,Denominator cohort 5,155794,155794,6,Doesn't satisfy age criteria during the study period,0,0
-5,Denominator cohort 5,135259,135259,7,Prior history requirement not fulfilled during study period,20535,20535
-5,Denominator cohort 5,100067,100067,8,Not Female,35192,35192
-5,Denominator cohort 5,7589,7589,10,No observation time available after applying age and prior history criteria,92478,92478
-6,Denominator cohort 6,222159,222159,1,Starting population,NA,NA
-6,Denominator cohort 6,222159,222159,2,Missing year of birth,0,0
-6,Denominator cohort 6,222159,222159,3,Missing sex,0,0
-6,Denominator cohort 6,222159,222159,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
-6,Denominator cohort 6,155794,155794,5,No observation time available during study period,66365,66365
-6,Denominator cohort 6,155794,155794,6,Doesn't satisfy age criteria during the study period,0,0
-6,Denominator cohort 6,135259,135259,7,Prior history requirement not fulfilled during study period,20535,20535
-6,Denominator cohort 6,35192,35192,8,Not Male,100067,100067
-6,Denominator cohort 6,1887,1887,10,No observation time available after applying age and prior history criteria,33305,33305
-7,Denominator cohort 7,222159,222159,1,Starting population,NA,NA
-7,Denominator cohort 7,222159,222159,2,Missing year of birth,0,0
-7,Denominator cohort 7,222159,222159,3,Missing sex,0,0
-7,Denominator cohort 7,222159,222159,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
-7,Denominator cohort 7,155794,155794,5,No observation time available during study period,66365,66365
-7,Denominator cohort 7,155794,155794,6,Doesn't satisfy age criteria during the study period,0,0
-7,Denominator cohort 7,135259,135259,7,Prior history requirement not fulfilled during study period,20535,20535
-7,Denominator cohort 7,38929,38929,10,No observation time available after applying age and prior history criteria,96330,96330
-8,Denominator cohort 8,222159,222159,1,Starting population,NA,NA
-8,Denominator cohort 8,222159,222159,2,Missing year of birth,0,0
-8,Denominator cohort 8,222159,222159,3,Missing sex,0,0
-8,Denominator cohort 8,222159,222159,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
-8,Denominator cohort 8,155794,155794,5,No observation time available during study period,66365,66365
-8,Denominator cohort 8,155794,155794,6,Doesn't satisfy age criteria during the study period,0,0
-8,Denominator cohort 8,135259,135259,7,Prior history requirement not fulfilled during study period,20535,20535
-8,Denominator cohort 8,100067,100067,8,Not Female,35192,35192
-8,Denominator cohort 8,29862,29862,10,No observation time available after applying age and prior history criteria,70205,70205
-9,Denominator cohort 9,222159,222159,1,Starting population,NA,NA
-9,Denominator cohort 9,222159,222159,2,Missing year of birth,0,0
-9,Denominator cohort 9,222159,222159,3,Missing sex,0,0
-9,Denominator cohort 9,222159,222159,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
-9,Denominator cohort 9,155794,155794,5,No observation time available during study period,66365,66365
-9,Denominator cohort 9,155794,155794,6,Doesn't satisfy age criteria during the study period,0,0
-9,Denominator cohort 9,135259,135259,7,Prior history requirement not fulfilled during study period,20535,20535
-9,Denominator cohort 9,35192,35192,8,Not Male,100067,100067
-9,Denominator cohort 9,9067,9067,10,No observation time available after applying age and prior history criteria,26125,26125
-10,Denominator cohort 10,222159,222159,1,Starting population,NA,NA
-10,Denominator cohort 10,222159,222159,2,Missing year of birth,0,0
-10,Denominator cohort 10,222159,222159,3,Missing sex,0,0
-10,Denominator cohort 10,222159,222159,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
-10,Denominator cohort 10,155794,155794,5,No observation time available during study period,66365,66365
-10,Denominator cohort 10,155794,155794,6,Doesn't satisfy age criteria during the study period,0,0
-10,Denominator cohort 10,135259,135259,7,Prior history requirement not fulfilled during study period,20535,20535
-10,Denominator cohort 10,69831,69831,10,No observation time available after applying age and prior history criteria,65428,65428
-11,Denominator cohort 11,222159,222159,1,Starting population,NA,NA
-11,Denominator cohort 11,222159,222159,2,Missing year of birth,0,0
-11,Denominator cohort 11,222159,222159,3,Missing sex,0,0
-11,Denominator cohort 11,222159,222159,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
-11,Denominator cohort 11,155794,155794,5,No observation time available during study period,66365,66365
-11,Denominator cohort 11,155794,155794,6,Doesn't satisfy age criteria during the study period,0,0
-11,Denominator cohort 11,135259,135259,7,Prior history requirement not fulfilled during study period,20535,20535
-11,Denominator cohort 11,100067,100067,8,Not Female,35192,35192
-11,Denominator cohort 11,50034,50034,10,No observation time available after applying age and prior history criteria,50033,50033
-12,Denominator cohort 12,222159,222159,1,Starting population,NA,NA
-12,Denominator cohort 12,222159,222159,2,Missing year of birth,0,0
-12,Denominator cohort 12,222159,222159,3,Missing sex,0,0
-12,Denominator cohort 12,222159,222159,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
-12,Denominator cohort 12,155794,155794,5,No observation time available during study period,66365,66365
-12,Denominator cohort 12,155794,155794,6,Doesn't satisfy age criteria during the study period,0,0
-12,Denominator cohort 12,135259,135259,7,Prior history requirement not fulfilled during study period,20535,20535
-12,Denominator cohort 12,35192,35192,8,Not Male,100067,100067
-12,Denominator cohort 12,19797,19797,10,No observation time available after applying age and prior history criteria,15395,15395
-13,Denominator cohort 13,222159,222159,1,Starting population,NA,NA
-13,Denominator cohort 13,222159,222159,2,Missing year of birth,0,0
-13,Denominator cohort 13,222159,222159,3,Missing sex,0,0
-13,Denominator cohort 13,222159,222159,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
-13,Denominator cohort 13,155794,155794,5,No observation time available during study period,66365,66365
-13,Denominator cohort 13,155794,155794,6,Doesn't satisfy age criteria during the study period,0,0
-13,Denominator cohort 13,135259,135259,7,Prior history requirement not fulfilled during study period,20535,20535
-13,Denominator cohort 13,25815,25815,10,No observation time available after applying age and prior history criteria,109444,109444
-14,Denominator cohort 14,222159,222159,1,Starting population,NA,NA
-14,Denominator cohort 14,222159,222159,2,Missing year of birth,0,0
-14,Denominator cohort 14,222159,222159,3,Missing sex,0,0
-14,Denominator cohort 14,222159,222159,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
-14,Denominator cohort 14,155794,155794,5,No observation time available during study period,66365,66365
-14,Denominator cohort 14,155794,155794,6,Doesn't satisfy age criteria during the study period,0,0
-14,Denominator cohort 14,135259,135259,7,Prior history requirement not fulfilled during study period,20535,20535
-14,Denominator cohort 14,100067,100067,8,Not Female,35192,35192
-14,Denominator cohort 14,19184,19184,10,No observation time available after applying age and prior history criteria,80883,80883
-15,Denominator cohort 15,222159,222159,1,Starting population,NA,NA
-15,Denominator cohort 15,222159,222159,2,Missing year of birth,0,0
-15,Denominator cohort 15,222159,222159,3,Missing sex,0,0
-15,Denominator cohort 15,222159,222159,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
-15,Denominator cohort 15,155794,155794,5,No observation time available during study period,66365,66365
-15,Denominator cohort 15,155794,155794,6,Doesn't satisfy age criteria during the study period,0,0
-15,Denominator cohort 15,135259,135259,7,Prior history requirement not fulfilled during study period,20535,20535
-15,Denominator cohort 15,35192,35192,8,Not Male,100067,100067
-15,Denominator cohort 15,6631,6631,10,No observation time available after applying age and prior history criteria,28561,28561
-16,Denominator cohort 16,222159,222159,1,Starting population,NA,NA
-16,Denominator cohort 16,222159,222159,2,Missing year of birth,0,0
-16,Denominator cohort 16,222159,222159,3,Missing sex,0,0
-16,Denominator cohort 16,222159,222159,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
-16,Denominator cohort 16,155794,155794,5,No observation time available during study period,66365,66365
-16,Denominator cohort 16,155794,155794,6,Doesn't satisfy age criteria during the study period,0,0
-16,Denominator cohort 16,135259,135259,7,Prior history requirement not fulfilled during study period,20535,20535
-16,Denominator cohort 16,135259,135259,10,No observation time available after applying age and prior history criteria,0,0
-17,Denominator cohort 17,222159,222159,1,Starting population,NA,NA
-17,Denominator cohort 17,222159,222159,2,Missing year of birth,0,0
-17,Denominator cohort 17,222159,222159,3,Missing sex,0,0
-17,Denominator cohort 17,222159,222159,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
-17,Denominator cohort 17,155794,155794,5,No observation time available during study period,66365,66365
-17,Denominator cohort 17,155794,155794,6,Doesn't satisfy age criteria during the study period,0,0
-17,Denominator cohort 17,135259,135259,7,Prior history requirement not fulfilled during study period,20535,20535
-17,Denominator cohort 17,100067,100067,8,Not Female,35192,35192
-17,Denominator cohort 17,100067,100067,10,No observation time available after applying age and prior history criteria,0,0
-18,Denominator cohort 18,222159,222159,1,Starting population,NA,NA
-18,Denominator cohort 18,222159,222159,2,Missing year of birth,0,0
-18,Denominator cohort 18,222159,222159,3,Missing sex,0,0
-18,Denominator cohort 18,222159,222159,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
-18,Denominator cohort 18,155794,155794,5,No observation time available during study period,66365,66365
-18,Denominator cohort 18,155794,155794,6,Doesn't satisfy age criteria during the study period,0,0
-18,Denominator cohort 18,135259,135259,7,Prior history requirement not fulfilled during study period,20535,20535
-18,Denominator cohort 18,35192,35192,8,Not Male,100067,100067
-18,Denominator cohort 18,35192,35192,10,No observation time available after applying age and prior history criteria,0,0
+1,Denominator cohort 1,869209,782473,1,Starting population,NA,NA
+1,Denominator cohort 1,869209,782473,2,Missing year of birth,0,0
+1,Denominator cohort 1,869200,782464,3,Missing sex,9,9
+1,Denominator cohort 1,869200,782464,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+1,Denominator cohort 1,867427,780816,5,No observation time available during study period,1773,1648
+1,Denominator cohort 1,867427,780816,6,Doesn't satisfy age criteria during the study period,0,0
+1,Denominator cohort 1,633493,566774,7,Prior history requirement not fulfilled during study period,233934,214042
+1,Denominator cohort 1,66752,63730,10,No observation time available after applying age and prior history criteria,566741,503044
+2,Denominator cohort 2,869209,782473,1,Starting population,NA,NA
+2,Denominator cohort 2,869209,782473,2,Missing year of birth,0,0
+2,Denominator cohort 2,869200,782464,3,Missing sex,9,9
+2,Denominator cohort 2,869200,782464,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+2,Denominator cohort 2,867427,780816,5,No observation time available during study period,1773,1648
+2,Denominator cohort 2,867427,780816,6,Doesn't satisfy age criteria during the study period,0,0
+2,Denominator cohort 2,633493,566774,7,Prior history requirement not fulfilled during study period,233934,214042
+2,Denominator cohort 2,336323,299336,8,Not Female,297170,267438
+2,Denominator cohort 2,33328,31836,10,No observation time available after applying age and prior history criteria,302995,267500
+3,Denominator cohort 3,869209,782473,1,Starting population,NA,NA
+3,Denominator cohort 3,869209,782473,2,Missing year of birth,0,0
+3,Denominator cohort 3,869200,782464,3,Missing sex,9,9
+3,Denominator cohort 3,869200,782464,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+3,Denominator cohort 3,867427,780816,5,No observation time available during study period,1773,1648
+3,Denominator cohort 3,867427,780816,6,Doesn't satisfy age criteria during the study period,0,0
+3,Denominator cohort 3,633493,566774,7,Prior history requirement not fulfilled during study period,233934,214042
+3,Denominator cohort 3,297170,267438,8,Not Male,336323,299336
+3,Denominator cohort 3,33424,31894,10,No observation time available after applying age and prior history criteria,263746,235544
+4,Denominator cohort 4,869209,782473,1,Starting population,NA,NA
+4,Denominator cohort 4,869209,782473,2,Missing year of birth,0,0
+4,Denominator cohort 4,869200,782464,3,Missing sex,9,9
+4,Denominator cohort 4,869200,782464,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+4,Denominator cohort 4,867427,780816,5,No observation time available during study period,1773,1648
+4,Denominator cohort 4,867427,780816,6,Doesn't satisfy age criteria during the study period,0,0
+4,Denominator cohort 4,633493,566774,7,Prior history requirement not fulfilled during study period,233934,214042
+4,Denominator cohort 4,143474,135043,10,No observation time available after applying age and prior history criteria,490019,431731
+5,Denominator cohort 5,869209,782473,1,Starting population,NA,NA
+5,Denominator cohort 5,869209,782473,2,Missing year of birth,0,0
+5,Denominator cohort 5,869200,782464,3,Missing sex,9,9
+5,Denominator cohort 5,869200,782464,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+5,Denominator cohort 5,867427,780816,5,No observation time available during study period,1773,1648
+5,Denominator cohort 5,867427,780816,6,Doesn't satisfy age criteria during the study period,0,0
+5,Denominator cohort 5,633493,566774,7,Prior history requirement not fulfilled during study period,233934,214042
+5,Denominator cohort 5,336323,299336,8,Not Female,297170,267438
+5,Denominator cohort 5,78398,73411,10,No observation time available after applying age and prior history criteria,257925,225925
+6,Denominator cohort 6,869209,782473,1,Starting population,NA,NA
+6,Denominator cohort 6,869209,782473,2,Missing year of birth,0,0
+6,Denominator cohort 6,869200,782464,3,Missing sex,9,9
+6,Denominator cohort 6,869200,782464,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+6,Denominator cohort 6,867427,780816,5,No observation time available during study period,1773,1648
+6,Denominator cohort 6,867427,780816,6,Doesn't satisfy age criteria during the study period,0,0
+6,Denominator cohort 6,633493,566774,7,Prior history requirement not fulfilled during study period,233934,214042
+6,Denominator cohort 6,297170,267438,8,Not Male,336323,299336
+6,Denominator cohort 6,65076,61632,10,No observation time available after applying age and prior history criteria,232094,205806
+7,Denominator cohort 7,869209,782473,1,Starting population,NA,NA
+7,Denominator cohort 7,869209,782473,2,Missing year of birth,0,0
+7,Denominator cohort 7,869200,782464,3,Missing sex,9,9
+7,Denominator cohort 7,869200,782464,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+7,Denominator cohort 7,867427,780816,5,No observation time available during study period,1773,1648
+7,Denominator cohort 7,867427,780816,6,Doesn't satisfy age criteria during the study period,0,0
+7,Denominator cohort 7,633493,566774,7,Prior history requirement not fulfilled during study period,233934,214042
+7,Denominator cohort 7,188573,171727,10,No observation time available after applying age and prior history criteria,444920,395047
+8,Denominator cohort 8,869209,782473,1,Starting population,NA,NA
+8,Denominator cohort 8,869209,782473,2,Missing year of birth,0,0
+8,Denominator cohort 8,869200,782464,3,Missing sex,9,9
+8,Denominator cohort 8,869200,782464,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+8,Denominator cohort 8,867427,780816,5,No observation time available during study period,1773,1648
+8,Denominator cohort 8,867427,780816,6,Doesn't satisfy age criteria during the study period,0,0
+8,Denominator cohort 8,633493,566774,7,Prior history requirement not fulfilled during study period,233934,214042
+8,Denominator cohort 8,336323,299336,8,Not Female,297170,267438
+8,Denominator cohort 8,98929,89685,10,No observation time available after applying age and prior history criteria,237394,209651
+9,Denominator cohort 9,869209,782473,1,Starting population,NA,NA
+9,Denominator cohort 9,869209,782473,2,Missing year of birth,0,0
+9,Denominator cohort 9,869200,782464,3,Missing sex,9,9
+9,Denominator cohort 9,869200,782464,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+9,Denominator cohort 9,867427,780816,5,No observation time available during study period,1773,1648
+9,Denominator cohort 9,867427,780816,6,Doesn't satisfy age criteria during the study period,0,0
+9,Denominator cohort 9,633493,566774,7,Prior history requirement not fulfilled during study period,233934,214042
+9,Denominator cohort 9,297170,267438,8,Not Male,336323,299336
+9,Denominator cohort 9,89644,82042,10,No observation time available after applying age and prior history criteria,207526,185396
+10,Denominator cohort 10,869209,782473,1,Starting population,NA,NA
+10,Denominator cohort 10,869209,782473,2,Missing year of birth,0,0
+10,Denominator cohort 10,869200,782464,3,Missing sex,9,9
+10,Denominator cohort 10,869200,782464,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+10,Denominator cohort 10,867427,780816,5,No observation time available during study period,1773,1648
+10,Denominator cohort 10,867427,780816,6,Doesn't satisfy age criteria during the study period,0,0
+10,Denominator cohort 10,633493,566774,7,Prior history requirement not fulfilled during study period,233934,214042
+10,Denominator cohort 10,169487,145568,10,No observation time available after applying age and prior history criteria,464006,421206
+11,Denominator cohort 11,869209,782473,1,Starting population,NA,NA
+11,Denominator cohort 11,869209,782473,2,Missing year of birth,0,0
+11,Denominator cohort 11,869200,782464,3,Missing sex,9,9
+11,Denominator cohort 11,869200,782464,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+11,Denominator cohort 11,867427,780816,5,No observation time available during study period,1773,1648
+11,Denominator cohort 11,867427,780816,6,Doesn't satisfy age criteria during the study period,0,0
+11,Denominator cohort 11,633493,566774,7,Prior history requirement not fulfilled during study period,233934,214042
+11,Denominator cohort 11,336323,299336,8,Not Female,297170,267438
+11,Denominator cohort 11,87207,74857,10,No observation time available after applying age and prior history criteria,249116,224479
+12,Denominator cohort 12,869209,782473,1,Starting population,NA,NA
+12,Denominator cohort 12,869209,782473,2,Missing year of birth,0,0
+12,Denominator cohort 12,869200,782464,3,Missing sex,9,9
+12,Denominator cohort 12,869200,782464,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+12,Denominator cohort 12,867427,780816,5,No observation time available during study period,1773,1648
+12,Denominator cohort 12,867427,780816,6,Doesn't satisfy age criteria during the study period,0,0
+12,Denominator cohort 12,633493,566774,7,Prior history requirement not fulfilled during study period,233934,214042
+12,Denominator cohort 12,297170,267438,8,Not Male,336323,299336
+12,Denominator cohort 12,82280,70711,10,No observation time available after applying age and prior history criteria,214890,196727
+13,Denominator cohort 13,869209,782473,1,Starting population,NA,NA
+13,Denominator cohort 13,869209,782473,2,Missing year of birth,0,0
+13,Denominator cohort 13,869200,782464,3,Missing sex,9,9
+13,Denominator cohort 13,869200,782464,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+13,Denominator cohort 13,867427,780816,5,No observation time available during study period,1773,1648
+13,Denominator cohort 13,867427,780816,6,Doesn't satisfy age criteria during the study period,0,0
+13,Denominator cohort 13,633493,566774,7,Prior history requirement not fulfilled during study period,233934,214042
+13,Denominator cohort 13,69365,55927,10,No observation time available after applying age and prior history criteria,564128,510847
+14,Denominator cohort 14,869209,782473,1,Starting population,NA,NA
+14,Denominator cohort 14,869209,782473,2,Missing year of birth,0,0
+14,Denominator cohort 14,869200,782464,3,Missing sex,9,9
+14,Denominator cohort 14,869200,782464,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+14,Denominator cohort 14,867427,780816,5,No observation time available during study period,1773,1648
+14,Denominator cohort 14,867427,780816,6,Doesn't satisfy age criteria during the study period,0,0
+14,Denominator cohort 14,633493,566774,7,Prior history requirement not fulfilled during study period,233934,214042
+14,Denominator cohort 14,336323,299336,8,Not Female,297170,267438
+14,Denominator cohort 14,40654,32345,10,No observation time available after applying age and prior history criteria,295669,266991
+15,Denominator cohort 15,869209,782473,1,Starting population,NA,NA
+15,Denominator cohort 15,869209,782473,2,Missing year of birth,0,0
+15,Denominator cohort 15,869200,782464,3,Missing sex,9,9
+15,Denominator cohort 15,869200,782464,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+15,Denominator cohort 15,867427,780816,5,No observation time available during study period,1773,1648
+15,Denominator cohort 15,867427,780816,6,Doesn't satisfy age criteria during the study period,0,0
+15,Denominator cohort 15,633493,566774,7,Prior history requirement not fulfilled during study period,233934,214042
+15,Denominator cohort 15,297170,267438,8,Not Male,336323,299336
+15,Denominator cohort 15,28711,23582,10,No observation time available after applying age and prior history criteria,268459,243856
+16,Denominator cohort 16,869209,782473,1,Starting population,NA,NA
+16,Denominator cohort 16,869209,782473,2,Missing year of birth,0,0
+16,Denominator cohort 16,869200,782464,3,Missing sex,9,9
+16,Denominator cohort 16,869200,782464,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+16,Denominator cohort 16,867427,780816,5,No observation time available during study period,1773,1648
+16,Denominator cohort 16,867427,780816,6,Doesn't satisfy age criteria during the study period,0,0
+16,Denominator cohort 16,633493,566774,7,Prior history requirement not fulfilled during study period,233934,214042
+16,Denominator cohort 16,633493,566774,10,No observation time available after applying age and prior history criteria,0,0
+17,Denominator cohort 17,869209,782473,1,Starting population,NA,NA
+17,Denominator cohort 17,869209,782473,2,Missing year of birth,0,0
+17,Denominator cohort 17,869200,782464,3,Missing sex,9,9
+17,Denominator cohort 17,869200,782464,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+17,Denominator cohort 17,867427,780816,5,No observation time available during study period,1773,1648
+17,Denominator cohort 17,867427,780816,6,Doesn't satisfy age criteria during the study period,0,0
+17,Denominator cohort 17,633493,566774,7,Prior history requirement not fulfilled during study period,233934,214042
+17,Denominator cohort 17,336323,299336,8,Not Female,297170,267438
+17,Denominator cohort 17,336323,299336,10,No observation time available after applying age and prior history criteria,0,0
+18,Denominator cohort 18,869209,782473,1,Starting population,NA,NA
+18,Denominator cohort 18,869209,782473,2,Missing year of birth,0,0
+18,Denominator cohort 18,869200,782464,3,Missing sex,9,9
+18,Denominator cohort 18,869200,782464,4,Cannot satisfy age criteria during the study period based on year of birth,0,0
+18,Denominator cohort 18,867427,780816,5,No observation time available during study period,1773,1648
+18,Denominator cohort 18,867427,780816,6,Doesn't satisfy age criteria during the study period,0,0
+18,Denominator cohort 18,633493,566774,7,Prior history requirement not fulfilled during study period,233934,214042
+18,Denominator cohort 18,297170,267438,8,Not Male,336323,299336
+18,Denominator cohort 18,297170,267438,10,No observation time available after applying age and prior history criteria,0,0

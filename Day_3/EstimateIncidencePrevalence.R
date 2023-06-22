@@ -54,7 +54,7 @@ cdm <- generateDenominatorCohortSet(
   sex = c("Both", "Female", "Male"),
   daysPriorHistory = 365,                                           
   strataTable = study_table_name,
-  strataCohortId = ra_no_covid_id,
+  strataCohortId = covid_no_ra_id,
   temporary = FALSE
 )
 exportAttrition(cdm[[ip_covid_no_ra_table_name]], here(output_folder, "attrition_ip_covid_no_ra_population.csv"))
