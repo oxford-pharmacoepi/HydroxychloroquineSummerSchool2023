@@ -1,4 +1,4 @@
-# Names of denominator tables cohort tables to generate
+# Names of denominator cohort tables to generate
 ip_general_table_name     <- paste0(stem_table, "_ip_general")     # Denominator table
 ip_covid_table_name       <- paste0(stem_table, "_ip_covid")       # Denominator table
 ip_covid_no_ra_table_name <- paste0(stem_table, "_ip_covid_no_ra") # Denominator table
