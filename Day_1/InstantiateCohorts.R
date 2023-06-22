@@ -78,13 +78,15 @@ cdm <- generateDrugUtilisationCohortSet(
 # Export cohort counts
 write_csv(
   cohortCount(cdm[[users_table_name]]) %>%
-    left_join(cohortSet(cdm[[users_table_name]])), 
+    left_join(cohortSet(cdm[[users_table_name]]) %>%
+                select("cohort_definition_id", "cohort_name")), 
   file = here(output_folder, "cohort_count_prevalent.csv")
 )
 # Export attrition
 write_csv(
   cohortAttrition(cdm[[users_table_name]]) %>%
-    left_join(cohortSet(cdm[[users_table_name]])), 
+    left_join(cohortSet(cdm[[users_table_name]]) %>%
+                select("cohort_definition_id", "cohort_name")), 
   file = here(output_folder, "cohort_attrition_prevalent.csv")
 )
 
