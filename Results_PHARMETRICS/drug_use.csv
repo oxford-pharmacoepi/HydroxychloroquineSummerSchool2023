@@ -80,23 +80,23 @@ Cohort name,new_users_hydroxychloroquine,Calendar time,during_hcq_use_for_covid,
 Cohort name,new_users_hydroxychloroquine,Calendar time,during_hcq_use_for_covid,number_exposures,NA,numeric,q75,2,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Calendar time,during_hcq_use_for_covid,number_exposures,NA,numeric,mean,2.49701851658123,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Calendar time,during_hcq_use_for_covid,number_exposures,NA,numeric,sd,3.79046370378859,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,covid,number subjects,NA,NA,count,2453,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,covid,number records,NA,NA,count,2453,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,covid,number subjects,NA,NA,count,2549,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,covid,number records,NA,NA,count,2549,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,covid,cumulative_dose,NA,numeric,median,2800,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,covid,cumulative_dose,NA,numeric,q25,2000,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,covid,cumulative_dose,NA,numeric,q75,4000,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,covid,cumulative_dose,NA,numeric,mean,4847.85976355483,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,covid,cumulative_dose,NA,numeric,sd,11116.2451348807,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,covid,cumulative_dose,NA,numeric,mean,5479.48214986269,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,covid,cumulative_dose,NA,numeric,sd,13524.9385463691,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,covid,duration,NA,numeric,median,7,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,covid,duration,NA,numeric,q25,5,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,covid,duration,NA,numeric,q75,10,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,covid,duration,NA,numeric,mean,14.0701182225846,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,covid,duration,NA,numeric,sd,34.4536354154156,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,covid,duration,NA,numeric,mean,15.8371910553158,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,covid,duration,NA,numeric,sd,40.3516306373047,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,covid,initial_daily_dose,NA,numeric,median,400,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,covid,initial_daily_dose,NA,numeric,q25,400,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,covid,initial_daily_dose,NA,numeric,q75,457.142857142857,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,covid,initial_daily_dose,NA,numeric,mean,420.890395456462,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,covid,initial_daily_dose,NA,numeric,sd,201.893040024261,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,covid,initial_daily_dose,NA,numeric,mean,419.798412042109,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,covid,initial_daily_dose,NA,numeric,sd,199.335439962885,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,covid,number_eras,NA,numeric,median,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,covid,number_eras,NA,numeric,q25,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,covid,number_eras,NA,numeric,q75,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
@@ -105,8 +105,8 @@ Cohort name,new_users_hydroxychloroquine,Indication,covid,number_eras,NA,numeric
 Cohort name,new_users_hydroxychloroquine,Indication,covid,number_exposures,NA,numeric,median,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,covid,number_exposures,NA,numeric,q25,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,covid,number_exposures,NA,numeric,q75,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,covid,number_exposures,NA,numeric,mean,1.12678353037097,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,covid,number_exposures,NA,numeric,sd,0.715013296301901,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,covid,number_exposures,NA,numeric,mean,1.1581012161632,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,covid,number_exposures,NA,numeric,sd,0.831881699784126,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,malaria,number subjects,NA,NA,count,7,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,malaria,number records,NA,NA,count,7,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,malaria,cumulative_dose,NA,numeric,median,36000,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
@@ -134,23 +134,23 @@ Cohort name,new_users_hydroxychloroquine,Indication,malaria,number_exposures,NA,
 Cohort name,new_users_hydroxychloroquine,Indication,malaria,number_exposures,NA,numeric,q75,3.5,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,malaria,number_exposures,NA,numeric,mean,4.14285714285714,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,malaria,number_exposures,NA,numeric,sd,6.22972903178973,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,multiple,number subjects,NA,NA,count,116,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,multiple,number records,NA,NA,count,116,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,multiple,cumulative_dose,NA,numeric,median,12000,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,multiple,cumulative_dose,NA,numeric,q25,2800,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,multiple,number subjects,NA,NA,count,152,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,multiple,number records,NA,NA,count,152,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,multiple,cumulative_dose,NA,numeric,median,18000,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,multiple,cumulative_dose,NA,numeric,q25,3100,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,multiple,cumulative_dose,NA,numeric,q75,36000,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,multiple,cumulative_dose,NA,numeric,mean,25498.275862069,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,multiple,cumulative_dose,NA,numeric,sd,36263.3123568222,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,multiple,duration,NA,numeric,median,30,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,multiple,duration,NA,numeric,q25,7,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,multiple,duration,NA,numeric,q75,90,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,multiple,duration,NA,numeric,mean,74.1637931034483,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,multiple,duration,NA,numeric,sd,106.543066937477,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,multiple,cumulative_dose,NA,numeric,mean,30275,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,multiple,cumulative_dose,NA,numeric,sd,37404.8607706475,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,multiple,duration,NA,numeric,median,54.5,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,multiple,duration,NA,numeric,q25,9.5,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,multiple,duration,NA,numeric,q75,97.75,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,multiple,duration,NA,numeric,mean,88.8684210526316,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,multiple,duration,NA,numeric,sd,112.537245296601,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,multiple,initial_daily_dose,NA,numeric,median,400,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,multiple,initial_daily_dose,NA,numeric,q25,400,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,multiple,initial_daily_dose,NA,numeric,q75,400,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,multiple,initial_daily_dose,NA,numeric,mean,377.434691745037,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,multiple,initial_daily_dose,NA,numeric,sd,108.175185944292,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,multiple,initial_daily_dose,NA,numeric,mean,373.217703349282,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,multiple,initial_daily_dose,NA,numeric,sd,111.182616369667,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,multiple,number_eras,NA,numeric,median,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,multiple,number_eras,NA,numeric,q25,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,multiple,number_eras,NA,numeric,q75,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
@@ -158,63 +158,63 @@ Cohort name,new_users_hydroxychloroquine,Indication,multiple,number_eras,NA,nume
 Cohort name,new_users_hydroxychloroquine,Indication,multiple,number_eras,NA,numeric,sd,0,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,multiple,number_exposures,NA,numeric,median,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,multiple,number_exposures,NA,numeric,q25,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,multiple,number_exposures,NA,numeric,q75,2,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,multiple,number_exposures,NA,numeric,mean,2.29310344827586,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,multiple,number_exposures,NA,numeric,sd,3.52880628019143,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,none,number subjects,NA,NA,count,31995,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,none,number records,NA,NA,count,31995,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,multiple,number_exposures,NA,numeric,q75,2.25,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,multiple,number_exposures,NA,numeric,mean,2.55263157894737,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,multiple,number_exposures,NA,numeric,sd,3.6571430127471,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,none,number subjects,NA,NA,count,31899,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,none,number records,NA,NA,count,31899,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,none,cumulative_dose,NA,numeric,median,18000,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,none,cumulative_dose,NA,numeric,q25,5600,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,none,cumulative_dose,NA,numeric,q75,48000,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,none,cumulative_dose,NA,numeric,mean,44168.6913512603,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,none,cumulative_dose,NA,numeric,sd,69315.0423144766,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,none,cumulative_dose,NA,numeric,mean,44236.5723951197,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,none,cumulative_dose,NA,numeric,sd,69377.2563255205,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,none,duration,NA,numeric,median,58,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,none,duration,NA,numeric,q25,16,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,none,duration,NA,numeric,q75,158,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,none,duration,NA,numeric,mean,130.50264169819,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,none,duration,NA,numeric,sd,194.339499998103,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,none,duration,NA,numeric,mean,130.711893637703,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,none,duration,NA,numeric,sd,194.510919652002,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,none,initial_daily_dose,NA,numeric,median,400,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,none,initial_daily_dose,NA,numeric,q25,285.714285714286,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,none,initial_daily_dose,NA,numeric,q25,280,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,none,initial_daily_dose,NA,numeric,q75,400,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,none,initial_daily_dose,NA,numeric,mean,368.504241333218,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,none,initial_daily_dose,NA,numeric,sd,169.267178141418,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,none,initial_daily_dose,NA,numeric,mean,368.433826323571,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,none,initial_daily_dose,NA,numeric,sd,169.40395180839,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,none,number_eras,NA,numeric,median,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,none,number_eras,NA,numeric,q25,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,none,number_eras,NA,numeric,q75,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,none,number_eras,NA,numeric,mean,1.00003126270047,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,none,number_eras,NA,numeric,sd,0.00559130579311012,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,none,number_eras,NA,numeric,mean,1.00003135680913,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,none,number_eras,NA,numeric,sd,0.00559971509374386,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,none,number_exposures,NA,numeric,median,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,none,number_exposures,NA,numeric,q25,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,none,number_exposures,NA,numeric,q75,3,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,none,number_exposures,NA,numeric,mean,3.18495013599275,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,none,number_exposures,NA,numeric,sd,4.47599960557008,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,number subjects,NA,NA,count,15075,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,number records,NA,NA,count,15075,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,none,number_exposures,NA,numeric,mean,3.18864256373271,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,none,number_exposures,NA,numeric,sd,4.48066514997028,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,number subjects,NA,NA,count,15039,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,number records,NA,NA,count,15039,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,cumulative_dose,NA,numeric,median,36000,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,cumulative_dose,NA,numeric,q25,18000,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,cumulative_dose,NA,numeric,q75,91100,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,cumulative_dose,NA,numeric,mean,71240.1648332682,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,cumulative_dose,NA,numeric,sd,83410.6156686942,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,cumulative_dose,NA,numeric,q75,91200,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,cumulative_dose,NA,numeric,mean,71301.3983506608,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,cumulative_dose,NA,numeric,sd,83481.5583541273,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,duration,NA,numeric,median,112,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,duration,NA,numeric,q25,58,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,duration,NA,numeric,q75,273,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,duration,NA,numeric,mean,208.108486497246,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,duration,NA,numeric,sd,233.892699328649,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,duration,NA,numeric,mean,208.28054539408,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,duration,NA,numeric,sd,234.074924226464,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,initial_daily_dose,NA,numeric,median,400,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,initial_daily_dose,NA,numeric,q25,200,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,initial_daily_dose,NA,numeric,q75,400,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,initial_daily_dose,NA,numeric,mean,353.924162461701,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,initial_daily_dose,NA,numeric,sd,369.725453964283,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,initial_daily_dose,NA,numeric,mean,353.910501216737,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,initial_daily_dose,NA,numeric,sd,370.121731562993,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,number_eras,NA,numeric,median,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,number_eras,NA,numeric,q25,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,number_eras,NA,numeric,q75,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,number_eras,NA,numeric,mean,1.0000663525977,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,number_eras,NA,numeric,sd,0.00814571038671276,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,number_eras,NA,numeric,mean,1.00006651147323,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,number_eras,NA,numeric,sd,0.00815545665362351,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,number_exposures,NA,numeric,median,2,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,number_exposures,NA,numeric,q25,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,number_exposures,NA,numeric,q75,5,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,number_exposures,NA,numeric,mean,4.4076040076969,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,number_exposures,NA,numeric,sd,5.31614391298473,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,number_exposures,NA,numeric,mean,4.4100432324576,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_hydroxychloroquine,Indication,rheumatoid_arthritis,number_exposures,NA,numeric,sd,5.31880459172429,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Overall,Overall,number subjects,NA,NA,count,49646,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Overall,Overall,number records,NA,NA,count,49646,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_hydroxychloroquine,Overall,Overall,cumulative_dose,NA,numeric,median,24000,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
@@ -323,33 +323,33 @@ Cohort name,new_users_methotrexate,Calendar time,during_hcq_use_for_covid,number
 Cohort name,new_users_methotrexate,Calendar time,during_hcq_use_for_covid,number_exposures,NA,numeric,q75,6,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Calendar time,during_hcq_use_for_covid,number_exposures,NA,numeric,mean,4.80531540185719,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Calendar time,during_hcq_use_for_covid,number_exposures,NA,numeric,sd,5.52333677442759,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,covid,number subjects,NA,NA,count,70,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,covid,number records,NA,NA,count,70,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,covid,number subjects,NA,NA,count,99,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,covid,number records,NA,NA,count,99,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,covid,cumulative_dose,NA,numeric,median,150,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,covid,cumulative_dose,NA,numeric,q25,52.5,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,covid,cumulative_dose,NA,numeric,q75,240,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,covid,cumulative_dose,NA,numeric,mean,244.629416282642,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,covid,cumulative_dose,NA,numeric,sd,323.412694018089,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,covid,duration,NA,numeric,median,54,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,covid,duration,NA,numeric,q25,11.25,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,covid,duration,NA,numeric,q75,114.75,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,covid,duration,NA,numeric,mean,104.435483870968,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,covid,duration,NA,numeric,sd,135.608116804285,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,covid,cumulative_dose,NA,numeric,q25,54.375,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,covid,cumulative_dose,NA,numeric,q75,306.25,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,covid,cumulative_dose,NA,numeric,mean,269.772486772487,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,covid,cumulative_dose,NA,numeric,sd,347.649627075269,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,covid,duration,NA,numeric,median,65.5,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,covid,duration,NA,numeric,q25,19.75,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,covid,duration,NA,numeric,q75,124.75,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,covid,duration,NA,numeric,mean,113.566666666667,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,covid,duration,NA,numeric,sd,142.632004697561,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,covid,initial_daily_dose,NA,numeric,median,2.36111111111111,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,covid,initial_daily_dose,NA,numeric,q25,1.78571428571429,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,covid,initial_daily_dose,NA,numeric,q75,8.88888888888889,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,covid,initial_daily_dose,NA,numeric,mean,13.1999401475208,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,covid,initial_daily_dose,NA,numeric,sd,26.9524822314634,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,covid,initial_daily_dose,NA,numeric,q75,7.01388888888889,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,covid,initial_daily_dose,NA,numeric,mean,11.8548661756995,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,covid,initial_daily_dose,NA,numeric,sd,25.0096841210064,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,covid,number_eras,NA,numeric,median,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,covid,number_eras,NA,numeric,q25,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,covid,number_eras,NA,numeric,q75,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,covid,number_eras,NA,numeric,mean,1.01612903225806,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,covid,number_eras,NA,numeric,sd,0.127000127000191,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,covid,number_eras,NA,numeric,mean,1.01111111111111,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,covid,number_eras,NA,numeric,sd,0.105409255338946,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,covid,number_exposures,NA,numeric,median,2,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,covid,number_exposures,NA,numeric,q25,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,covid,number_exposures,NA,numeric,q75,3,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,covid,number_exposures,NA,numeric,mean,3.37096774193548,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,covid,number_exposures,NA,numeric,sd,4.10610848821304,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,covid,number_exposures,NA,numeric,mean,3.55555555555556,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,covid,number_exposures,NA,numeric,sd,4.35015461719559,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,malaria,number subjects,NA,NA,count,NA,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,malaria,number records,NA,NA,count,NA,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,malaria,cumulative_dose,NA,numeric,median,NA,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
@@ -377,87 +377,87 @@ Cohort name,new_users_methotrexate,Indication,malaria,number_exposures,NA,numeri
 Cohort name,new_users_methotrexate,Indication,malaria,number_exposures,NA,numeric,q75,NA,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,malaria,number_exposures,NA,numeric,mean,NA,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,malaria,number_exposures,NA,numeric,sd,NA,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,multiple,number subjects,NA,NA,count,59,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,multiple,number records,NA,NA,count,59,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,multiple,number subjects,NA,NA,count,101,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,multiple,number records,NA,NA,count,101,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,multiple,cumulative_dose,NA,numeric,median,180,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,multiple,cumulative_dose,NA,numeric,q25,90,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,multiple,cumulative_dose,NA,numeric,q75,300,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,multiple,cumulative_dose,NA,numeric,mean,276.99460916442,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,multiple,cumulative_dose,NA,numeric,sd,326.350987139789,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,multiple,cumulative_dose,NA,numeric,q25,80,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,multiple,cumulative_dose,NA,numeric,q75,367.5,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,multiple,cumulative_dose,NA,numeric,mean,297.776915113872,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,multiple,cumulative_dose,NA,numeric,sd,326.932286092219,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,multiple,duration,NA,numeric,median,84,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,multiple,duration,NA,numeric,q25,36,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,multiple,duration,NA,numeric,q75,157,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,multiple,duration,NA,numeric,mean,120.169811320755,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,multiple,duration,NA,numeric,sd,115.629670109272,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,multiple,duration,NA,numeric,q25,35,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,multiple,duration,NA,numeric,q75,196.25,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,multiple,duration,NA,numeric,mean,132.826086956522,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,multiple,duration,NA,numeric,sd,124.652978409174,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,multiple,initial_daily_dose,NA,numeric,median,2.14285714285714,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,multiple,initial_daily_dose,NA,numeric,q25,1.42857142857143,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,multiple,initial_daily_dose,NA,numeric,q25,1.70073149741824,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,multiple,initial_daily_dose,NA,numeric,q75,2.85714285714286,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,multiple,initial_daily_dose,NA,numeric,mean,2.23013379285808,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,multiple,initial_daily_dose,NA,numeric,sd,1.31200113960921,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,multiple,initial_daily_dose,NA,numeric,mean,2.26891218257681,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,multiple,initial_daily_dose,NA,numeric,sd,1.16826977241339,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,multiple,number_eras,NA,numeric,median,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,multiple,number_eras,NA,numeric,q25,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,multiple,number_eras,NA,numeric,q75,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,multiple,number_eras,NA,numeric,mean,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,multiple,number_eras,NA,numeric,sd,0,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,multiple,number_exposures,NA,numeric,median,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,multiple,number_exposures,NA,numeric,median,2,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,multiple,number_exposures,NA,numeric,q25,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,multiple,number_exposures,NA,numeric,q75,3,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,multiple,number_exposures,NA,numeric,mean,2.62264150943396,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,multiple,number_exposures,NA,numeric,sd,3.38677527072548,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,none,number subjects,NA,NA,count,18247,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,none,number records,NA,NA,count,18247,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,multiple,number_exposures,NA,numeric,mean,3.03260869565217,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,multiple,number_exposures,NA,numeric,sd,3.56247563926592,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,none,number subjects,NA,NA,count,18218,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,none,number records,NA,NA,count,18218,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,none,cumulative_dose,NA,numeric,median,180,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,none,cumulative_dose,NA,numeric,q25,80,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,none,cumulative_dose,NA,numeric,q75,435,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,none,cumulative_dose,NA,numeric,mean,408.911159587238,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,none,cumulative_dose,NA,numeric,sd,2744.67214514097,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,none,cumulative_dose,NA,numeric,mean,409.051714856887,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,none,cumulative_dose,NA,numeric,sd,2746.93366655143,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,none,duration,NA,numeric,median,84,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,none,duration,NA,numeric,q25,28,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,none,duration,NA,numeric,q75,193,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,none,duration,NA,numeric,mean,154.005643950766,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,none,duration,NA,numeric,sd,195.374752902371,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,none,duration,NA,numeric,mean,154.039694472845,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,none,duration,NA,numeric,sd,195.434021456221,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,none,initial_daily_dose,NA,numeric,median,2.14285714285714,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,none,initial_daily_dose,NA,numeric,q25,1.42857142857143,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,none,initial_daily_dose,NA,numeric,q75,2.85714285714286,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,none,initial_daily_dose,NA,numeric,mean,45.1025932969298,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,none,initial_daily_dose,NA,numeric,sd,2522.00588849144,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,none,initial_daily_dose,NA,numeric,mean,45.1635983456847,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,none,initial_daily_dose,NA,numeric,sd,2524.12809228372,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,none,number_eras,NA,numeric,median,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,none,number_eras,NA,numeric,q25,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,none,number_eras,NA,numeric,q75,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,none,number_eras,NA,numeric,mean,1.00246172320624,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,none,number_eras,NA,numeric,sd,0.0738789030174992,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,none,number_eras,NA,numeric,mean,1.00246586876767,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,none,number_eras,NA,numeric,sd,0.0739410177889377,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,none,number_exposures,NA,numeric,median,2,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,none,number_exposures,NA,numeric,q25,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,none,number_exposures,NA,numeric,q75,5,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,none,number_exposures,NA,numeric,mean,4.24214950465326,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,none,number_exposures,NA,numeric,sd,5.41664130852261,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,number subjects,NA,NA,count,19120,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,number records,NA,NA,count,19120,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,none,number_exposures,NA,numeric,mean,4.24261742948217,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,none,number_exposures,NA,numeric,sd,5.41758723889207,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,number subjects,NA,NA,count,19078,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,number records,NA,NA,count,19078,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,cumulative_dose,NA,numeric,median,260,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,cumulative_dose,NA,numeric,q25,120,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,cumulative_dose,NA,numeric,q75,610,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,cumulative_dose,NA,numeric,mean,478.054907180928,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,cumulative_dose,NA,numeric,sd,589.181641865506,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,cumulative_dose,NA,numeric,mean,478.404826300155,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,cumulative_dose,NA,numeric,sd,589.607231075182,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,duration,NA,numeric,median,123,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,duration,NA,numeric,q25,59,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,duration,NA,numeric,q75,277.25,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,duration,NA,numeric,mean,210.224505416863,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,duration,NA,numeric,sd,228.137420476113,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,duration,NA,numeric,q75,278,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,duration,NA,numeric,mean,210.363056948953,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,duration,NA,numeric,sd,228.29122085601,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,initial_daily_dose,NA,numeric,median,2.14285714285714,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,initial_daily_dose,NA,numeric,q25,1.44444444444444,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,initial_daily_dose,NA,numeric,q75,2.85714285714286,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,initial_daily_dose,NA,numeric,mean,3.13132654709448,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,initial_daily_dose,NA,numeric,sd,33.6713627813842,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,initial_daily_dose,NA,numeric,mean,3.13319015910752,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,initial_daily_dose,NA,numeric,sd,33.7100385534896,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,number_eras,NA,numeric,median,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,number_eras,NA,numeric,q25,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,number_eras,NA,numeric,q75,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,number_eras,NA,numeric,mean,1.0011186999529,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,number_eras,NA,numeric,sd,0.0351465373119461,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,number_eras,NA,numeric,mean,1.0011212747123,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,number_eras,NA,numeric,sd,0.0351869214248287,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,number_exposures,NA,numeric,median,3,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,number_exposures,NA,numeric,q25,1,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,number_exposures,NA,numeric,q75,6,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,number_exposures,NA,numeric,mean,4.8452661328309,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
-Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,number_exposures,NA,numeric,sd,6.09092888427743,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,number_exposures,NA,numeric,mean,4.84815579817055,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
+Cohort name,new_users_methotrexate,Indication,rheumatoid_arthritis,number_exposures,NA,numeric,sd,6.09503498107145,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Overall,Overall,number subjects,NA,NA,count,37497,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Overall,Overall,number records,NA,NA,count,37497,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse
 Cohort name,new_users_methotrexate,Overall,Overall,cumulative_dose,NA,numeric,median,225,PHARMETRICS,DrugUtilisation_0.2.1_summariseDrugUse

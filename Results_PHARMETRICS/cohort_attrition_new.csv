@@ -1,17 +1,17 @@
-cohort_definition_id,number_records,number_subjects,reason_id,reason,excluded_records,excluded_subjects,cohort_name,summarise_mode,fixed_time,days_prior_history,gap_era,prior_use_washout,cohort_date_range_start,cohort_date_range_end,impute_duration,duration_range_min,duration_range_max
-1,888054,129590,1,Qualifying initial records,0,0,new_users_hydroxychloroquine,FirstEra,NA,365,30,365,2019-01-01,2022-06-01,eliminate,1,Inf
-1,888054,129590,2,Duration imputation; affected rows: 0,0,0,new_users_hydroxychloroquine,FirstEra,NA,365,30,365,2019-01-01,2022-06-01,eliminate,1,Inf
-1,221570,129590,3,Join eras,666484,0,new_users_hydroxychloroquine,FirstEra,NA,365,30,365,2019-01-01,2022-06-01,eliminate,1,Inf
-1,100612,59459,4,at least 365 prior history,120958,70131,new_users_hydroxychloroquine,FirstEra,NA,365,30,365,2019-01-01,2022-06-01,eliminate,1,Inf
-1,61156,59459,5,prior use wahout of 365 days,39456,0,new_users_hydroxychloroquine,FirstEra,NA,365,30,365,2019-01-01,2022-06-01,eliminate,1,Inf
-1,50764,49814,6,cohort_start_date >= 2019-01-01,10392,9645,new_users_hydroxychloroquine,FirstEra,NA,365,30,365,2019-01-01,2022-06-01,eliminate,1,Inf
-1,50566,49646,7,cohort_end_date <= 2022-06-01,198,168,new_users_hydroxychloroquine,FirstEra,NA,365,30,365,2019-01-01,2022-06-01,eliminate,1,Inf
-1,49646,49646,8,summariseMode: FirstEra applied,920,0,new_users_hydroxychloroquine,FirstEra,NA,365,30,365,2019-01-01,2022-06-01,eliminate,1,Inf
-2,988017,114736,1,Qualifying initial records,0,0,new_users_methotrexate,FirstEra,NA,365,30,365,2019-01-01,2022-06-01,eliminate,1,Inf
-2,988017,114736,2,Duration imputation; affected rows: 0,0,0,new_users_methotrexate,FirstEra,NA,365,30,365,2019-01-01,2022-06-01,eliminate,1,Inf
-2,208021,114736,3,Join eras,779996,0,new_users_methotrexate,FirstEra,NA,365,30,365,2019-01-01,2022-06-01,eliminate,1,Inf
-2,90650,48426,4,at least 365 prior history,117371,66310,new_users_methotrexate,FirstEra,NA,365,30,365,2019-01-01,2022-06-01,eliminate,1,Inf
-2,49953,48426,5,prior use wahout of 365 days,40697,0,new_users_methotrexate,FirstEra,NA,365,30,365,2019-01-01,2022-06-01,eliminate,1,Inf
-2,38513,37670,6,cohort_start_date >= 2019-01-01,11440,10756,new_users_methotrexate,FirstEra,NA,365,30,365,2019-01-01,2022-06-01,eliminate,1,Inf
-2,38315,37497,7,cohort_end_date <= 2022-06-01,198,173,new_users_methotrexate,FirstEra,NA,365,30,365,2019-01-01,2022-06-01,eliminate,1,Inf
-2,37497,37497,8,summariseMode: FirstEra applied,818,0,new_users_methotrexate,FirstEra,NA,365,30,365,2019-01-01,2022-06-01,eliminate,1,Inf
+cohort_definition_id,number_records,number_subjects,reason_id,reason,excluded_records,excluded_subjects,cohort_name
+1,888054,129590,1,Qualifying initial records,0,0,new_users_hydroxychloroquine
+1,888054,129590,2,Duration imputation; affected rows: 0,0,0,new_users_hydroxychloroquine
+1,221570,129590,3,Join eras,666484,0,new_users_hydroxychloroquine
+1,100612,59459,4,at least 365 prior history,120958,70131,new_users_hydroxychloroquine
+1,61156,59459,5,prior use wahout of 365 days,39456,0,new_users_hydroxychloroquine
+1,50764,49814,6,cohort_start_date >= 2019-01-01,10392,9645,new_users_hydroxychloroquine
+1,50566,49646,7,cohort_end_date <= 2022-06-01,198,168,new_users_hydroxychloroquine
+1,49646,49646,8,summariseMode: FirstEra applied,920,0,new_users_hydroxychloroquine
+2,988017,114736,1,Qualifying initial records,0,0,new_users_methotrexate
+2,988017,114736,2,Duration imputation; affected rows: 0,0,0,new_users_methotrexate
+2,208021,114736,3,Join eras,779996,0,new_users_methotrexate
+2,90650,48426,4,at least 365 prior history,117371,66310,new_users_methotrexate
+2,49953,48426,5,prior use wahout of 365 days,40697,0,new_users_methotrexate
+2,38513,37670,6,cohort_start_date >= 2019-01-01,11440,10756,new_users_methotrexate
+2,38315,37497,7,cohort_end_date <= 2022-06-01,198,173,new_users_methotrexate
+2,37497,37497,8,summariseMode: FirstEra applied,818,0,new_users_methotrexate
