@@ -371,15 +371,36 @@ ui <- dashboardPage(
           style = "display: inline-block;vertical-align:top; width: 150px;",
           pickerInput(
             inputId = "incidence_estimates_incidence_start_date",
-            label = "Incidence date",
-            choices = as.character(unique(incidence_estimates$incidence_start_date)),
-            selected = as.character(unique(incidence_estimates$incidence_start_date)),
+            label = "Incidence start date",
+            choices = as.character(
+              unique(
+                sort(
+                  incidence_estimates$incidence_start_date))),
+            selected = as.character(min(incidence_estimates$incidence_start_date)),
             options = list(
               `actions-box` = TRUE,
               size = 10,
               `selected-text-format` = "count > 3"
             ),
-            multiple = TRUE
+            multiple = FALSE
+          )
+        ),
+        div(
+          style = "display: inline-block;vertical-align:top; width: 150px;",
+          pickerInput(
+            inputId = "incidence_estimates_incidence_end_date",
+            label = "Incidence end date",
+            choices = as.character(
+              unique(
+                sort(
+                  incidence_estimates$incidence_end_date))),
+            selected = as.character(max(incidence_estimates$incidence_end_date)),
+            options = list(
+              `actions-box` = TRUE,
+              size = 10,
+              `selected-text-format` = "count > 3"
+            ),
+            multiple = FALSE
           )
         ),
         div(
@@ -543,15 +564,36 @@ ui <- dashboardPage(
           style = "display: inline-block;vertical-align:top; width: 150px;",
           pickerInput(
             inputId = "prevalence_estimates_prevalence_start_date",
-            label = "Prevalence date",
-            choices = as.character(unique(prevalence_estimates$prevalence_start_date)),
-            selected = as.character(unique(prevalence_estimates$prevalence_start_date)),
+            label = "Prevalence start date",
+            choices = as.character(
+              unique(
+                sort(
+                  prevalence_estimates$prevalence_start_date))),
+            selected = as.character(min(prevalence_estimates$prevalence_start_date)),
             options = list(
               `actions-box` = TRUE,
               size = 10,
               `selected-text-format` = "count > 3"
             ),
-            multiple = TRUE
+            multiple = FALSE
+          )
+        ),
+        div(
+          style = "display: inline-block;vertical-align:top; width: 150px;",
+          pickerInput(
+            inputId = "prevalence_estimates_prevalence_end_date",
+            label = "Prevalence start date",
+            choices = as.character(
+              unique(
+                sort(
+                  prevalence_estimates$prevalence_end_date))),
+            selected = as.character(max(prevalence_estimates$prevalence_end_date)),
+            options = list(
+              `actions-box` = TRUE,
+              size = 10,
+              `selected-text-format` = "count > 3"
+            ),
+            multiple = FALSE
           )
         ),
         div(
@@ -1226,6 +1268,7 @@ server <- function(input, output, session) {
         sex = input$incidence_estimates_denominator_sex,
         strataCohortName = input$incidence_estimates_denominator_strata_cohort_name,
         incidenceStartDate = input$incidence_estimates_incidence_start_date,
+        incidenceEndDate = input$incidence_estimates_incidence_end_date,
         analysisInterval = input$incidence_interval,
         outcome = input$incidence_estimates_outcome_cohort_name
       ), 
@@ -1243,7 +1286,8 @@ server <- function(input, output, session) {
       dplyr::filter(.data$denominator_age_group %in% input$incidence_estimates_denominator_age_group) %>%
       dplyr::filter(.data$denominator_sex %in% input$incidence_estimates_denominator_sex) %>%
       dplyr::filter(.data$denominator_strata_cohort_name %in% input$incidence_estimates_denominator_strata_cohort_name) %>%
-      dplyr::filter(as.character(.data$incidence_start_date) %in% input$incidence_estimates_incidence_start_date) %>%
+      dplyr::filter(.data$incidence_start_date >= as.Date(input$incidence_estimates_incidence_start_date)) %>%
+      dplyr::filter(.data$incidence_end_date <= as.Date(input$incidence_estimates_incidence_end_date)) %>%
       dplyr::filter(.data$analysis_interval %in% input$incidence_interval) %>%
       dplyr::filter(.data$outcome_cohort_name %in% input$incidence_estimates_outcome_cohort_name) %>%
       dplyr::mutate(
@@ -1362,6 +1406,7 @@ server <- function(input, output, session) {
         sex = input$prevalence_estimates_denominator_sex,
         strataCohortName = input$prevalence_estimates_denominator_strata_cohort_name,
         prevalenceStartDate = input$prevalence_estimates_prevalence_start_date,
+        prevalenceEndDate = input$prevalence_estimates_prevalence_end_date,
         analysisInterval = input$prevalence_interval,
         outcome = input$prevalence_estimates_outcome_cohort_name
         
@@ -1380,7 +1425,8 @@ server <- function(input, output, session) {
       dplyr::filter(.data$denominator_age_group %in% input$prevalence_estimates_denominator_age_group) %>%
       dplyr::filter(.data$denominator_sex %in% input$prevalence_estimates_denominator_sex) %>%
       dplyr::filter(.data$denominator_strata_cohort_name %in% input$prevalence_estimates_denominator_strata_cohort_name) %>%
-      dplyr::filter(as.character(.data$prevalence_start_date) %in% input$prevalence_estimates_prevalence_start_date) %>%
+      dplyr::filter(.data$prevalence_start_date >= as.Date(input$prevalence_estimates_prevalence_start_date)) %>%
+      dplyr::filter(.data$prevalence_end_date <= as.Date(input$prevalence_estimates_prevalence_end_date)) %>%
       dplyr::filter(.data$analysis_interval %in% input$prevalence_interval) %>%
       dplyr::filter(.data$outcome_cohort_name %in% input$prevalence_estimates_outcome_cohort_name) %>%
       dplyr::mutate(

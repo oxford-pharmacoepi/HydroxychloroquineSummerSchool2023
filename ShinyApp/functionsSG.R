@@ -204,13 +204,15 @@ displayIncidence <- function(incidence,
                              sex,
                              strataCohortName,
                              incidenceStartDate,
+                             incidenceEndDate,
                              analysisInterval,
                              outcome) {
   incidence %>%
     dplyr::filter(.data$denominator_age_group %in%.env$ageGroup) %>%
     dplyr::filter(.data$denominator_sex %in% .env$sex) %>%
     dplyr::filter(.data$denominator_strata_cohort_name %in% .env$strataCohortName) %>%
-    dplyr::filter(as.character(.data$incidence_start_date) %in% .env$incidenceStartDate) %>%
+    dplyr::filter(.data$incidence_start_date >= as.Date(.env$incidenceStartDate)) %>%
+    dplyr::filter(.data$incidence_end_date <= as.Date(.env$incidenceEndDate)) %>%
     dplyr::filter(.data$analysis_interval %in% .env$analysisInterval) %>%
     dplyr::filter(.data$outcome_cohort_name %in% .env$outcome) %>%
     dplyr::mutate(
@@ -236,13 +238,15 @@ displayPrevalence <- function(prevalence,
                              sex,
                              strataCohortName,
                              prevalenceStartDate,
+                             prevalenceEndDate,
                              analysisInterval,
                              outcome) {
   prevalence %>%
     dplyr::filter(.data$denominator_age_group %in%.env$ageGroup) %>%
     dplyr::filter(.data$denominator_sex %in% .env$sex) %>%
     dplyr::filter(.data$denominator_strata_cohort_name %in% .env$strataCohortName) %>%
-    dplyr::filter(as.character(.data$prevalence_start_date) %in% .env$prevalenceStartDate) %>%
+    dplyr::filter(.data$prevalence_start_date >= as.Date(.env$prevalenceStartDate)) %>%
+    dplyr::filter(.data$prevalence_end_date <= as.Date(.env$prevalenceEndDate)) %>%
     dplyr::filter(.data$analysis_interval %in% .env$analysisInterval) %>%
     dplyr::filter(.data$outcome_cohort_name %in% .env$outcome) %>%
     dplyr::mutate(
