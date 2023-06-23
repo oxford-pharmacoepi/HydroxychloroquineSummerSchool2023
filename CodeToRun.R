@@ -72,7 +72,7 @@ results_database_schema <- "results"
 #   will be overwritten
 # - more than one cohort will be created
 # - name must be lower case
-stem_table <- "nmb"
+stem_table <- "ss_mc"
 
 # create cdm reference ----
 cdm <- CDMConnector::cdm_from_con(
