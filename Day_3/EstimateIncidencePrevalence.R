@@ -1,4 +1,4 @@
-# Names of denominator tables cohort tables to generate
+# Names of denominator cohort tables to generate
 ip_general_table_name     <- paste0(stem_table, "_ip_general")     # Denominator table
 ip_covid_table_name       <- paste0(stem_table, "_ip_covid")       # Denominator table
 ip_covid_no_ra_table_name <- paste0(stem_table, "_ip_covid_no_ra") # Denominator table
@@ -102,13 +102,13 @@ cdm <- generateDenominatorCohortSet(
 exportAttrition(cdm[[ip_malaria_table_name]], here(output_folder, "attrition_ip_malaria_population.csv"))
 
 ## Estimate incidence prevalence ----
-getIncidencePrevalence <- function(denominator_table_name, outcome_table_name) {
+getIncidencePrevalence <- function(denominator_table_name) {
   
   # estimate incidence
   inc <- estimateIncidence(
     cdm = cdm,
     denominatorTable = denominator_table_name,
-    outcomeTable = outcome_table_name,
+    outcomeTable = users_table_name,
     interval = c("weeks", "months"),
     outcomeWashout = 365,
     repeatedEvents = FALSE,
@@ -119,7 +119,7 @@ getIncidencePrevalence <- function(denominator_table_name, outcome_table_name) {
   prev <- estimatePeriodPrevalence(
     cdm = cdm,
     denominatorTable = denominator_table_name,
-    outcomeTable = outcome_table_name,
+    outcomeTable = users_table_name,
     interval = c("weeks", "months"),
     minCellCount = minimum_counts
   )
@@ -127,12 +127,12 @@ getIncidencePrevalence <- function(denominator_table_name, outcome_table_name) {
   return(list("incidence" = inc, "prevalence" = prev))
 }
 
-ip_general     <- getIncidencePrevalence(ip_general_table_name, users_table_name)     # general pop
-ip_covid       <- getIncidencePrevalence(ip_covid_table_name, users_table_name)       # covid pop
-ip_covid_no_ra <- getIncidencePrevalence(ip_covid_no_ra_table_name, users_table_name) # covid no ra pop
-ip_ra          <- getIncidencePrevalence(ip_ra_table_name, users_table_name)          # ra pop
-ip_ra_no_covid <- getIncidencePrevalence(ip_ra_no_covid_table_name, users_table_name) # ra no covid pop
-ip_malaria     <- getIncidencePrevalence(ip_malaria_table_name, users_table_name)     # malaria pop
+ip_general     <- getIncidencePrevalence(ip_general_table_name)     # general pop
+ip_covid       <- getIncidencePrevalence(ip_covid_table_name)       # covid pop
+ip_covid_no_ra <- getIncidencePrevalence(ip_covid_no_ra_table_name) # covid no ra pop
+ip_ra          <- getIncidencePrevalence(ip_ra_table_name)          # ra pop
+ip_ra_no_covid <- getIncidencePrevalence(ip_ra_no_covid_table_name) # ra no covid pop
+ip_malaria     <- getIncidencePrevalence(ip_malaria_table_name)     # malaria pop
 
 # Export incidence results
 incidence <- ip_general$incidence %>%
