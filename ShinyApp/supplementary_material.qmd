@@ -1,0 +1,132 @@
+---
+title: "SUPPLEMENTARY"
+format:
+  docx:
+    reference-doc: reference-doc.docx
+    fig-cap-location: top
+execute:
+  echo: false
+lof: TRUE
+---
+
+```{r, warning=FALSE, results='hide', cache.comments=FALSE, message=FALSE}
+library(dplyr)
+library(tidyr)
+library(readr)
+library(here)
+library(flextable)
+library(survival)
+library(ggplot2)
+library(ggfortify)
+library(survminer)
+library(ggh4x)
+library(officer)
+library(knitr)
+library(officedown)
+library(grid)
+
+knitr::opts_chunk$set(
+  echo       = FALSE,
+  message    = FALSE,
+  warning    = FALSE
+)
+knitr::opts_chunk$set(echo = FALSE, fig.cap = TRUE, tab.cap.pre = "Table ", tab.cap.sep = ": ")
+num_tab <- 1
+num_fig <- 1
+```
+
+```{r, warning=FALSE, results='hide', cache.comments=FALSE, message=FALSE}
+source(here("data_preparation_quarto.R"))
+```
+
+
+```{r, warning=FALSE, cache.comments=FALSE, message=FALSE, results='asis'}
+# Table One ----
+for (ii in 1:nrow(captions_table_one)) {
+  
+  cat("\n") 
+    cat("##",paste0("**Table S", num_tab, ": ", captions_table_one$caption_to[ii]))
+    
+  flextable_to_rmd(
+    table_one %>%
+      filter(cdm_name == captions_table_one$cdm_name[ii] | is.na(cdm_name)) %>%
+      filter(group_level == captions_table_one$group_level[ii] | is.na(group_level)) %>%
+      select(-cdm_name, -group_level, -variable_level) %>%
+      flextable() %>%
+      merge_at(i = 11, j = 1:5, part = "body") %>%
+      merge_at(i = 35, j = 1:5, part = "body") %>%
+      bold(part = "header") %>%
+      bold(i = c(1:3, 9:11, 35), j = 1, part = "body") %>%
+      set_table_properties(layout = "autofit")
+  )
+  
+   cat("*Calculated as the days of previous observation in the database before index date.") 
+    cat("\n")
+    cat("**Assessed anytime before index date.")
+    cat("\n")
+    cat("***Assessed one year before index date.")
+    cat("\n")
+    cat("COPD = Chronic obstructive pulmonary disease, GERD = Gastro-Esophageal reflux disease, HIV =  Human Immunodeficiency Virus") 
+    
+     cat("\n\n\\pagebreak\n")
+  num_tab <- num_tab + 1
+}
+ 
+```
+
+
+```{r, warning=FALSE, cache.comments=FALSE, message=FALSE, results='asis'}
+# Table drug exposure ----
+for (ii in 1:nrow(captions)) {
+  
+  cat("\n") 
+  cat("##", paste0("**Table S", num_tab, ": ", captions$caption_du[ii]))
+  flextable_to_rmd(
+    drug_use %>%
+      filter(cdm_name == captions$cdm_name[ii] | is.na(cdm_name)) %>%
+      filter(group_level == captions$group_level[ii] | is.na(group_level)) %>% 
+      select(-cdm_name, -group_level, -estimate_type) %>%
+      flextable() %>%
+      bold(part = "header") %>%
+      bold(i = c(seq(2,16,3)), j = 1, part = "body") %>%
+      set_table_properties(layout = "autofit")
+  )
+  cat("*Number of contiuous time periods taking the pharmac") 
+    cat("\n")
+    cat("**Assessed anytime before index date.")
+    cat("\n")
+    cat("***Assessed one year before index date.")
+  cat("\n\n\\pagebreak\n")
+  num_tab <- num_tab + 1
+}
+
+
+```
+
+```{r, warning=FALSE, cache.comments=FALSE, message=FALSE, results='asis'}
+#| label: metave
+#| fig-align: center
+#| fig-width: 10
+#| fig-asp: 0.7
+#| out-width: "90%"
+#| fig-dpi: 500
+#| fig.retina: 2
+
+# Forest meta-analysis VE ----
+# list_figures <- list.files(here::here("figures_pacs"), ".png")
+# list_figures_ve1 <- list_figures[grepl("Figure1", list_figures)]
+# 
+# for (ii in 1) {
+#    path <- here::here("figures_pacs", list_figures_ve1[grepl(forest_meta_ve$exposure_name[ii], list_figures_ve1) & 
+#                             grepl(forest_meta_ve$censoring_filter[ii], list_figures_ve1)])
+#  cat("\n")
+#   cat("##",paste0("**Figure ", num_fig, ": ", forest_meta_ve$caption_1[ii], "**", forest_meta_ve$caption_2[ii]), "Dashed line represents a level of hetereogeneity I2 > 0.4.")
+# cat("\n")
+# cat(paste0("![](", path, ")"), "\n")
+# num_fig <- num_fig + 1
+# cat("VTE = Venous thromboembolism, ATE = Arterial thromboembolism, CD + HS = Cardiac diseases and Hemorrhagic stroke")
+# cat("\n\n\\pagebreak\n")
+# }
+
+```
+
