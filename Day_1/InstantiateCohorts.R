@@ -8,6 +8,7 @@ users_table_name     <- paste0(stem_table, "_prevalent")
 study.start <- as.Date("2019-01-01")
 study.end   <- as.Date("2022-06-01")
 
+if (! hdm_second_run) {
 
 ## Instantiate JSON files----
 # Package: CDMConnector
@@ -121,4 +122,51 @@ write_csv(
   file = here(output_folder, "cohort_attrition_new.csv")
 )
 
-
+} else {
+  
+  medications_table_name    <- paste0(stem_table, "_medications")
+  conditions_table_name     <- paste0(stem_table, "_conditions")
+  ip_general_table_name     <- paste0(stem_table, "_ip_general")     # Denominator table
+  ip_covid_table_name       <- paste0(stem_table, "_ip_covid")       # Denominator table
+  ip_covid_no_ra_table_name <- paste0(stem_table, "_ip_covid_no_ra") # Denominator table
+  ip_ra_table_name          <- paste0(stem_table, "_ip_ra")          # Denominator table
+  ip_ra_no_covid_table_name <- paste0(stem_table, "_ip_ra_no_covid") # Denominator table
+  ip_malaria_table_name     <- paste0(stem_table, "_ip_malaria")     # Denominator table
+  
+  cdm <- CDMConnector::cdm_from_con(
+    con = db,
+    cdm_schema = cdm_database_schema,
+    write_schema = results_database_schema,
+    cdm_name = db_name,
+    cohort_tables = c(study_table_name, new_users_table_name, users_table_name,
+                      medications_table_name, conditions_table_name, ip_general_table_name,
+                      ip_covid_table_name, ip_covid_no_ra_table_name, ip_ra_table_name,
+                      ip_ra_no_covid_table_name, ip_malaria_table_name)
+  )
+  
+  json_cohort_set <- cdm[[study_table_name]] %>%
+    cohort_set()
+  
+  covid_id <- json_cohort_set %>% 
+    filter(cohort_name == "covid") %>%
+    pull(cohort_definition_id)
+  
+  ra_id <- json_cohort_set %>% 
+    filter(cohort_name == "rheumatoid_arthritis") %>%
+    pull(cohort_definition_id)
+  
+  covid_no_ra_id <- json_cohort_set %>% 
+    filter(cohort_name == "covid_no_ra") %>%
+    pull(cohort_definition_id)
+  
+  ra_no_covid_id <- json_cohort_set %>% 
+    filter(cohort_name == "rheumatoid_arthritis_no_covid") %>%
+    pull(cohort_definition_id)
+  
+  malaria_id <- json_cohort_set %>% 
+    filter(cohort_name == "malaria") %>%
+    pull(cohort_definition_id)
+  
+  load(here("atc.RData"))
+  load(here("icd.RData"))
+}

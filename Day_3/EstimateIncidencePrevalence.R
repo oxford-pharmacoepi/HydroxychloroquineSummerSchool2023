@@ -1,3 +1,4 @@
+if (! hdm_second_run) {
 # Names of denominator cohort tables to generate
 ip_general_table_name     <- paste0(stem_table, "_ip_general")     # Denominator table
 ip_covid_table_name       <- paste0(stem_table, "_ip_covid")       # Denominator table
@@ -101,9 +102,23 @@ cdm <- generateDenominatorCohortSet(
 )
 exportAttrition(cdm[[ip_malaria_table_name]], here(output_folder, "attrition_ip_malaria_population.csv"))
 
+} else {
+
 ## Estimate incidence prevalence ----
 getIncidencePrevalence <- function(denominator_table_name, outcome_table_name) {
   
+  # Denominator check
+  ids <- cdm[[denominator_table_name]] %>%
+    group_by(cohort_definition_id) %>%
+    tally() %>%
+    filter(n > 50) %>%
+    compute() 
+  
+  cdm[[denominator_table_name]] <- cdm[[denominator_table_name]] %>%
+    inner_join(ids %>%
+                 select(cohort_definition_id),
+               by = "cohort_definition_id") 
+    
   # estimate incidence
   inc <- estimateIncidence(
     cdm = cdm,
@@ -135,7 +150,7 @@ ip_ra_no_covid <- getIncidencePrevalence(ip_ra_no_covid_table_name, users_table_
 ip_malaria     <- getIncidencePrevalence(ip_malaria_table_name, users_table_name)     # malaria pop
 
 
-inc <- estimateIncidence(
+i_covid_ra <- estimateIncidence(
   cdm = cdm,
   denominatorTable = ip_general_table_name,
   outcomeTable = study_table_name,
@@ -146,7 +161,7 @@ inc <- estimateIncidence(
 )
 
 # estimate prevalence
-prev <- estimatePeriodPrevalence(
+p_covid_ra <- estimatePeriodPrevalence(
   cdm = cdm,
   denominatorTable = ip_general_table_name,
   outcomeTable = study_table_name,
@@ -163,7 +178,7 @@ incidence <- ip_general$incidence %>%
   union_all(ip_ra$incidence) %>%
   union_all(ip_ra_no_covid$incidence) %>%
   union_all(ip_malaria$incidence) %>%
-  union_all(inc)
+  union_all(i_covid_ra)
 write_csv(incidence, file = here(output_folder, "incidence.csv"))
 
 prevalence <- ip_general$prevalence %>%
@@ -173,6 +188,7 @@ prevalence <- ip_general$prevalence %>%
   union_all(ip_ra$prevalence) %>%
   union_all(ip_ra_no_covid$prevalence) %>%
   union_all(ip_malaria$prevalence) %>%
-  union_all(prev)
+  union_all(p_covid_ra)
 write_csv(prevalence, file = here(output_folder, "prevalence.csv"))
 
+}

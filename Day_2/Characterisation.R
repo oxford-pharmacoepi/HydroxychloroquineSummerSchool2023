@@ -46,7 +46,9 @@ cdm_subset[[new_users_table_name]] <- cdm_subset[[new_users_table_name]] %>%
     )
   ) %>%
   select(-c("covid", "rheumatoid_arthritis", "malaria"))
-  
+
+if (! hdm_second_run) {
+   
 # Instantiate medications and general conditions for Table One
 # Names for the instantiated cohorts
 medications_table_name <- paste0(stem_table, "_medications")
@@ -70,7 +72,6 @@ cdm_subset <- generateConceptCohortSet(cdm_subset,
 cdm_subset <- generateConceptCohortSet(cdm_subset,
                                        conditions_table_name,
                                        conditions_concept_list)
-
 
 ## Characterisation ----
 ## 1. Drug use ----
@@ -173,8 +174,10 @@ write_csv(table_one, here(output_folder, "table_one.csv"))
 
 ## 3. Large Scale Characteristics ----
 # Get ATC and ICD10 codes (package CodelistGenerator)
-atc_codes   <- getATCCodes(cdm_subset, "ATC 3rd")
-icd10_codes <- getICD10StandardCodes(cdm_subset, "ICD10 SubChapter")
+atc_codes   <- getATCCodes(cdm, "ATC 3rd")
+icd10_codes <- getICD10StandardCodes(cdm, "ICD10 SubChapter")
+
+} else {
 
 # Characteristics (package DrugUtilisation)
 #  3.1. ATC 
@@ -202,4 +205,4 @@ result_ICD10 <- summariseCharacteristicsFromCodelist(
   minCellCount = minimum_counts
 )
 write_csv(result_ICD10, here(output_folder, "characteristics_icd10.csv"))
-
+}
