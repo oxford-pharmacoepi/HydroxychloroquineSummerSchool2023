@@ -31,7 +31,7 @@ classes <- dplyr::tibble(
       "cohort_definition_id", "age_group", "sex", "days_prior_history", 
       "start_date", "end_date", "strata_cohort_definition_id", 
       "strata_cohort_name", "number_records", "number_subjects", "reason_id",
-      "reason", "excluded_records", "excluded_subjects"
+      "reason", "excluded_records", "excluded_subjects", 
     )
   )) %>%
   dplyr::union_all(dplyr::tibble(

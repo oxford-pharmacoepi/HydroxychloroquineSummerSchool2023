@@ -13,6 +13,7 @@ library(tidyr)
 
 resultsFolder <- "Results_PHARMETRICS"
 
+
 readr::read_csv(
   here::here(resultsFolder, "characteristics_atc.csv"), 
   col_types = readr::cols(.default = readr::col_character())
