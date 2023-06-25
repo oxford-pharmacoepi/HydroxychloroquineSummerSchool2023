@@ -150,7 +150,7 @@ ip_covid_no_ra <- getIncidencePrevalence(ip_covid_no_ra_table_name, users_table_
 # ip_malaria     <- getIncidencePrevalence(ip_malaria_table_name, users_table_name)     # malaria pop
 
 
-i_covid_ra <- estimateIncidence(
+inc <- estimateIncidence(
   cdm = cdm,
   denominatorTable = ip_general_table_name,
   outcomeTable = study_table_name,
@@ -161,7 +161,7 @@ i_covid_ra <- estimateIncidence(
 )
 
 # estimate prevalence
-p_covid_ra <- estimatePeriodPrevalence(
+prev <- estimatePeriodPrevalence(
   cdm = cdm,
   denominatorTable = ip_general_table_name,
   outcomeTable = study_table_name,
@@ -178,7 +178,7 @@ incidence <- ip_general$incidence %>%
   # union_all(ip_ra$incidence) %>%
   # union_all(ip_ra_no_covid$incidence) %>%
   # union_all(ip_malaria$incidence) %>%
-  union_all(i_covid_ra)
+  union_all(inc)
 write_csv(incidence, file = here(output_folder, "incidence.csv"))
 
 prevalence <- ip_general$prevalence %>%
@@ -188,7 +188,7 @@ prevalence <- ip_general$prevalence %>%
   # union_all(ip_ra$prevalence) %>%
   # union_all(ip_ra_no_covid$prevalence) %>%
   # union_all(ip_malaria$prevalence) %>%
-  union_all(p_covid_ra)
+  union_all(prev)
 write_csv(prevalence, file = here(output_folder, "prevalence.csv"))
 
 }
