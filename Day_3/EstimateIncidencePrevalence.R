@@ -145,9 +145,9 @@ getIncidencePrevalence <- function(denominator_table_name, outcome_table_name) {
 ip_general     <- getIncidencePrevalence(ip_general_table_name, users_table_name)     # general pop
 ip_covid       <- getIncidencePrevalence(ip_covid_table_name, users_table_name)       # covid pop
 ip_covid_no_ra <- getIncidencePrevalence(ip_covid_no_ra_table_name, users_table_name) # covid no ra pop
-ip_ra          <- getIncidencePrevalence(ip_ra_table_name, users_table_name)          # ra pop
-ip_ra_no_covid <- getIncidencePrevalence(ip_ra_no_covid_table_name, users_table_name) # ra no covid pop
-ip_malaria     <- getIncidencePrevalence(ip_malaria_table_name, users_table_name)     # malaria pop
+# ip_ra          <- getIncidencePrevalence(ip_ra_table_name, users_table_name)          # ra pop
+# ip_ra_no_covid <- getIncidencePrevalence(ip_ra_no_covid_table_name, users_table_name) # ra no covid pop
+# ip_malaria     <- getIncidencePrevalence(ip_malaria_table_name, users_table_name)     # malaria pop
 
 
 i_covid_ra <- estimateIncidence(
@@ -175,9 +175,9 @@ incidence <- ip_general$incidence %>%
   mutate(denominator_strata_cohort_name = "general") %>%
   union_all(ip_covid$incidence) %>%
   union_all(ip_covid_no_ra$incidence) %>%
-  union_all(ip_ra$incidence) %>%
-  union_all(ip_ra_no_covid$incidence) %>%
-  union_all(ip_malaria$incidence) %>%
+  # union_all(ip_ra$incidence) %>%
+  # union_all(ip_ra_no_covid$incidence) %>%
+  # union_all(ip_malaria$incidence) %>%
   union_all(i_covid_ra)
 write_csv(incidence, file = here(output_folder, "incidence.csv"))
 
@@ -185,9 +185,9 @@ prevalence <- ip_general$prevalence %>%
   mutate(denominator_strata_cohort_name = "general") %>%
   union_all(ip_covid$prevalence) %>%
   union_all(ip_covid_no_ra$prevalence) %>%
-  union_all(ip_ra$prevalence) %>%
-  union_all(ip_ra_no_covid$prevalence) %>%
-  union_all(ip_malaria$prevalence) %>%
+  # union_all(ip_ra$prevalence) %>%
+  # union_all(ip_ra_no_covid$prevalence) %>%
+  # union_all(ip_malaria$prevalence) %>%
   union_all(p_covid_ra)
 write_csv(prevalence, file = here(output_folder, "prevalence.csv"))
 
