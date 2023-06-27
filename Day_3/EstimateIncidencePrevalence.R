@@ -12,7 +12,6 @@ ip_malaria_table_name     <- paste0(stem_table, "_ip_malaria")     # Denominator
 exportAttrition <- function(cohort, path) {
   cohort %>%
     cohort_set() %>%
-    select("cohort_definition_id", "cohort_name") %>%
     inner_join(cohort %>%
                  cohort_attrition(),
                by = "cohort_definition_id") %>%
