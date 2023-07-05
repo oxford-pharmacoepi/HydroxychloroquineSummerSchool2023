@@ -113,7 +113,7 @@ hdm_second_run <- TRUE
 
 # Jobs to Run
 source(here("Day_1", "InstantiateCohorts.R"))
-source(here("Day_2", "Characterisation.R"))
+# source(here("Day_2", "Characterisation.R"))
 source(here("Day_3", "EstimateIncidencePrevalence.R"))
 
 
