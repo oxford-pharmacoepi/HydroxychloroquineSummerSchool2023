@@ -23,7 +23,7 @@ library(PatientProfiles)
 library(DrugUtilisation)
 library(CodelistGenerator)
 library(IncidencePrevalence)
-library(Capr)
+# library(Capr)
 
 # database metadata and connection details -----
 # The name/ acronym for the database
@@ -114,7 +114,35 @@ hdm_second_run <- TRUE
 # Jobs to Run
 source(here("Day_1", "InstantiateCohorts.R"))
 # source(here("Day_2", "Characterisation.R"))
-source(here("Day_3", "EstimateIncidencePrevalence.R"))
+# source(here("Day_3", "EstimateIncidencePrevalence.R"))
 
 
+## Paper data:
+ip_general_table_name     <- paste0(stem_table, "_ip_general")
+cdm <- generateDenominatorCohortSet(
+  cdm = cdm,
+  name = ip_general_table_name,
+  cohortDateRange = c(study.start, as.Date("2020-02-29")),
+  ageGroup = list(c(0,150)), 
+  sex = "Both",
+  daysPriorHistory = 365, 
+  temporary = FALSE
+)
 
+# estimate incidence
+inc <- estimateIncidence(
+  cdm = cdm,
+  denominatorTable = ip_general_table_name,
+  outcomeTable = users_table_name,
+  interval = "overall",
+  outcomeWashout = 365,
+  repeatedEvents = FALSE,
+  minCellCount = minimum_counts
+)
+
+write_csv(inc %>% 
+            select(incidence_100000_pys, 
+                   incidence_100000_pys_95CI_lower, 
+                   incidence_100000_pys_95CI_upper, 
+                   outcome_cohort_name),
+          here("preCOVID19_incidence,csv"))
