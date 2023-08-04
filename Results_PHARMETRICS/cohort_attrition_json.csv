@@ -1,8 +1,0 @@
-cohort_definition_id,number_records,number_subjects,reason_id,reason,excluded_records,excluded_subjects,cohort_name
-1,889060,798662,1,Qualifying initial records,0,0,covid
-2,5845487,798662,1,Qualifying initial records,0,0,covid_no_ra
-2,5631087,782473,2,no RA,214400,16189,covid_no_ra
-3,1516,1516,1,Qualifying initial records,0,0,malaria
-4,237765,237765,1,Qualifying initial records,0,0,rheumatoid_arthritis
-5,237765,237765,1,Qualifying initial records,0,0,rheumatoid_arthritis_no_covid
-5,222159,222159,2,no covid before,15606,15606,rheumatoid_arthritis_no_covid
