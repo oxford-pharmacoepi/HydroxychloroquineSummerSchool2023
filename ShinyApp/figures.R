@@ -6,176 +6,398 @@ library(tidyr)
 library(grid)
 library(ggfortify)
 library(ggh4x)
+library(ggpubr)
+library(lubridate)
 
+# GET DATA -----
 
-resultsFolder <- "Results_PHARMETRICS"
-
-cdc_covid <- tibble(read.csv(here("cdc_covid.csv"))) %>%
+# External data 
+covid_us <- tibble(read.csv(here("center_disease_control.csv"))) %>%
   mutate(start_date = as.Date(start_date, format = "%m/%d/%Y"),
          end_date = as.Date(end_date, format = "%m/%d/%Y")) %>%
   group_by(start_date, end_date) %>%
   summarise(new_cases = sum(new_cases), .groups = "drop") %>%
   filter(start_date <= as.Date("2022-04-01")) %>%
-  mutate(facet = "Weekly COVID-19 cases",
-         color_aesthetic = "COVID-19 weekly cases")
+  mutate(cdm_name = "PHARMETRICS",
+         denominator = "Region/Country population") %>%
+  select(start_date, new_cases, cdm_name, denominator)
+
+covid_cat <- tibble(read.csv(here("dades_obertes_catalunya.csv"))) %>%
+  mutate(data = as.Date(data, format = "%d/%m/%Y")) %>%
+  filter(data >= as.Date("2019-01-01")) %>%
+  filter(data <= as.Date("2022-04-01")) %>%
+  mutate(start_date = floor_date(x = .data$data, unit = "week")) %>%
+  group_by(start_date) %>%
+  summarise(new_cases = sum(casos, na.rm = TRUE), .groups = "drop") %>%
+  mutate(cdm_name = "IMASIS",
+         denominator = "Region/Country population") %>%
+  select(start_date, new_cases, cdm_name, denominator)
 
 
-# COVID + RA on hydroxychloroquine
-inc <- tibble(read.csv(here(resultsFolder, "incidence.csv"))) %>%
-  mutate(incidence_start_date = as.Date(incidence_start_date, format = "%Y-%m-%d"),
-         incidence_end_date = as.Date(incidence_end_date, format = "%Y-%m-%d")) %>%
-  filter(incidence_end_date <= as.Date("2022-04-01")) %>%
-  filter(denominator_age_group == "0;150") %>%
-  filter(denominator_sex == "Both") %>%
-  filter(denominator_strata_cohort_name  %in% c("general", "covid_no_ra", "rheumatoid_arthritis_no_covid")) %>%
-  filter(analysis_interval == "months") 
+# Study data
+resultsFolder <- "data"
+source(here("functionsSGByDB.R"))
+addCdmName(here(resultsFolder))
+elements <- readFiles(here::here(resultsFolder))
+settings <- attr(elements, "settings")
 
-prev <- tibble(read.csv(here(resultsFolder, "prevalence.csv"))) %>%
-  mutate(prevalence_start_date = as.Date(prevalence_start_date, format = "%Y-%m-%d"),
-         prevalence_end_date = as.Date(prevalence_end_date, format = "%Y-%m-%d")) %>%
-  filter(prevalence_end_date <= as.Date("2022-04-01")) %>%
-  filter(denominator_age_group == "0;150") %>%
-  filter(denominator_sex == "Both") %>%
-  filter(denominator_strata_cohort_name  %in% c("general", "covid_no_ra", "rheumatoid_arthritis_no_covid")) %>%
-  filter(analysis_interval == "months")
-
-data_ip_cases <- inc %>%
-  select(start_date = incidence_start_date, 
-         point = incidence_100000_pys, 
-         denominator = denominator_strata_cohort_name,
-         lower = incidence_100000_pys_95CI_lower,
-         upper = incidence_100000_pys_95CI_upper,
-         outcome = outcome_cohort_name) %>%
-  mutate(facet = "Incidence") %>%
-  union_all(prev %>%
-              select(start_date = prevalence_start_date, 
-                     point = prevalence, 
-                     denominator = denominator_strata_cohort_name,
-                     outcome = outcome_cohort_name) %>%
-              mutate(facet = "Prevalence",
-                     lower = NA,
-                     upper = NA)) %>%
-  # union_all(cdc_covid %>%
-  #             select(start_date,
-  #                    point = new_cases,
-  #                    facet) %>%
-  #             mutate(
-  #               denominator = "rheumatoid_arthritis_no_covid",
-  #               facet = "COVID-19 weekly cases",
-  #               lower = NA,
-  #               upper = NA,
-  #               outcome = "COVID-19 weekly cases")) %>%
-  # union_all(cdc_covid %>%
-  #             select(start_date,
-  #                    point = new_cases,
-  #                    facet) %>%
-  #             mutate(
-  #               facet = "COVID-19 weekly cases",
-  #               denominator = "covid_no_ra",
-  #               lower = NA,
-  #               upper = NA,
-  #               outcome = "COVID-19 weekly cases")) %>%
-  # union_all(cdc_covid %>%
-  #             select(start_date,
-  #                    point = new_cases,
-  #                    facet) %>%
-  #             mutate(
-  #               facet = "COVID-19 weekly cases",
-  #               denominator = "general",
-  #               lower = NA,
-  #               upper = NA,
-  #               outcome = "COVID-19 weekly cases")) %>%
+incidence_estimates <- getElementType(elements, "incidence_estimates") %>%
+  bind_rows() %>% 
+  mutate(
+    denominator_strata_cohort_name = if_else(
+      is.na(denominator_strata_cohort_name),
+      "general",
+      denominator_strata_cohort_name
+    ),
+    denominator_age_group = gsub(";", " to ", denominator_age_group),
+    denominator_age_group = if_else(denominator_age_group == "0 to 150", "All ages", denominator_age_group),
+    denominator_age_group = if_else(denominator_age_group == "80 to 150", ">=80", denominator_age_group),
+    denominator_age_group = factor(denominator_age_group, levels = c("All ages", "0 to 19", "20 to 39", "40 to 59", "60 to 79", ">=80")),
+    incidence_100000_pys = as.numeric(incidence_100000_pys), 
+    incidence_100000_pys_95CI_lower = as.numeric(incidence_100000_pys_95CI_lower),
+    incidence_100000_pys_95CI_upper = as.numeric(incidence_100000_pys_95CI_upper),
+    incidence_start_date = as.Date(incidence_start_date, format = "%Y-%m-%d"),
+    incidence_end_date = as.Date(incidence_end_date, format = "%Y-%m-%d")
+  ) %>%
+  filter(analysis_interval == "months" &
+           denominator_age_group  == "All ages" &
+           denominator_sex  == "Both" &
+           ! denominator_strata_cohort_name %in% c("covid", "rheumatoid_arthritis",
+                                                 "malaria") &
+           outcome_cohort_name %in% c("users_hydroxychloroquine", "users_methotrexate") &
+         incidence_start_date <= as.Date("2022-03-01")
+         ) %>%
+  select(
+    "start_date" = "incidence_start_date", 
+    "incidence_100000_pys", "incidence_100000_pys_95CI_lower", "incidence_100000_pys_95CI_upper", 
+    "outcome" = "outcome_cohort_name",  
+    "denominator" = "denominator_strata_cohort_name", "cdm_name"
+  ) %>%
   mutate(denominator = 
            factor(denominator, 
                   levels = c(
                     "general",
+                    "covid_no_ra",
                     "rheumatoid_arthritis_no_covid",
-                    "covid_no_ra"),
+                    "Region/Country population"),
                   labels = c(
-                    "General",
+                    "General database population",
+                    "COVID-19",
                     "Rheumatoid arthritis",
-                    "COVID-19"
+                    "Region/Country population"
                   )),
-         facet = 
-           factor(
-             facet,
-             levels = c("Incidence", "Prevalence", "COVID-19 weekly cases"),
-             labels = c("Incidence (100,000 pys)", 
-                        "Prevalence", 
-                        "COVID-19 weekly cases")),
          outcome = case_when(
            outcome == "users_hydroxychloroquine" ~ "Hydroxychloroquine",
            outcome == "users_methotrexate" ~ "Methotrexate",
-           outcome == "COVID-19 weekly cases" ~ "COVID-19",
            .default = NA
-         ) )
+         ))
 
-###################
 
-gg <- data_ip_cases %>%
-  ggplot(aes(x = start_date, y = point, color = outcome)) +
+
+# FIGURE ----
+gg <- incidence_estimates %>%
+  filter(outcome %in% c("Hydroxychloroquine", "Methotrexate")) %>%
+  ggplot(aes(x = start_date, y = incidence_100000_pys, color = outcome, fill = outcome)) +
   geom_point() +
   geom_line() +
-  facet_grid2(rows = vars(facet),
-              cols = vars(denominator),
-              scales = "free_y", 
-              independent = "y") +
-  scale_color_manual(values = c("#2a9d8f", "#f4a261")) +
+  geom_col(data = covid_us %>%
+             union_all(covid_cat) %>%
+             mutate(outcome = "Weekly COVID-19 cases",
+                    denominator = 
+                      factor(denominator, 
+                             levels = c(
+                               "general",
+                               "covid_no_ra",
+                               "rheumatoid_arthritis_no_covid",
+                               "Region/Country population"),
+                             labels = c(
+                               "General DB population",
+                               "COVID-19",
+                               "Rheumatoid arthritis",
+                               "Region/Country population"
+                             ))),
+           aes(x = start_date, y = new_cases, fill = outcome, color = outcome)) +
+  facet_grid2(rows = vars(denominator),
+               cols = vars(cdm_name),
+               scales = "free_y", 
+               independent = "y") +
+  scale_color_manual(values = c("#2a9d8f", "#f4a261", "#adb5bd")) +
+  scale_fill_manual(values = c("#78c5b7", "#f8c6a1", "#ced4da")) +
+  scale_y_continuous(labels = label_comma(), limits = c(0, NA)) + 
   xlab("Date") +
   ylab("") +
-  guides(colour = guide_legend(" "))
+  guides(colour = element_blank()) +
+  theme_update() +
+  ylab("Incidence (100,000 pys)") +
+  theme(legend.title = element_blank())
 
+
+# ggsave(
+#   paste0("Figure.png"),
+#   plot = gg,
+#   path = here(),
+#   scale = 1,
+#   width = 3000,
+#   height = 3000,
+#   units = "px",
+#   dpi = 300
+# )
+
+
+
+# FIGURE DANI ----
+## scales 
+y_scales <- list(
+  cdm_name == "IMASIS" & denominator == "General database population" ~
+    scale_y_continuous(labels = label_comma(), 
+                       limits = c(0, NA), 
+                       breaks = c(0, 1000, 2000, 3000, 4000, 5000)),
+  
+  cdm_name == "PHARMETRICS" & denominator == "General database population" ~
+    scale_y_continuous(labels = label_comma(), 
+                       limits = c(0, NA), 
+                       breaks = c(0, 250, 500, 740, 1000, 1250)),
+  
+  cdm_name == "PHARMETRICS" & denominator == "Rheumatoid arthritis" ~
+    scale_y_continuous(labels = label_comma(), 
+                       limits = c(0, NA), 
+                       breaks = c(0, 2500, 5000, 7500))
+)
+
+
+gg_general <- incidence_estimates %>%
+  filter(outcome %in% c("Hydroxychloroquine", "Methotrexate")) %>%
+  filter(denominator == "General database population") %>%
+  ggplot(aes(x = start_date, 
+             y = incidence_100000_pys,
+             color = outcome, 
+             fill = outcome)) +
+  geom_col(data = covid_us %>%
+             mutate(outcome = "Weekly COVID-19 cases",
+                    denominator = "general",
+                    denominator = 
+                      factor(denominator, 
+                             levels = c(
+                               "general",
+                               "covid_no_ra",
+                               "rheumatoid_arthritis",
+                               "Region/Country population"),
+                             labels = c(
+                               "General database population",
+                               "COVID-19",
+                               "Rheumatoid arthritis",
+                               "Region/Country population"
+                             ))),
+           aes(x = start_date, y = new_cases/4000, fill = outcome, color = outcome)) +
+  geom_col(data = covid_cat %>%
+             mutate(outcome = "Weekly COVID-19 cases",
+                    denominator = "general",
+                    denominator = 
+                      factor(denominator, 
+                             levels = c(
+                               "general",
+                               "covid_no_ra",
+                               "rheumatoid_arthritis",
+                               "Region/Country population"),
+                             labels = c(
+                               "General database population",
+                               "COVID-19",
+                               "Rheumatoid arthritis",
+                               "Region/Country population"
+                             ))),
+           aes(x = start_date, y = new_cases/40, fill = outcome, color = outcome)) +
+  geom_line(linewidth = 0.55) +
+  geom_ribbon(data = incidence_estimates %>%
+                filter(outcome %in% c("Hydroxychloroquine", "Methotrexate")) %>%
+                filter(denominator == "General database population"),
+                aes(ymin = incidence_100000_pys_95CI_lower,
+                    ymax = incidence_100000_pys_95CI_upper,
+                    x = start_date, 
+                    y = incidence_100000_pys,
+                    color = outcome, 
+                    fill = outcome),
+                alpha = 0.4, colour = NA) +
+  geom_point(aes(shape = outcome), size = 2) +
+  facet_grid2(rows = vars(denominator),
+              cols = vars(cdm_name),
+              scales = "free_y", 
+              independent = "y") +
+  scale_color_manual(values = c("#2a9d8f", "#f4a261", "#adb5bd")) +
+  scale_fill_manual(values = c("#78c5b7", "#f8c6a1", "#ced4da")) +
+  scale_y_continuous(labels = label_comma()) + 
+  xlab("Date") +
+  ylab("") +
+  guides(colour = element_blank()) +
+  theme_update() +
+  ylab("Incidence (100,000 pys)") +
+  theme(legend.title = element_blank()) +
+  facetted_pos_scales(y = y_scales)
+
+gg_ra <- incidence_estimates %>%
+  filter(outcome %in% c("Hydroxychloroquine", "Methotrexate")) %>%
+  filter(denominator == "Rheumatoid arthritis",
+         cdm_name == "PHARMETRICS") %>%
+  ggplot(aes(x = start_date, 
+             y = incidence_100000_pys, 
+             ymin = incidence_100000_pys_95CI_lower,
+             ymax = incidence_100000_pys_95CI_upper,
+             color = outcome, 
+             fill = outcome)) +
+  # geom_errorbar(width = 15, linewidth = 0.45) +
+  geom_ribbon(alpha = 0.4, colour = NA) +
+  geom_line(linewidth = 0.55) +
+  geom_point(size = 3, aes(shape = outcome)) +
+  facet_grid2(rows = vars(denominator),
+              cols = vars(cdm_name),
+              scales = "free_y", 
+              independent = "y") +
+  scale_color_manual(values = c("#2a9d8f", "#f4a261", "#adb5bd")) +
+  scale_fill_manual(values = c("#78c5b7", "#f8c6a1", "#ced4da")) +
+  scale_y_continuous(labels = label_comma()) + 
+  xlab("Date") +
+  ylab("") +
+  guides(colour = element_blank()) +
+  theme_update() +
+  ylab("Incidence (100,000 pys)") +
+  theme(legend.title = element_blank()) 
+  # facetted_pos_scales(y = y_scales)
+
+gg_dani <- ggarrange(plotlist = list(gg_general, gg_ra), 
+                     nrow = 2, 
+                     common.legend = TRUE,
+                     widths = c(1.5,1),
+                     heights = c(1.25,1),
+                     legend = "right",
+                     legend.grob = get_legend(gg_general)) +
+  bgcolor("white")
 
 ggsave(
-  paste0("Figure1.png"),
-  plot = gg,
+  paste0("Figure.tiff"),
+  plot = gg_dani,
   path = here(),
   scale = 1,
-  width = 4000,
-  height = 1800,
+  width = 3000,
+  height = 2000,
+  units = "px",
+  dpi = 300,
+  device='tiff'
+)
+
+
+## SUPPLEMENTARY ----
+incidence_estimates <- getElementType(elements, "incidence_estimates") %>%
+  bind_rows() %>% 
+  mutate(
+    denominator_strata_cohort_name = if_else(
+      is.na(denominator_strata_cohort_name),
+      "general",
+      denominator_strata_cohort_name
+    ),
+    denominator_age_group = gsub(";", " to ", denominator_age_group),
+    denominator_age_group = if_else(denominator_age_group == "0 to 150", "All ages", denominator_age_group),
+    denominator_age_group = if_else(denominator_age_group == "80 to 150", ">=80", denominator_age_group),
+    denominator_age_group = factor(denominator_age_group, levels = c("All ages", "0 to 19", "20 to 39", "40 to 59", "60 to 79", ">=80")),
+    incidence_100000_pys = as.numeric(incidence_100000_pys), 
+    incidence_100000_pys_95CI_lower = as.numeric(incidence_100000_pys_95CI_lower),
+    incidence_100000_pys_95CI_upper = as.numeric(incidence_100000_pys_95CI_upper),
+    incidence_start_date = as.Date(incidence_start_date, format = "%Y-%m-%d"),
+    incidence_end_date = as.Date(incidence_end_date, format = "%Y-%m-%d")
+  ) %>%
+  filter(analysis_interval == "months" &
+           denominator_age_group  == "All ages" &
+           denominator_sex  == "Both" &
+           ! denominator_strata_cohort_name %in% c("covid_no_ra", "rheumatoid_arthritis_no_covid",
+                                                   "malaria") &
+           outcome_cohort_name %in% c("users_hydroxychloroquine", "users_methotrexate") &
+           incidence_start_date <= as.Date("2022-03-01")
+  ) %>%
+  select(
+    "start_date" = "incidence_start_date", 
+    "incidence_100000_pys", "incidence_100000_pys_95CI_lower", "incidence_100000_pys_95CI_upper", 
+    "outcome" = "outcome_cohort_name",  
+    "denominator" = "denominator_strata_cohort_name", "cdm_name"
+  ) %>%
+  mutate(denominator = 
+           factor(denominator, 
+                  levels = c(
+                    "general",
+                    "covid",
+                    "rheumatoid_arthritis",
+                    "Region/Country population"),
+                  labels = c(
+                    "General database population",
+                    "COVID-19",
+                    "Rheumatoid arthritis",
+                    "Region/Country population"
+                  )),
+         outcome = case_when(
+           outcome == "users_hydroxychloroquine" ~ "Hydroxychloroquine",
+           outcome == "users_methotrexate" ~ "Methotrexate",
+           .default = NA
+         ))
+
+gg_sup <- incidence_estimates %>%
+  filter(outcome %in% c("Hydroxychloroquine", "Methotrexate")) %>%
+  filter(denominator != "COVID-19") %>%
+  ggplot(aes(x = start_date, y = incidence_100000_pys, color = outcome, fill = outcome)) +
+  geom_col(data = covid_us %>%
+             mutate(outcome = "Weekly COVID-19 cases",
+                    denominator = "general",
+                    denominator = 
+                      factor(denominator, 
+                             levels = c(
+                               "general",
+                               "covid_no_ra",
+                               "rheumatoid_arthritis_no_covid",
+                               "Region/Country population"),
+                             labels = c(
+                               "General database population",
+                               "COVID-19",
+                               "Rheumatoid arthritis",
+                               "Region/Country population"
+                             ))),
+           aes(x = start_date, y = new_cases/4000, fill = outcome, color = outcome)) +
+  geom_col(data = covid_cat %>%
+             mutate(outcome = "Weekly COVID-19 cases",
+                    denominator = "general",
+                    denominator = 
+                      factor(denominator, 
+                             levels = c(
+                               "general",
+                               "covid_no_ra",
+                               "rheumatoid_arthritis_no_covid",
+                               "Region/Country population"),
+                             labels = c(
+                               "General database population",
+                               "COVID-19",
+                               "Rheumatoid arthritis",
+                               "Region/Country population"
+                             ))),
+           aes(x = start_date, y = new_cases/40, fill = outcome, color = outcome)) +
+  geom_point() +
+  geom_line() +
+  facet_grid2(rows = vars(denominator),
+              cols = vars(cdm_name),
+              scales = "free_y", 
+              independent = "y") +
+  scale_color_manual(values = c("#2a9d8f", "#f4a261", "#adb5bd")) +
+  scale_fill_manual(values = c("#78c5b7", "#f8c6a1", "#ced4da")) +
+  scale_y_continuous(labels = label_comma()) + 
+  xlab("Date") +
+  ylab("") +
+  guides(colour = element_blank()) +
+  theme_update() +
+  ylab("Incidence (100,000 pys)") +
+  theme(legend.title = element_blank()) +
+  facetted_pos_scales(y = y_scales)
+
+ggsave(
+  paste0("Figure_sup.png"),
+  plot = gg_sup,
+  path = here(),
+  scale = 1,
+  width = 3000,
+  height = 2000,
   units = "px",
   dpi = 300
 )
-
-###################
-
-
-
-prev <- tibble(read.csv(here(resultsFolder, "prevalence.csv"))) %>%
-  mutate(prevalence_start_date = as.Date(prevalence_start_date, format = "%Y-%m-%d"),
-         prevalence_end_date = as.Date(prevalence_end_date, format = "%Y-%m-%d")) %>%
-  filter(prevalence_end_date <= as.Date("2022-04-01")) %>%
-  filter(denominator_age_group == "0;150") %>%
-  filter(denominator_sex == "Both") %>%
-  filter(denominator_strata_cohort_name  %in% c("covid_no_ra", "rheumatoid_arthritis_no_covid")) %>%
-  filter(analysis_interval == "weeks") %>%
-  filter(outcome_cohort_name == "users_hydroxychloroquine")
-
-prev %>%
-  ggplot(aes(x = prevalence_start_date, y = prevalence, color = denominator_strata_cohort_name)) +
-  geom_point() +
-  geom_line() 
-
-
-# 
-prev <- tibble(read.csv(here(resultsFolder, "prevalence.csv"))) %>%
-  mutate(prevalence_start_date = as.Date(prevalence_start_date, format = "%Y-%m-%d"),
-         prevalence_end_date = as.Date(prevalence_end_date, format = "%Y-%m-%d")) %>%
-  filter(prevalence_end_date <= as.Date("2022-04-01")) %>%
-  filter(denominator_age_group == "0;150") %>%
-  filter(denominator_sex == "Both") %>%
-  filter(analysis_interval == "months") %>%
-  filter(denominator_strata_cohort_name != "malaria") %>%
-  mutate(denominator_strata_cohort_name = 
-           factor(denominator_strata_cohort_name,
-                  levels = c("general", "covid", "covid_no_ra", "rheumatoid_arthritis", 
-                             "rheumatoid_arthritis_no_covid")
-                  )
-         )
-  
-prev %>% 
-  ggplot(aes(x = prevalence_start_date, y = prevalence, color = outcome_cohort_name)) +
-  geom_point() +
-  geom_line() +
-  facet_grid(rows = vars(denominator_strata_cohort_name), scales = "free_y")
-

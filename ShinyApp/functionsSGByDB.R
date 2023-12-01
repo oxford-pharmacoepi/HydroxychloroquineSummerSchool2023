@@ -1,6 +1,7 @@
+# classes ----
 classes <- dplyr::tibble(
   primary_class = "cdm_snapshot",
-  column_name = c("attribute", "value")
+  column_name = c("attribute", "value", "cdm_name")
 ) %>%
   dplyr::union_all(dplyr::tibble(
     primary_class = "summary_codelist",
@@ -26,12 +27,27 @@ classes <- dplyr::tibble(
     )
   )) %>%
   dplyr::union_all(dplyr::tibble(
+    primary_class = "vaccine_exclusion_counts",
+    column_name = c(
+      "cdm_name", "reason", "n", "population" 
+    )
+  )) %>%
+  dplyr::union_all(dplyr::tibble(
     primary_class = "denominator_attrition",
     column_name = c(
       "cohort_definition_id", "age_group", "sex", "days_prior_history", 
       "start_date", "end_date", "strata_cohort_definition_id", 
       "strata_cohort_name", "number_records", "number_subjects", "reason_id",
-      "reason", "excluded_records", "excluded_subjects" 
+      "reason", "excluded_records", "excluded_subjects", "cdm_name" 
+    )
+  )) %>%
+  dplyr::union_all(dplyr::tibble(
+    primary_class = "denominator_count",
+    column_name = c(
+      "cohort_definition_id", "number_records", "number_subjects", "cohort_name",               
+      "age_group", "sex", "days_prior_history", "start_date",                
+      "end_date", "strata_cohort_definition_id", "strata_cohort_name", "closed_cohort",             
+      "cdm_name" 
     )
   )) %>%
   dplyr::union_all(dplyr::tibble(
@@ -71,14 +87,14 @@ classes <- dplyr::tibble(
   dplyr::union_all(dplyr::tibble(
     primary_class = "cohort_count",
     column_name = c(
-      "cohort_name", "cohort_definition_id", "number_records", "number_subjects"
+      "cohort_name", "cohort_definition_id", "number_records", "number_subjects", "cdm_name"
     )
   )) %>%
   dplyr::union_all(dplyr::tibble(
     primary_class = "cohort_attrition",
     column_name = c(
       "cohort_definition_id", "number_records", "number_subjects", "reason_id",
-      "reason", "excluded_records", "excluded_subjects", "cohort_name"
+      "reason", "excluded_records", "excluded_subjects", "cohort_name", "cdm_name"
     )
   )) 
 
@@ -88,6 +104,28 @@ subClasses <- dplyr::tibble(
   distinguish_content = c("summariseCodelistATC", "summariseCodelistICD10", "summariseIndication", "summariseDrugUse"),
   distinguish_variable = "generated_by"
 )
+
+
+# process data to add db name ----
+addCdmName <- function(path) {
+  files <- list.files(path, full.names = TRUE)
+  
+  for (k in seq_along(files)) {
+    if (tools::file_ext(files[k]) == "csv") {
+      x <- readr::read_csv(
+        files[k], col_types = readr::cols(.default = readr::col_character())
+      )
+      
+      if(! "cdm_name" %in% names(x))  {
+        db_name <- gsub(".csv", "", str_split_1(files[k], "_")[length(str_split_1(files[k], "_"))])
+        x <- x %>%
+          mutate(cdm_name = db_name)
+        
+        write_csv(x, files[k])
+      }
+    }
+  }
+}
 
 identifyClass <- function(x) {
   cl <- sort(colnames(x))
@@ -139,7 +177,9 @@ readFiles <- function(path) {
 }
 displayCdmSnapshot <- function(elements) {
   lapply(getElementType(elements, "cdm_snapshot"), function(x) {
-    tidyr::pivot_wider(x, names_from = "attribute", values_from = "value")
+    x %>%
+      dplyr::select(-cdm_name) %>%
+    tidyr::pivot_wider(names_from = "attribute", values_from = "value")
   }) %>%
     dplyr::bind_rows() %>%
     dplyr::mutate(
@@ -155,18 +195,11 @@ displayCdmSnapshot <- function(elements) {
       "Number observation periods" = "observation_period_cnt"
     )
 }
-displayCohortCount <- function(elements) {
-  getElementType(elements, "cohort_count") %>%
-    dplyr::bind_rows() %>%
-    dplyr::mutate(
-      number_records = niceNum(.data$number_records),
-      number_subjects = niceNum(.data$number_subjects)
-    ) %>%
-    dplyr::select("cohort_name", "number_records", "number_subjects")
-}
-displayCohortAttrition <- function(elements) {
+
+displayCohortAttrition <- function(elements, cdmName) {
   getElementType(elements, "cohort_attrition") %>%
     dplyr::bind_rows() %>%
+    filter(.data$cdm_name == .env$cdmName) %>%
     dplyr::mutate(
       number_records = niceNum(.data$number_records),
       number_subjects = niceNum(.data$number_subjects),
@@ -185,7 +218,8 @@ displayDenominatorAttrition <- function(denominatorAttrition,
                                         daysPriorHistory, 
                                         startDate,
                                         endDate,
-                                        strataCohortName) {
+                                        strataCohortName,
+                                        cdmName) {
   denominatorAttrition %>%
     dplyr::filter(.data$age_group == .env$ageGroup) %>%
     dplyr::filter(.data$sex == .env$sex) %>%
@@ -193,6 +227,7 @@ displayDenominatorAttrition <- function(denominatorAttrition,
     dplyr::filter(.data$start_date == .env$startDate) %>%
     dplyr::filter(.data$end_date == .env$endDate) %>%
     dplyr::filter(.data$strata_cohort_name == .env$strataCohortName) %>%
+    dplyr::filter(.data$cdm_name == .env$cdmName) %>%
     dplyr::arrange(as.numeric(.data$reason_id)) %>%
     dplyr::select(
       "reason_id", "reason", "number_records", "number_subjects", 
@@ -206,7 +241,8 @@ displayIncidence <- function(incidence,
                              incidenceStartDate,
                              incidenceEndDate,
                              analysisInterval,
-                             outcome) {
+                             outcome,
+                             cdmName) {
   incidence %>%
     dplyr::filter(.data$denominator_age_group %in%.env$ageGroup) %>%
     dplyr::filter(.data$denominator_sex %in% .env$sex) %>%
@@ -215,6 +251,7 @@ displayIncidence <- function(incidence,
     dplyr::filter(.data$incidence_end_date <= as.Date(.env$incidenceEndDate)) %>%
     dplyr::filter(.data$analysis_interval %in% .env$analysisInterval) %>%
     dplyr::filter(.data$outcome_cohort_name %in% .env$outcome) %>%
+    dplyr::filter(.data$cdm_name %in% .env$cdmName) %>%
     dplyr::mutate(
       incidence_100000_pys = as.numeric(incidence_100000_pys),
       incidence_100000_pys_95CI_lower = as.numeric(incidence_100000_pys_95CI_lower),
@@ -240,7 +277,8 @@ displayPrevalence <- function(prevalence,
                              prevalenceStartDate,
                              prevalenceEndDate,
                              analysisInterval,
-                             outcome) {
+                             outcome,
+                             cdmName) {
   prevalence %>%
     dplyr::filter(.data$denominator_age_group %in%.env$ageGroup) %>%
     dplyr::filter(.data$denominator_sex %in% .env$sex) %>%
@@ -249,6 +287,7 @@ displayPrevalence <- function(prevalence,
     dplyr::filter(.data$prevalence_end_date <= as.Date(.env$prevalenceEndDate)) %>%
     dplyr::filter(.data$analysis_interval %in% .env$analysisInterval) %>%
     dplyr::filter(.data$outcome_cohort_name %in% .env$outcome) %>%
+    dplyr::filter(.data$cdm_name %in% .env$cdmName) %>%
     dplyr::mutate(
       prevalence = as.numeric(prevalence),
       prevalence_95CI_lower = as.numeric(prevalence_95CI_lower),
@@ -267,9 +306,10 @@ displayPrevalence <- function(prevalence,
       "denominator_sex", "denominator_strata_cohort_name"
     ))
 }
-displayTableOne <- function(elements, drug_type) {
+displayTableOne <- function(elements, drug_type, cdmName) {
   x <- getElementType(elements, "table_characteristics") %>%
     dplyr::bind_rows() %>%
+    dplyr::filter(.data$cdm_name == .env$cdmName) %>%
     dplyr::select(-c("group_name", "strata_name", "cdm_name")) %>%
     dplyr::filter(.data$group_level == .env$drug_type) %>%
     dplyr::select(-"group_level") %>%

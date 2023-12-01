@@ -1,22 +1,24 @@
 
-source(here("functions_quarto.R"))
+resultsFolder <- "data"
+source(here("functionsSGByDB.R"))
+addCdmName(here(resultsFolder))
 
-elements <- readFiles(here::here("Results_PHARMETRICS"))
+elements <- readFiles(here::here(resultsFolder))
 
 # TABLE ONE ----
 ## data frame ----
 table_one <- getElementType(elements, "table_characteristics") %>%
   dplyr::bind_rows() %>%
-  dplyr::filter(strata_name%in% c("Indication", "Overall")) %>%
-  dplyr::filter(strata_level != "Malaria") %>%
+  dplyr::filter(strata_name %in% c("Indication", "Overall")) %>%
+  dplyr::filter(! strata_level %in% c("Malaria")) %>% 
   dplyr::mutate(strata_level = case_when(
     strata_level == "covid" ~ "COVID-19",
     strata_level == "rheumatoid_arthritis" ~ "RA",
-    .default = "Overall"
+    .default = stringr::str_to_sentence(.data$strata_level)
   )) %>%
   dplyr::select(-c("group_name", "strata_name")) %>%
   dplyr::mutate(estimate = niceNum(.data$estimate, significativeDecimals = 0)) %>%
-  dplyr::mutate(estimate = gsub(" ", "", .data$estimate)) %>%
+  dplyr::mutate(estimate = gsub(" ", "", .data$estimate)) %>% 
   tidyr::pivot_wider(names_from = "estimate_type", values_from = "estimate") %>%
   dplyr::mutate(
     "Count (%)" = dplyr::if_else(!is.na(.data[["%"]]), paste0(count, " (", `%`, "%)"), as.character(NA)),
@@ -52,13 +54,13 @@ table_one <- table_one_1 %>%
 
 table_one <- tibble(
   variable = c("number subjects", "age", "Age group", "age_group", "sex", "prior_history", 
-               "Comorbidities**",
+               "Comorbidities",
                "anxiety", "asthma", "chronic_kidney_disease", "chronic_liver_disease",                    
                "copd", "covid", "dementia", "depressive_disorder", "diabetes", "heart_failure", "hiv",                                   
                "hypertension", "hypothyroidism", "infertility", "inflammatory_bowel_disease",               
                "malaria", "malignant_neoplastic_disease", "myocardial_infarction", "osteoporosis",                             
                "pneumonia", "rheumatoid_arthritis", "stroke", "venous_thromboembolism",
-               "Medications***",
+               "Medications",
                "agents_acting_on_renin_angiotensin_system", "antibacterials_systemic",                  
                "antidepressants", "antiepileptics", "antiinflammatory_antirheumatic_agents", 
                "antineoplastic_agents", "antithrombotics", "beta_blocking_agents",                     
@@ -80,7 +82,6 @@ table_one <- tibble(
     variable == "Covid" ~ "COVID-19",
     variable == "gerd" ~ "GERD",
     variable == "Hiv" ~ "HIV",
-    variable == "Prior history" ~ "Prior history*",
     .default = variable
   )) %>%
   rename("Variable" = "variable",
@@ -88,7 +89,7 @@ table_one <- tibble(
   
 ## captions ----  
 captions <- expand_grid(
-  cdm_name = unique(table_one$cdm_name),
+  cdm_name = unique(table_one$cdm_name[!is.na(table_one$cdm_name)]),
   group_level = c("new_users_hydroxychloroquine", "new_users_methotrexate")
 ) %>%
   mutate(drug_name = if_else(
@@ -131,8 +132,6 @@ drug_use <- tibble(
                 by = "variable") %>%
   mutate(variable = case_when(
     variable == "number subjects" ~ "Number subjects (N)",
-    variable == "Number eras" ~ "Number eras*",
-    variable == "Number exposures" ~ "Number exposures**",
     .default = variable
   )) %>%
   mutate(variable = if_else(

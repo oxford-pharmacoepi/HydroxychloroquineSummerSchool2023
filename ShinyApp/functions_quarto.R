@@ -1,6 +1,7 @@
+# classes ----
 classes <- dplyr::tibble(
   primary_class = "cdm_snapshot",
-  column_name = c("attribute", "value")
+  column_name = c("attribute", "value", "cdm_name")
 ) %>%
   dplyr::union_all(dplyr::tibble(
     primary_class = "summary_codelist",
@@ -26,12 +27,27 @@ classes <- dplyr::tibble(
     )
   )) %>%
   dplyr::union_all(dplyr::tibble(
+    primary_class = "vaccine_exclusion_counts",
+    column_name = c(
+      "cdm_name", "reason", "n", "population" 
+    )
+  )) %>%
+  dplyr::union_all(dplyr::tibble(
     primary_class = "denominator_attrition",
     column_name = c(
       "cohort_definition_id", "age_group", "sex", "days_prior_history", 
       "start_date", "end_date", "strata_cohort_definition_id", 
       "strata_cohort_name", "number_records", "number_subjects", "reason_id",
-      "reason", "excluded_records", "excluded_subjects"
+      "reason", "excluded_records", "excluded_subjects", "cdm_name" 
+    )
+  )) %>%
+  dplyr::union_all(dplyr::tibble(
+    primary_class = "denominator_count",
+    column_name = c(
+      "cohort_definition_id", "number_records", "number_subjects", "cohort_name",               
+      "age_group", "sex", "days_prior_history", "start_date",                
+      "end_date", "strata_cohort_definition_id", "strata_cohort_name", "closed_cohort",             
+      "cdm_name" 
     )
   )) %>%
   dplyr::union_all(dplyr::tibble(
@@ -71,14 +87,14 @@ classes <- dplyr::tibble(
   dplyr::union_all(dplyr::tibble(
     primary_class = "cohort_count",
     column_name = c(
-      "cohort_name", "cohort_definition_id", "number_records", "number_subjects"
+      "cohort_name", "cohort_definition_id", "number_records", "number_subjects", "cdm_name"
     )
   )) %>%
   dplyr::union_all(dplyr::tibble(
     primary_class = "cohort_attrition",
     column_name = c(
       "cohort_definition_id", "number_records", "number_subjects", "reason_id",
-      "reason", "excluded_records", "excluded_subjects", "cohort_name"
+      "reason", "excluded_records", "excluded_subjects", "cohort_name", "cdm_name"
     )
   )) 
 
@@ -88,6 +104,28 @@ subClasses <- dplyr::tibble(
   distinguish_content = c("summariseCodelistATC", "summariseCodelistICD10", "summariseIndication", "summariseDrugUse"),
   distinguish_variable = "generated_by"
 )
+
+
+# process data to add db name ----
+addCdmName <- function(path) {
+  files <- list.files(path, full.names = TRUE)
+  
+  for (k in seq_along(files)) {
+    if (tools::file_ext(files[k]) == "csv") {
+      x <- readr::read_csv(
+        files[k], col_types = readr::cols(.default = readr::col_character())
+      )
+      
+      if(! "cdm_name" %in% names(x))  {
+        db_name <- gsub(".csv", "", str_split_1(files[k], "_")[length(str_split_1(files[k], "_"))])
+        x <- x %>%
+          mutate(cdm_name = db_name)
+        
+        write_csv(x, files[k])
+      }
+    }
+  }
+}
 
 identifyClass <- function(x) {
   cl <- sort(colnames(x))

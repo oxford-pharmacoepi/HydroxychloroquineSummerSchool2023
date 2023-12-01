@@ -10,41 +10,30 @@ library(DT)
 library(plotly)
 library(scales)
 library(tidyr)
-library(stringr)
+
+resultsFolder <- "Results_IMASIS"
 
 
-resultsFolder <- "data"
+readr::read_csv(
+  here::here(resultsFolder, "characteristics_atc.csv"), 
+  col_types = readr::cols(.default = readr::col_character())
+) %>%
+  dplyr::mutate(generated_by = "DrugUtilisation_0.2.0_summariseCodelistATC") %>%
+  readr::write_csv(
+    here::here(resultsFolder, "characteristics_atc.csv")
+  )
 
-# for (db in c("IMASIS", "PHARMETRICS")) {
-#   resultsFolder_old <- here(paste0("Results_", db))
-#   files <- list.files(resultsFolder_old, full.names = TRUE)
-#   for (file in files) {
-#     file_new <- gsub(resultsFolder_old, resultsFolder, paste0(substr(file, 1, nchar(file)-4), "_", db, ".csv"))
-#     file.copy(file, file_new)
-#   }
-# }
-# 
-# readr::read_csv(
-#   here::here(resultsFolder, "characteristics_atc_IMASIS.csv"),
-#   col_types = readr::cols(.default = readr::col_character())
-# ) %>%
-#   dplyr::mutate(generated_by = "DrugUtilisation_0.2.0_summariseCodelistATC") %>%
-#   readr::write_csv(
-#     here::here(resultsFolder, "characteristics_atc_IMASIS.csv")
-#   )
-# 
-# readr::read_csv(
-#   here::here(resultsFolder, "characteristics_icd10_IMASIS.csv"),
-#   col_types = readr::cols(.default = readr::col_character())
-# ) %>%
-#   dplyr::mutate(generated_by = "DrugUtilisation_0.2.0_summariseCodelistICD10") %>%
-#   readr::write_csv(
-#     here::here(resultsFolder, "characteristics_icd10_IMASIS.csv")
-#   )
+readr::read_csv(
+  here::here(resultsFolder, "characteristics_icd10.csv"), 
+  col_types = readr::cols(.default = readr::col_character())
+) %>%
+  dplyr::mutate(generated_by = "DrugUtilisation_0.2.0_summariseCodelistICD10") %>%
+  readr::write_csv(
+    here::here(resultsFolder, "characteristics_icd10.csv")
+  )
 
-source(here("functionsSGByDB.R"))
+source(here("functionsSG.R"))
 
-addCdmName(here(resultsFolder))
 elements <- readFiles(here::here(resultsFolder))
 settings <- attr(elements, "settings")
 
@@ -72,7 +61,7 @@ denominatorAttrition <- getElementType(elements, "denominator_attrition") %>%
 
 atc <- getElementType(elements, "atc_summary") %>%
   dplyr::bind_rows() %>%
-  dplyr::select(-c("group_name", "strata_name", "variable_type", "variable_level", "estimate_type", "generated_by"))
+  dplyr::select(-c("group_name", "strata_name", "cdm_name", "variable_type", "variable_level", "estimate_type", "generated_by"))
 atc <- atc %>%
   filter(variable != "denominator") %>%
   left_join(
@@ -80,7 +69,7 @@ atc <- atc %>%
       filter(variable == "denominator") %>%
       mutate(denominator = estimate) %>%
       select(-c("variable", "estimate")),
-    by = c("strata_level", "window_name", "group_level", "cdm_name")
+    by = c("strata_level", "window_name", "group_level")
   ) %>%
   mutate(
     percentage = as.numeric(estimate)/as.numeric(denominator),
@@ -92,7 +81,7 @@ atc <- atc %>%
 
 icd10 <- getElementType(elements, "icd10_summary") %>%
   dplyr::bind_rows() %>%
-  dplyr::select(-c("group_name", "strata_name", "variable_type", "variable_level", "estimate_type", "generated_by"))
+  dplyr::select(-c("group_name", "strata_name", "cdm_name", "variable_type", "variable_level", "estimate_type", "generated_by"))
 icd10 <- icd10 %>%
   filter(variable != "denominator") %>%
   left_join(
@@ -100,7 +89,7 @@ icd10 <- icd10 %>%
       filter(variable == "denominator") %>%
       mutate(denominator = estimate) %>%
       select(-c("variable", "estimate")),
-    by = c("strata_level", "window_name", "group_level", "cdm_name")
+    by = c("strata_level", "window_name", "group_level")
   ) %>%
   mutate(
     percentage = as.numeric(estimate)/as.numeric(denominator)
@@ -118,10 +107,10 @@ icd10 <- icd10 %>%
 
 drug_use <- getElementType(elements, "drug_use") %>%
   bind_rows() %>%
-  select(-c("group_name", "strata_name", "variable_level", "variable_type", "generated_by")) %>%
+  select(-c("group_name", "strata_name", "variable_level", "variable_type", "cdm_name", "generated_by")) %>%
   mutate(estimate = round(as.numeric(estimate))) %>%
   pivot_wider(names_from = "strata_level", values_from = "estimate") %>%
-  select(group_level, variable, estimate_type, Overall, before_pandemic, during_hcq_use_for_covid, after_fda_retraction, covid, rheumatoid_arthritis, cdm_name)
+  select(group_level, variable, estimate_type, Overall, before_pandemic, during_hcq_use_for_covid, after_fda_retraction, covid, rheumatoid_arthritis)
 
 incidence_estimates <- getElementType(elements, "incidence_estimates") %>%
   bind_rows() %>%
@@ -138,13 +127,13 @@ incidence_estimates <- getElementType(elements, "incidence_estimates") %>%
     incidence_100000_pys = as.numeric(incidence_100000_pys), 
     incidence_100000_pys_95CI_lower = as.numeric(incidence_100000_pys_95CI_lower),
     incidence_100000_pys_95CI_upper = as.numeric(incidence_100000_pys_95CI_upper),
-    incidence_start_date = as.Date(incidence_start_date, format = "%Y-%m-%d"),
-    incidence_end_date = as.Date(incidence_end_date, format = "%Y-%m-%d")
+    incidence_start_date = as.Date(incidence_start_date, format = "%d/%m/%Y"),
+    incidence_end_date = as.Date(incidence_end_date, format = "%d/%m/%Y")
   ) %>%
   select(
     "incidence_start_date", "incidence_end_date", "incidence_100000_pys", "incidence_100000_pys_95CI_lower", "incidence_100000_pys_95CI_upper", 
     "outcome_cohort_name", "denominator_age_group", "denominator_sex", "denominator_strata_cohort_name",
-    "n_persons", "n_events", "analysis_interval", "cdm_name"
+    "n_persons", "n_events", "analysis_interval"
   )
 
 prevalence_estimates <- getElementType(elements, "prevalence_estimates") %>%
@@ -162,21 +151,13 @@ prevalence_estimates <- getElementType(elements, "prevalence_estimates") %>%
     prevalence = as.numeric(prevalence), 
     prevalence_95CI_lower = as.numeric(prevalence_95CI_lower),
     prevalence_95CI_upper = as.numeric(prevalence_95CI_upper),
-    prevalence_start_date = as.Date(prevalence_start_date, format = "%Y-%m-%d"),
-    prevalence_end_date = as.Date(prevalence_end_date, format = "%Y-%m-%d")
+    prevalence_start_date = as.Date(prevalence_start_date, format = "%d/%m/%Y"),
+    prevalence_end_date = as.Date(prevalence_end_date, format = "%d/%m/%Y")
   ) %>%
   select(
     "prevalence_start_date", "prevalence_end_date", "prevalence", "prevalence_95CI_lower", "prevalence_95CI_upper", 
     "outcome_cohort_name", "denominator_age_group", "denominator_sex", "denominator_strata_cohort_name",
-    "n_cases", "n_population", "analysis_interval", "cdm_name"
-  )
-
-# cohort count
-cohortCount <- getElementType(elements, "cohort_count") %>%
-  dplyr::bind_rows()  %>%
-  dplyr::mutate(
-    number_records = niceNum(.data$number_records),
-    number_subjects = niceNum(.data$number_subjects),
+    "n_cases", "n_population", "analysis_interval"
   )
 
  # ui ----
@@ -224,63 +205,18 @@ ui <- dashboardPage(
       tabItem(
         tabName = "cohort_counts", 
         h3("Counts for the cohorts instantiated in the study"),
-        div(
-          style = "display: inline-block;vertical-align:top; width: 150px;",
-          pickerInput(
-            inputId = "cohort_count_cdm_name",
-            label = "Database",
-            choices = unique(cohortCount$cdm_name),
-            selected = unique(cohortCount$cdm_name)[2],
-            options = list(
-              `actions-box` = TRUE,
-              size = 10,
-              `selected-text-format` = "count > 3"
-            ),
-            multiple = TRUE
-          )
-        ),
         DTOutput("cohort_count")
       ),
       ### cohort_attrition -----
       tabItem(
         tabName = "cohort_attrition", 
         h3("Attrition for the different cohorts in the study"),
-        div(
-          style = "display: inline-block;vertical-align:top; width: 150px;",
-          pickerInput(
-            inputId = "cohort_attrition_cdm_name",
-            label = "Database",
-            choices = unique(cohortCount$cdm_name),
-            selected = unique(cohortCount$cdm_name)[2],
-            options = list(
-              `actions-box` = TRUE,
-              size = 10,
-              `selected-text-format` = "count > 3"
-            ),
-            multiple = FALSE
-          )
-        ),
         DTOutput("cohort_attrition")
       ),
       ### denomiator_population ----
       tabItem(
         tabName = "denomiator_population", 
         h3("Attrition for the denominator population"),
-        div(
-          style = "display: inline-block;vertical-align:top; width: 150px;",
-          pickerInput(
-            inputId = "denominator_attrition_cdm_name",
-            label = "Database",
-            choices = unique(denominatorAttrition$cdm_name),
-            selected = unique(denominatorAttrition$cdm_name)[2],
-            options = list(
-              `actions-box` = TRUE,
-              size = 10,
-              `selected-text-format` = "count > 3"
-            ),
-            multiple = FALSE
-          )
-        ),
         div(
           style = "display: inline-block;vertical-align:top; width: 150px;",
           pickerInput(
@@ -331,11 +267,8 @@ ui <- dashboardPage(
           pickerInput(
             inputId = "denominator_attrition_start_date",
             label = "Start date",
-            choices = as.character(
-              unique(
-                sort(
-                  denominatorAttrition$start_date))),
-            selected = as.character(min(denominatorAttrition$start_date)),
+            choices = unique(denominatorAttrition$start_date),
+            selected = unique(denominatorAttrition$start_date)[1],
             options = list(
               `actions-box` = TRUE,
               size = 10,
@@ -349,11 +282,8 @@ ui <- dashboardPage(
           pickerInput(
             inputId = "denominator_attrition_end_date",
             label = "End date",
-            choices = as.character(
-              unique(
-                sort(
-                  denominatorAttrition$end_date))),
-            selected = as.character(max(denominatorAttrition$end_date)),
+            choices = unique(denominatorAttrition$end_date),
+            selected = unique(denominatorAttrition$end_date)[1],
             options = list(
               `actions-box` = TRUE,
               size = 10,
@@ -401,21 +331,6 @@ ui <- dashboardPage(
           )
         ),
         h3("Denominator population"),
-        div(
-          style = "display: inline-block;vertical-align:top; width: 150px;",
-          pickerInput(
-            inputId = "incidence_estimates_cdm_name",
-            label = "Database",
-            choices = unique(incidence_estimates$cdm_name),
-            selected = unique(incidence_estimates$cdm_name)[2],
-            options = list(
-              `actions-box` = TRUE,
-              size = 10,
-              `selected-text-format` = "count > 3"
-            ),
-            multiple = TRUE
-          )
-        ),
         div(
           style = "display: inline-block;vertical-align:top; width: 150px;",
           pickerInput(
@@ -490,7 +405,7 @@ ui <- dashboardPage(
               unique(
                 sort(
                   incidence_estimates$incidence_end_date))),
-            selected = "2022-05-31",
+            selected = as.character(max(incidence_estimates$incidence_end_date)),
             options = list(
               `actions-box` = TRUE,
               size = 10,
@@ -533,8 +448,7 @@ ui <- dashboardPage(
                   "outcome_cohort_name",
                   "denominator_age_group", 
                   "denominator_sex",
-                  "denominator_strata_cohort_name",
-                  "cdm_name"
+                  "denominator_strata_cohort_name"
                 ),
                 selected = "incidence_start_date",
                 options = list(
@@ -553,8 +467,7 @@ ui <- dashboardPage(
                   "outcome_cohort_name", 
                   "denominator_age_group",
                   "denominator_sex",
-                  "denominator_strata_cohort_name",
-                  "cdm_name"
+                  "denominator_strata_cohort_name"
                 ),
                 selected = c("outcome_cohort_name"),
                 options = list(
@@ -574,8 +487,7 @@ ui <- dashboardPage(
                   "outcome_cohort_name", 
                   "denominator_age_group",
                   "denominator_sex",
-                  "denominator_strata_cohort_name",
-                  "cdm_name"
+                  "denominator_strata_cohort_name"
                 ),
                 selected="outcome_cohort_name",
                 options = list(
@@ -612,21 +524,6 @@ ui <- dashboardPage(
           )
         ),
         h3("Denominator population"),
-        div(
-          style = "display: inline-block;vertical-align:top; width: 150px;",
-          pickerInput(
-            inputId = "prevalence_estimatest_cdm_name",
-            label = "Database",
-            choices = unique(prevalence_estimates$cdm_name),
-            selected = unique(prevalence_estimates$cdm_name)[2],
-            options = list(
-              `actions-box` = TRUE,
-              size = 10,
-              `selected-text-format` = "count > 3"
-            ),
-            multiple = TRUE
-          )
-        ),
         div(
           style = "display: inline-block;vertical-align:top; width: 150px;",
           pickerInput(
@@ -701,7 +598,7 @@ ui <- dashboardPage(
               unique(
                 sort(
                   prevalence_estimates$prevalence_end_date))),
-            selected = "2022-05-31",
+            selected = as.character(max(prevalence_estimates$prevalence_end_date)),
             options = list(
               `actions-box` = TRUE,
               size = 10,
@@ -744,8 +641,7 @@ ui <- dashboardPage(
                   "outcome_cohort_name",
                   "denominator_age_group", 
                   "denominator_sex",
-                  "denominator_strata_cohort_name",
-                  "cdm_name"
+                  "denominator_strata_cohort_name"
                 ),
                 selected = "prevalence_start_date",
                 options = list(
@@ -764,8 +660,7 @@ ui <- dashboardPage(
                   "outcome_cohort_name", 
                   "denominator_age_group",
                   "denominator_sex",
-                  "denominator_strata_cohort_name",
-                  "cdm_name"
+                  "denominator_strata_cohort_name"
                 ),
                 selected = c("outcome_cohort_name"),
                 options = list(
@@ -785,8 +680,7 @@ ui <- dashboardPage(
                   "outcome_cohort_name", 
                   "denominator_age_group",
                   "denominator_sex",
-                  "denominator_strata_cohort_name",
-                  "cdm_name"
+                  "denominator_strata_cohort_name"
                 ),
                 selected="outcome_cohort_name",
                 options = list(
@@ -887,21 +781,6 @@ ui <- dashboardPage(
           tabPanel(
             "Compare indication",
             div(
-              style = "display: inline-block;vertical-align:top; width: 150px;",
-              pickerInput(
-                inputId = "drug_use_cdm_name_indication",
-                label = "Database",
-                choices = unique(drug_use$cdm_name),
-                selected = unique(drug_use$cdm_name)[2],
-                options = list(
-                  `actions-box` = TRUE,
-                  size = 10,
-                  `selected-text-format` = "count > 3"
-                ),
-                multiple = FALSE
-              )
-            ),
-            div(
               style="display: inline-block;vertical-align:top; width: 150px;",
               pickerInput(
                 inputId = "du_drug_type_indication",
@@ -920,21 +799,6 @@ ui <- dashboardPage(
           ),
           tabPanel(
             "Compare calendar times",
-            div(
-              style = "display: inline-block;vertical-align:top; width: 150px;",
-              pickerInput(
-                inputId = "drug_use_cdm_name_window",
-                label = "Database",
-                choices = unique(drug_use$cdm_name),
-                selected = unique(drug_use$cdm_name)[2],
-                options = list(
-                  `actions-box` = TRUE,
-                  size = 10,
-                  `selected-text-format` = "count > 3"
-                ),
-                multiple = FALSE
-              )
-            ),
             div(
               style="display: inline-block;vertical-align:top; width: 150px;",
               pickerInput(
@@ -963,21 +827,6 @@ ui <- dashboardPage(
           tabPanel(
             "Compare indication",
             div(
-              style = "display: inline-block;vertical-align:top; width: 150px;",
-              pickerInput(
-                inputId = "tc_cdm_name_indication",
-                label = "Database",
-                choices = unique(drug_use$cdm_name),
-                selected = unique(drug_use$cdm_name)[2],
-                options = list(
-                  `actions-box` = TRUE,
-                  size = 10,
-                  `selected-text-format` = "count > 3"
-                ),
-                multiple = FALSE
-              )
-            ),
-            div(
               style="display: inline-block;vertical-align:top; width: 150px;",
               pickerInput(
                 inputId = "tc_drug_type_indication",
@@ -996,21 +845,6 @@ ui <- dashboardPage(
           ),
           tabPanel(
             "Compare calendar times",
-            div(
-              style = "display: inline-block;vertical-align:top; width: 150px;",
-              pickerInput(
-                inputId = "tc_cdm_window",
-                label = "Database",
-                choices = unique(drug_use$cdm_name),
-                selected = unique(drug_use$cdm_name)[2],
-                options = list(
-                  `actions-box` = TRUE,
-                  size = 10,
-                  `selected-text-format` = "count > 3"
-                ),
-                multiple = FALSE
-              )
-            ),
             div(
               style="display: inline-block;vertical-align:top; width: 150px;",
               pickerInput(
@@ -1038,21 +872,6 @@ ui <- dashboardPage(
           type = "tabs",
           tabPanel(
             "Compare indication",
-            div(
-              style = "display: inline-block;vertical-align:top; width: 150px;",
-              pickerInput(
-                inputId = "atc_cdm_ind",
-                label = "Database",
-                choices = unique(drug_use$cdm_name),
-                selected = unique(drug_use$cdm_name)[2],
-                options = list(
-                  `actions-box` = TRUE,
-                  size = 10,
-                  `selected-text-format` = "count > 3"
-                ),
-                multiple = FALSE
-              )
-            ),
             div(
               style = "display: inline-block;vertical-align:top; width: 150px;",
               pickerInput(
@@ -1090,21 +909,6 @@ ui <- dashboardPage(
             div(
               style = "display: inline-block;vertical-align:top; width: 150px;",
               pickerInput(
-                inputId = "atc_cdm_window",
-                label = "Database",
-                choices = unique(atc$cdm_name),
-                selected = unique(atc$cdm_name)[2],
-                options = list(
-                  `actions-box` = TRUE,
-                  size = 10,
-                  `selected-text-format` = "count > 3"
-                ),
-                multiple = FALSE
-              )
-            ),
-            div(
-              style = "display: inline-block;vertical-align:top; width: 150px;",
-              pickerInput(
                 inputId = "atc_strata_level",
                 label = "Choose calendar time",
                 choices = unique(atc$strata_level),
@@ -1135,22 +939,7 @@ ui <- dashboardPage(
             DTOutput('atc_window') %>% withSpinner()
           ),
           tabPanel(
-            "Compare calendar times", 
-            div(
-              style = "display: inline-block;vertical-align:top; width: 150px;",
-              pickerInput(
-                inputId = "atc_cdm_calendar",
-                label = "Database",
-                choices = unique(atc$cdm_name),
-                selected = unique(atc$cdm_name)[2],
-                options = list(
-                  `actions-box` = TRUE,
-                  size = 10,
-                  `selected-text-format` = "count > 3"
-                ),
-                multiple = FALSE
-              )
-            ),
+            "Compare calendar times",
             div(
               style = "display: inline-block;vertical-align:top; width: 150px;",
               pickerInput(
@@ -1196,21 +985,6 @@ ui <- dashboardPage(
             div(
               style = "display: inline-block;vertical-align:top; width: 150px;",
               pickerInput(
-                inputId = "icd_cdm_indication",
-                label = "Database",
-                choices = unique(icd10$cdm_name),
-                selected = unique(icd10$cdm_name)[2],
-                options = list(
-                  `actions-box` = TRUE,
-                  size = 10,
-                  `selected-text-format` = "count > 3"
-                ),
-                multiple = FALSE
-              )
-            ),
-            div(
-              style = "display: inline-block;vertical-align:top; width: 150px;",
-              pickerInput(
                 inputId = "icd10_window_name_ind",
                 label = "Choose window",
                 choices = unique(icd10$window_name),
@@ -1245,21 +1019,6 @@ ui <- dashboardPage(
             div(
               style = "display: inline-block;vertical-align:top; width: 150px;",
               pickerInput(
-                inputId = "icd_cdm_window",
-                label = "Database",
-                choices = unique(icd10$cdm_name),
-                selected = unique(icd10$cdm_name)[2],
-                options = list(
-                  `actions-box` = TRUE,
-                  size = 10,
-                  `selected-text-format` = "count > 3"
-                ),
-                multiple = FALSE
-              )
-            ),
-            div(
-              style = "display: inline-block;vertical-align:top; width: 150px;",
-              pickerInput(
                 inputId = "icd10_strata_level",
                 label = "Choose calendar time",
                 choices = unique(icd10$strata_level),
@@ -1291,21 +1050,6 @@ ui <- dashboardPage(
           ),
           tabPanel(
             "Compare calendar times",
-            div(
-              style = "display: inline-block;vertical-align:top; width: 150px;",
-              pickerInput(
-                inputId = "icd_cdm_calendar",
-                label = "Database",
-                choices = unique(icd10$cdm_name),
-                selected = unique(icd10$cdm_name)[2],
-                options = list(
-                  `actions-box` = TRUE,
-                  size = 10,
-                  `selected-text-format` = "count > 3"
-                ),
-                multiple = FALSE
-              )
-            ),
             div(
               style = "display: inline-block;vertical-align:top; width: 150px;",
               pickerInput(
@@ -1361,8 +1105,7 @@ server <- function(input, output, session) {
   })
   output$cohort_count <- renderDataTable({
     DT::datatable(
-      cohortCount %>%
-        filter(.data$cdm_name %in% input$cohort_count_cdm_name), 
+      displayCohortCount(elements), 
       options = list(
         lengthChange = FALSE, 
         searching = FALSE, 
@@ -1373,7 +1116,7 @@ server <- function(input, output, session) {
   })
   output$cohort_attrition <- renderDataTable({
     DT::datatable(
-      displayCohortAttrition(elements, input$cohort_attrition_cdm_name), 
+      displayCohortAttrition(elements), 
       options = list(
         lengthChange = FALSE, 
         searching = FALSE, 
@@ -1391,8 +1134,7 @@ server <- function(input, output, session) {
         daysPriorHistory = input$denominator_attrition_days_prior_history,
         startDate = input$denominator_attrition_start_date,
         endDate = input$denominator_attrition_end_date,
-        strataCohortName = input$denominator_attrition_strata_cohort_name,
-        cdmName = input$denominator_attrition_cdm_name
+        strataCohortName = input$denominator_attrition_strata_cohort_name
       ), 
       options = list(
         lengthChange = FALSE, 
@@ -1405,7 +1147,7 @@ server <- function(input, output, session) {
   # table characteristics ----
   output$table_one_window <- renderDataTable({
     DT::datatable(
-      displayTableOne(elements, input$tc_drug_type_window, input$tc_cdm_window) %>%
+      displayTableOne(elements, input$tc_drug_type_window) %>%
         dplyr::select("variable", "variable_level", "estimate_type", "Overall", "before_pandemic", "during_hcq_use_for_covid", 
                       "after_fda_retraction"), 
       options = list(
@@ -1419,9 +1161,7 @@ server <- function(input, output, session) {
   
   output$table_one_indication <- renderDataTable({
     DT::datatable(
-      displayTableOne(elements, 
-                      input$tc_drug_type_indication,
-                      input$tc_cdm_name_indication) %>%
+      displayTableOne(elements, input$tc_drug_type_indication) %>%
         dplyr::select(-c("before_pandemic", "during_hcq_use_for_covid", 
                           "after_fda_retraction")), 
       options = list(
@@ -1437,9 +1177,7 @@ server <- function(input, output, session) {
     DT::datatable(
       drug_use %>%
         dplyr::filter(.data$group_level == input$du_drug_type_window) %>%
-        dplyr::select(-"group_level", "variable", "estimate_type", "before_pandemic", 
-                      "during_hcq_use_for_covid", "after_fda_retraction") %>%
-        dplyr::filter(.data$cdm_name == input$drug_use_cdm_name_window),
+        dplyr::select(-"group_level", "variable", "estimate_type", "before_pandemic", "during_hcq_use_for_covid", "after_fda_retraction"),
       options = list(
         lengthChange = FALSE, 
         searching = FALSE, 
@@ -1452,8 +1190,7 @@ server <- function(input, output, session) {
     DT::datatable(
       drug_use %>%
         dplyr::filter(.data$group_level == input$du_drug_type_indication) %>%
-        dplyr::filter(.data$cdm_name == input$drug_use_cdm_name_indication) %>%
-        dplyr::select("variable", "estimate_type", "rheumatoid_arthritis", "covid") ,
+        dplyr::select("variable", "estimate_type", "rheumatoid_arthritis", "covid"),
         
       options = list(
         lengthChange = FALSE, 
@@ -1469,8 +1206,7 @@ server <- function(input, output, session) {
       atc %>%
         dplyr::filter(.data$strata_level == input$atc_strata_level) %>%
         dplyr::filter(.data$group_level == input$atc_group_level) %>%
-        dplyr::filter(.data$cdm_name == input$atc_cdm_window) %>%
-        dplyr::select(-"strata_level", -"group_level", -"cdm_name") %>%
+        dplyr::select(-"strata_level", -"group_level") %>%
         tidyr::pivot_wider(names_from = "window_name", values_from = "percentage")
     ) %>%
       formatPercentage(c("-365 to -1", "-30 to -1", "0 to 0", "1 to 30", "1 to 365"), 0)
@@ -1480,8 +1216,7 @@ server <- function(input, output, session) {
       atc %>%
         dplyr::filter(.data$group_level == input$atc_group_level_by_calendar) %>%
         dplyr::filter(.data$window_name == input$atc_window_name) %>%
-        dplyr::filter(.data$cdm_name == input$atc_cdm_calendar) %>%
-        dplyr::select(-"window_name", -"group_level", -"cdm_name") %>%
+        dplyr::select(-"window_name", -"group_level") %>%
         tidyr::pivot_wider(names_from = "strata_level", values_from = "percentage") %>%
         dplyr::select("ATC 3rd", "Overall", "before_pandemic", "during_hcq_use_for_covid", 
                       "after_fda_retraction")
@@ -1494,8 +1229,7 @@ server <- function(input, output, session) {
       atc %>%
         dplyr::filter(.data$group_level == input$atc_group_level_by_calendar_ind) %>%
         dplyr::filter(.data$window_name == input$atc_window_name_ind) %>%
-        dplyr::filter(.data$cdm_name == input$atc_cdm_ind) %>%
-        dplyr::select(-"window_name", -"group_level", -"cdm_name") %>%
+        dplyr::select(-"window_name", -"group_level") %>%
         tidyr::pivot_wider(names_from = "strata_level", values_from = "percentage") %>%
         dplyr::select("ATC 3rd", "Overall", "rheumatoid_arthritis", "covid")
     ) %>%
@@ -1507,8 +1241,7 @@ server <- function(input, output, session) {
       icd10 %>%
         dplyr::filter(.data$strata_level == input$icd10_strata_level) %>%
         dplyr::filter(.data$group_level == input$icd10_group_level_window) %>%
-        dplyr::filter(.data$cdm_name == input$icd_cdm_window) %>%
-        dplyr::select(-"strata_level", -"group_level", -"cdm_name") %>%
+        dplyr::select(-"strata_level", -"group_level") %>%
         tidyr::pivot_wider(names_from = "window_name", values_from = "percentage")
     ) %>%
       formatPercentage(c("-Inf to -1", "-365 to -1", "-30 to -1", "0 to 0", "1 to 30", "1 to 365", "1 to Inf"), 0)
@@ -1518,8 +1251,7 @@ server <- function(input, output, session) {
       icd10 %>%
         dplyr::filter(.data$window_name == input$icd10_window_name) %>%
         dplyr::filter(.data$group_level == input$icd10_group_level_calendar) %>%
-        dplyr::filter(.data$cdm_name == input$icd_cdm_calendar) %>%
-        dplyr::select(-"window_name", -"group_level", -"cdm_name") %>%
+        dplyr::select(-"window_name", -"group_level") %>%
         tidyr::pivot_wider(names_from = "strata_level", values_from = "percentage") %>%
         dplyr::select("ICD10 Subchapter", "Overall", "before_pandemic", "during_hcq_use_for_covid", 
                       "after_fda_retraction" )
@@ -1532,8 +1264,7 @@ server <- function(input, output, session) {
       icd10 %>%
         dplyr::filter(.data$window_name == input$icd10_window_name_ind) %>%
         dplyr::filter(.data$group_level == input$icd10_group_level_calendar_ind) %>%
-        dplyr::filter(.data$cdm_name == input$icd_cdm_indication) %>%
-        dplyr::select(-"window_name", -"group_level", -"cdm_name") %>%
+        dplyr::select(-"window_name", -"group_level") %>%
         tidyr::pivot_wider(names_from = "strata_level", values_from = "percentage") %>%
         dplyr::select("ICD10 Subchapter", "Overall", "rheumatoid_arthritis", "covid")
     ) %>%
@@ -1550,8 +1281,7 @@ server <- function(input, output, session) {
         incidenceStartDate = input$incidence_estimates_incidence_start_date,
         incidenceEndDate = input$incidence_estimates_incidence_end_date,
         analysisInterval = input$incidence_interval,
-        outcome = input$incidence_estimates_outcome_cohort_name,
-        cdmName = input$incidence_estimates_cdm_name
+        outcome = input$incidence_estimates_outcome_cohort_name
       ), 
       options = list(
         lengthChange = FALSE, 
@@ -1571,7 +1301,6 @@ server <- function(input, output, session) {
       dplyr::filter(.data$incidence_end_date <= as.Date(input$incidence_estimates_incidence_end_date)) %>%
       dplyr::filter(.data$analysis_interval %in% input$incidence_interval) %>%
       dplyr::filter(.data$outcome_cohort_name %in% input$incidence_estimates_outcome_cohort_name) %>%
-      dplyr::filter(.data$cdm_name %in% input$incidence_estimates_cdm_name) %>%
       dplyr::mutate(
         incidence_100000_pys = as.numeric(incidence_100000_pys),
         incidence_100000_pys_95CI_lower = as.numeric(incidence_100000_pys_95CI_lower),
@@ -1690,8 +1419,8 @@ server <- function(input, output, session) {
         prevalenceStartDate = input$prevalence_estimates_prevalence_start_date,
         prevalenceEndDate = input$prevalence_estimates_prevalence_end_date,
         analysisInterval = input$prevalence_interval,
-        outcome = input$prevalence_estimates_outcome_cohort_name,
-        cdmName = input$prevalence_estimatest_cdm_name
+        outcome = input$prevalence_estimates_outcome_cohort_name
+        
       ), 
       options = list(
         lengthChange = FALSE, 
@@ -1711,7 +1440,6 @@ server <- function(input, output, session) {
       dplyr::filter(.data$prevalence_end_date <= as.Date(input$prevalence_estimates_prevalence_end_date)) %>%
       dplyr::filter(.data$analysis_interval %in% input$prevalence_interval) %>%
       dplyr::filter(.data$outcome_cohort_name %in% input$prevalence_estimates_outcome_cohort_name) %>%
-      dplyr::filter(.data$cdm_name %in% input$prevalence_estimatest_cdm_name) %>%
       dplyr::mutate(
         prevalence = as.numeric(prevalence),
         prevalence_95CI_lower = as.numeric(prevalence_95CI_lower),
