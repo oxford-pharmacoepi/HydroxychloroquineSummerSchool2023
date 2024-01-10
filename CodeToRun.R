@@ -23,7 +23,7 @@ library(PatientProfiles)
 library(DrugUtilisation)
 library(CodelistGenerator)
 library(IncidencePrevalence)
-library(Capr)
+# library(Capr)
 
 # database metadata and connection details -----
 # The name/ acronym for the database
@@ -60,7 +60,7 @@ db <- dbConnect(
 )
 
 # The name of the schema that contains the OMOP CDM with patient-level data
-cdm_database_schema <- "public"
+cdm_database_schema <- "public_100k"
 
 # The name of the schema where results tables will be created 
 results_database_schema <- "results"
@@ -72,7 +72,7 @@ results_database_schema <- "results"
 #   will be overwritten
 # - more than one cohort will be created
 # - name must be lower case
-stem_table <- "ss_mc"
+stem_table <- "ss_hcq_"
 
 # create cdm reference ----
 cdm <- CDMConnector::cdm_from_con(
@@ -108,10 +108,58 @@ age_groups <- list(c(0,19), c(20,39), c(40,59), c(60,79), c(80,150), c(0, 150))
 
 write_csv(snapshot(cdm), here(output_folder, "cdm_snapshot.csv"))
 
-# Jobs to Run
-source(here("Day_1", "InstantiateCohorts.R"))
-source(here("Day_2", "Characterisation.R"))
-source(here("Day_3", "EstimateIncidencePrevalence.R"))
 
+# Jobs to Run
+runInstantiateCohorts   <- FALSE
+runCharacteriseNewUsers <- TRUE
+runIncidencePrevalence  <- FALSE
+
+
+# Cohort table names 
+study_table_name     <- paste0(stem_table, "_study")
+new_users_table_name <- paste0(stem_table, "_new")
+users_table_name     <- paste0(stem_table, "_prevalent")
+
+
+# Run
+if (runInstantiateCohorts) {
+  source(here("1_InstantiateCohorts", "InstantiateCohorts.R"))
+} else {
+  cdm <- CDMConnector::cdm_from_con(
+    con = db,
+    cdm_schema = cdm_database_schema,
+    write_schema = results_database_schema,
+    cdm_name = db_name,
+    cohort_tables = c(study_table_name, new_users_table_name, users_table_name)
+  )
+  covid_id <- json_cohort_set %>% 
+    filter(cohort_name == "covid") %>%
+    pull(cohort_definition_id)
+  
+  ra_id <- json_cohort_set %>% 
+    filter(cohort_name == "rheumatoid_arthritis") %>%
+    pull(cohort_definition_id)
+  
+  ra_no_covid_id <- json_cohort_set %>% 
+    filter(cohort_name == "rheumatoid_arthritis_no_covid") %>%
+    pull(cohort_definition_id)
+  
+  sle_id <- json_cohort_set %>% 
+    filter(cohort_name == "sle") %>%
+    pull(cohort_definition_id)
+  
+  sle_no_covid_id <- json_cohort_set %>% 
+    filter(cohort_name == "sle_no_covid") %>%
+    pull(cohort_definition_id)
+  
+}
+
+if (runCharacteriseNewUsers) {
+  source(here("2_CharacteriseNewUsers", "Characterisation.R"))
+}
+
+if (runIncidencePrevalence) {
+source(here("3_IncidencePrevalence", "EstimateIncidencePrevalence.R"))
+}
 
 

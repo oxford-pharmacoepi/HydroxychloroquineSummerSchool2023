@@ -1,0 +1,17 @@
+cohort_definition_id,number_records,number_subjects,reason_id,reason,excluded_records,excluded_subjects,cohort_name
+1,2811,402,1,Qualifying initial records,0,0,users_hydroxychloroquine
+1,2811,402,2,Duration imputation; affected rows: 0,0,0,users_hydroxychloroquine
+1,683,402,3,Join eras,2128,0,users_hydroxychloroquine
+1,683,402,4,daysPriorHistory applied,0,0,users_hydroxychloroquine
+1,683,402,5,priorUseWashout applied,0,0,users_hydroxychloroquine
+1,683,402,6,cohort_start_date >= cohort_date_range_start,0,0,users_hydroxychloroquine
+1,683,402,7,cohort_end_date <= cohort_date_range_end,0,0,users_hydroxychloroquine
+1,683,402,8,summariseMode: AllEras applied,0,0,users_hydroxychloroquine
+2,2650,357,1,Qualifying initial records,0,0,users_methotrexate
+2,2650,357,2,Duration imputation; affected rows: 0,0,0,users_methotrexate
+2,666,357,3,Join eras,1984,0,users_methotrexate
+2,666,357,4,daysPriorHistory applied,0,0,users_methotrexate
+2,666,357,5,priorUseWashout applied,0,0,users_methotrexate
+2,666,357,6,cohort_start_date >= cohort_date_range_start,0,0,users_methotrexate
+2,666,357,7,cohort_end_date <= cohort_date_range_end,0,0,users_methotrexate
+2,666,357,8,summariseMode: AllEras applied,0,0,users_methotrexate

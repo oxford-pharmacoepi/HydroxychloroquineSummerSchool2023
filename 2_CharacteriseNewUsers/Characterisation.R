@@ -32,20 +32,20 @@ cdm_subset[[new_users_table_name]] <- cdm_subset[[new_users_table_name]] %>%
   addCohortIntersectFlag(
     cdm = cdm_subset,
     targetCohortTable = study_table_name,
-    targetCohortId = malaria_id,
+    targetCohortId = sle_id,
     window = c(-Inf,0),
-    nameStyle = "malaria"
+    nameStyle = "sle"
   ) %>%
   mutate(
     indication = case_when(
-      covid == 1 & rheumatoid_arthritis == 0 & malaria == 0 ~ "covid",
-      covid == 0 & rheumatoid_arthritis == 1 & malaria == 0 ~ "rheumatoid_arthritis",
-      covid == 0 & rheumatoid_arthritis == 0 & malaria == 1 ~ "malaria",
-      covid == 0 & rheumatoid_arthritis == 0 & malaria == 0 ~ "none",
+      covid == 1 & rheumatoid_arthritis == 0 & sle == 0 ~ "covid",
+      covid == 0 & rheumatoid_arthritis == 1 & sle == 0 ~ "rheumatoid_arthritis",
+      covid == 0 & rheumatoid_arthritis == 0 & sle == 1 ~ "sle",
+      covid == 0 & rheumatoid_arthritis == 0 & sle == 0 ~ "none",
       .default = "multiple"
     )
   ) %>%
-  select(-c("covid", "rheumatoid_arthritis", "malaria"))
+  select(-c("covid", "rheumatoid_arthritis", "sle"))
   
 # Instantiate medications and general conditions for Table One
 # Names for the instantiated cohorts
