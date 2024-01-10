@@ -132,26 +132,25 @@ if (runInstantiateCohorts) {
     cdm_name = db_name,
     cohort_tables = c(study_table_name, new_users_table_name, users_table_name)
   )
-  covid_id <- json_cohort_set %>% 
+  covid_id <- cohort_set(cdm[[study_table_name]]) %>% 
     filter(cohort_name == "covid") %>%
     pull(cohort_definition_id)
   
-  ra_id <- json_cohort_set %>% 
+  ra_id <- cohort_set(cdm[[study_table_name]]) %>% 
     filter(cohort_name == "rheumatoid_arthritis") %>%
     pull(cohort_definition_id)
   
-  ra_no_covid_id <- json_cohort_set %>% 
+  ra_no_covid_id <- cohort_set(cdm[[study_table_name]]) %>% 
     filter(cohort_name == "rheumatoid_arthritis_no_covid") %>%
     pull(cohort_definition_id)
   
-  sle_id <- json_cohort_set %>% 
+  sle_id <- cohort_set(cdm[[study_table_name]]) %>% 
     filter(cohort_name == "sle") %>%
     pull(cohort_definition_id)
   
-  sle_no_covid_id <- json_cohort_set %>% 
+  sle_no_covid_id <- cohort_set(cdm[[study_table_name]]) %>% 
     filter(cohort_name == "sle_no_covid") %>%
     pull(cohort_definition_id)
-  
 }
 
 if (runCharacteriseNewUsers) {
