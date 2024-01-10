@@ -60,7 +60,7 @@ db <- dbConnect(
 )
 
 # The name of the schema that contains the OMOP CDM with patient-level data
-cdm_database_schema <- "public_100k"
+cdm_database_schema <- "public"
 
 # The name of the schema where results tables will be created 
 results_database_schema <- "results"
@@ -72,7 +72,7 @@ results_database_schema <- "results"
 #   will be overwritten
 # - more than one cohort will be created
 # - name must be lower case
-stem_table <- "ss_mc"
+stem_table <- "ss_nmb"
 
 # create cdm reference ----
 cdm <- CDMConnector::cdm_from_con(
@@ -112,12 +112,35 @@ write_csv(snapshot(cdm), here(output_folder, "cdm_snapshot.csv"))
 hdm_second_run <- TRUE
 
 # Jobs to Run
-source(here("Day_1", "InstantiateCohorts.R"))
+# source(here("Day_1", "InstantiateCohorts.R"))
 # source(here("Day_2", "Characterisation.R"))
 # source(here("Day_3", "EstimateIncidencePrevalence.R"))
 
 
 ## Paper data:
+stem_table <- "nmb"
+study_table_name         <- paste0(stem_table, "_study")
+new_users_table_name <- paste0(stem_table, "_new")
+users_table_name     <- paste0(stem_table, "_prevalent")
+# prevalent users
+cdm <- generateDrugUtilisationCohortSet(
+  cdm = cdm,
+  name = users_table_name,
+  conceptSetList = conceptList,
+  summariseMode = "AllEras", 
+  gapEra = 30
+)
+ip_general_table_name     <- paste0(stem_table, "_ip_general")
+cdm <- generateDenominatorCohortSet(
+  cdm = cdm,
+  name = ip_general_table_name,
+  cohortDateRange = c(study.start, as.Date("2020-02-29")),
+  ageGroup = list(c(0,150)), 
+  sex = "Both",
+  daysPriorHistory = 365, 
+  temporary = FALSE
+)
+
 ip_general_table_name     <- paste0(stem_table, "_ip_general")
 cdm <- generateDenominatorCohortSet(
   cdm = cdm,
@@ -145,4 +168,4 @@ write_csv(inc %>%
                    incidence_100000_pys_95CI_lower, 
                    incidence_100000_pys_95CI_upper, 
                    outcome_cohort_name),
-          here("preCOVID19_incidence,csv"))
+          here("preCOVID19_incidence.csv"))
