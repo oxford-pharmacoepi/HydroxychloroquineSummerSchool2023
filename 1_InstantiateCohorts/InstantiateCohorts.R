@@ -27,7 +27,7 @@ sle_id <- json_cohort_set %>%
   pull(cohort_definition_id)
 
 sle_no_covid_id <- json_cohort_set %>% 
-  filter(cohort_name == "sle") %>%
+  filter(cohort_name == "sle_no_covid") %>%
   pull(cohort_definition_id)
 
 # Instantiate cohorts from json

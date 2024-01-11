@@ -1,9 +1,6 @@
-# Subset of the cdm
-cdm_subset <- cdmSubsetCohort(cdm, new_users_table_name)
-
 ## Prepare data ----
 # Add calendar windows + indication to new user cohorts
-cdm_subset[[new_users_table_name]] <- cdm_subset[[new_users_table_name]] %>%
+cdm[[new_users_table_name]] <- cdm[[new_users_table_name]] %>%
   mutate(window = case_when(
     .data$cohort_start_date >= !! window.before[1] & .data$cohort_start_date <= !! window.before[2] ~
       "before_pandemic",
@@ -16,21 +13,21 @@ cdm_subset[[new_users_table_name]] <- cdm_subset[[new_users_table_name]] %>%
   ) %>%
   filter(!is.na(window)) %>%
   addCohortIntersectFlag(
-    cdm = cdm_subset,
+    cdm = cdm,
     targetCohortTable = study_table_name,
     targetCohortId = covid_id,
     window = c(-21,0),
     nameStyle = "covid"
   ) %>%
   addCohortIntersectFlag(
-    cdm = cdm_subset,
+    cdm = cdm,
     targetCohortTable = study_table_name,
     targetCohortId = ra_id,
     window = c(-Inf,0),
     nameStyle = "rheumatoid_arthritis"
   ) %>%
   addCohortIntersectFlag(
-    cdm = cdm_subset,
+    cdm = cdm,
     targetCohortTable = study_table_name,
     targetCohortId = sle_id,
     window = c(-Inf,0),
@@ -54,20 +51,20 @@ conditions_table_name  <- paste0(stem_table, "_conditions")
 
 # Get concept sets
 medications_concept_list <- readConceptList(
-  cdm_subset,
-  path = here("Day_2", "TableCharacteristics", "MedicationsConceptSet")
+  cdm,
+  path = here("2_CharacteriseNewUsers", "TableCharacteristics", "MedicationsConceptSet")
 )
 conditions_concept_list <- readConceptList(
-  cdm_subset,
-  path = here("Day_2", "TableCharacteristics", "GeneralConditionsConceptSet")
+  cdm,
+  path = here("2_CharacteriseNewUsers", "TableCharacteristics", "GeneralConditionsConceptSet")
 )
 
-# Generate cohorts in cdm_subset
-cdm_subset <- generateConceptCohortSet(cdm_subset,
+# Generate cohorts in cdm
+cdm <- generateConceptCohortSet(cdm,
                                        medications_table_name,
                                        medications_concept_list)
 
-cdm_subset <- generateConceptCohortSet(cdm_subset,
+cdm <- generateConceptCohortSet(cdm,
                                        conditions_table_name,
                                        conditions_concept_list)
 
@@ -75,20 +72,20 @@ cdm_subset <- generateConceptCohortSet(cdm_subset,
 ## Characterisation ----
 ## 1. Drug use ----
 #  1.1. HCQ drug use
-drug_use_table_hcq <- cdm_subset[[new_users_table_name]] %>%
+drug_use_table_hcq <- cdm[[new_users_table_name]] %>%
   filter(cohort_definition_id == 1) %>%
-  addDrugUse(cdm = cdm_subset, ingredientConceptId = 1777087) %>%
+  addDrugUse(cdm = cdm, ingredientConceptId = 1777087) %>%
   summariseDrugUse(
-    cdm = cdm_subset, 
+    cdm = cdm, 
     drugUseEstimates = c("median", "q25", "q75", "mean", "sd"), 
     strata = list("Calendar time" = "window", 
                   "Indication" = "indication")
   )
-drug_use_table_mtx <- cdm_subset[[new_users_table_name]] %>%
+drug_use_table_mtx <- cdm[[new_users_table_name]] %>%
   filter(cohort_definition_id == 2) %>%
-  addDrugUse(cdm = cdm_subset, ingredientConceptId = 1305058) %>%
+  addDrugUse(cdm = cdm, ingredientConceptId = 1305058) %>%
   summariseDrugUse(
-    cdm = cdm_subset, 
+    cdm = cdm, 
     drugUseEstimates = c("median", "q25", "q75", "mean", "sd"), 
     strata = list("Calendar time" = "window",
                   "Indication" = "indication")
@@ -100,17 +97,17 @@ write_csv(drug_use_table_hcq %>%
 ## 2. Table One ----
 # Package: PatientProfiles
 #  2.1. HCQ new users
-table_one <- cdm_subset[[new_users_table_name]] %>% 
+table_one <- cdm[[new_users_table_name]] %>% 
   select(
     "cohort_definition_id", "subject_id", "cohort_start_date",
     "cohort_end_date", "window", "indication"
   ) %>%
   addDemographics(
-    cdm = cdm_subset, 
+    cdm = cdm, 
     ageGroup = list(c(0,19), c(20,39), c(40,59), c(60,79), c(80,150))
   ) %>%
   addIntersect(
-    cdm = cdm_subset, 
+    cdm = cdm, 
     tableName = "visit_occurrence", 
     value = "flag", 
     window = c(-365,0),
@@ -118,17 +115,17 @@ table_one <- cdm_subset[[new_users_table_name]] %>%
     nameStyle = "number_visits"
   ) %>%
   addCohortIntersectFlag(
-    cdm = cdm_subset,
+    cdm = cdm,
     targetCohortTable = medications_table_name,
     window = c(-365, 0),
   ) %>%
   addCohortIntersectFlag(
-    cdm = cdm_subset,
+    cdm = cdm,
     targetCohortTable = conditions_table_name,
     window = c(-Inf, 0),
   ) %>%
   left_join(
-    cdm_subset[[new_users_table_name]] %>%
+    cdm[[new_users_table_name]] %>%
       cohort_set() %>%
       select("cohort_definition_id", "cohort_name"), 
     by = "cohort_definition_id", 
@@ -166,21 +163,23 @@ table_one <- table_one %>%
     functions = functions, 
     minCellCount = minimum_counts
   ) %>%
-  mutate(cdm_name = cdmName(cdm_subset))
+  mutate(cdm_name = cdmName(cdm))
 
 # Export
 write_csv(table_one, here(output_folder, "table_one.csv"))
 
 ## 3. Large Scale Characteristics ----
 # Get ATC and ICD10 codes (package CodelistGenerator)
-atc_codes   <- getATCCodes(cdm_subset, "ATC 3rd")
-icd10_codes <- getICD10StandardCodes(cdm_subset, "ICD10 SubChapter")
+# atc_codes   <- getATCCodes(cdm, "ATC 3rd")
+# icd10_codes <- getICD10StandardCodes(cdm, "ICD10 SubChapter")
+load(here("Data", "icd10.RData"))
+load(here("Data", "atc.RData"))
 
 # Characteristics (package DrugUtilisation)
 #  3.1. ATC 
 result_ATC <- summariseCharacteristicsFromCodelist(
-  cohort = cdm_subset[[new_users_table_name]],
-  cdm = cdm_subset,
+  cohort = cdm[[new_users_table_name]],
+  cdm = cdm,
   conceptSetList = atc_codes,
   strata = list("Calendar time" = "window",
                 "Indication" = "indication"),
@@ -192,8 +191,8 @@ write_csv(result_ATC, here(output_folder, "characteristics_atc.csv"))
 
 #  3.2. ICD10 
 result_ICD10 <- summariseCharacteristicsFromCodelist(
-  cohort = cdm_subset[[new_users_table_name]],
-  cdm = cdm_subset,
+  cohort = cdm[[new_users_table_name]],
+  cdm = cdm,
   conceptSetList = icd10_codes,
   strata = list("Calendar time" = "window",
                 "Indication" = "indication"),

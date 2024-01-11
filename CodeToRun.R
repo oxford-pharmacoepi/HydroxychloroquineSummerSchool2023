@@ -1,4 +1,11 @@
-# ADD NECESSARY PACKAGES
+# Activate renv
+renv::activate()
+renv::restore()
+
+# Restart session 
+.rs.restartR() 
+
+# Load packages
 library(DBI)
 library(CDMConnector)
 library(dplyr)
@@ -10,31 +17,16 @@ library(stringr)
 library(log4r)
 library(remotes)
 library(testthat)
-
-# Install packages from GitHub:
-# install_github("ohdsi/CirceR")
-# install_github("darwin-eu-dev/PatientProfiles")
-# install_github("darwin-eu-dev/DrugUtilisation")
-# install_github("darwin-eu-dev/CodelistGenerator")
-# install_github("darwin-eu-dev/IncidencePrevalence@strata_prior_hist")
-# install_github("ohdsi/Capr")
 library(CirceR)
 library(PatientProfiles)
 library(DrugUtilisation)
 library(CodelistGenerator)
 library(IncidencePrevalence)
-# library(Capr)
+library(SqlRender)
 
 # database metadata and connection details -----
 # The name/ acronym for the database
 db_name <- "PHARMETRICS"
-
-# Set output folder location -----
-# the path to a folder where the results from this analysis will be saved
-output_folder <- here(paste0("Results_", db_name))
-if (!dir.exists(output_folder)) {
-  dir.create(output_folder)
-}
 
 # Database connection details -----
 # In this study we also use the DBI package to connect to the database
@@ -60,7 +52,7 @@ db <- dbConnect(
 )
 
 # The name of the schema that contains the OMOP CDM with patient-level data
-cdm_database_schema <- "public_100k"
+cdm_database_schema <- "public"
 
 # The name of the schema where results tables will be created 
 results_database_schema <- "results"
@@ -88,7 +80,8 @@ cdm$person %>%
   tally()
 
 
-# Study parameters:
+
+# STUDY PARAMETERS ----
 # minimum counts that can be displayed according to data governance
 minimum_counts <- 5
 
@@ -106,13 +99,20 @@ window.after <- c(hcq.end + 1, study.end)
 # Age groups
 age_groups <- list(c(0,19), c(20,39), c(40,59), c(60,79), c(80,150), c(0, 150))
 
+
+# Set output folder location 
+# the path to a folder where the results from this analysis will be saved
+output_folder <- here(paste0("Results_", db_name))
+if (!dir.exists(output_folder)) {
+  dir.create(output_folder)
+}
 write_csv(snapshot(cdm), here(output_folder, "cdm_snapshot.csv"))
 
 
 # Jobs to Run
-runInstantiateCohorts   <- FALSE
+runInstantiateCohorts   <- TRUE
 runCharacteriseNewUsers <- TRUE
-runIncidencePrevalence  <- FALSE
+runIncidencePrevalence  <- TRUE
 
 
 # Cohort table names 

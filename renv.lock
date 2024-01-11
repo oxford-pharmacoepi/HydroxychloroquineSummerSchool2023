@@ -47,6 +47,23 @@
       ],
       "Hash": "41f9500b3ff924dfba7f8563b7523e40"
     },
+        "SqlRender": {
+      "Package": "SqlRender",
+      "Version": "1.16.1",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "SqlRender",
+      "RemoteUsername": "ohdsi",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "bd72fb4b5016874fed034f3254971840e01b9211",
+      "Requirements": [
+        "checkmate",
+        "rJava",
+        "rlang"
+      ],
+      "Hash": "61cb2a4a419d12dc63ed1d11effbebea"
+    },
     "CirceR": {
       "Package": "CirceR",
       "Version": "1.3.0",
