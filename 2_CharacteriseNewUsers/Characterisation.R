@@ -1,6 +1,9 @@
+## cdm subset 
+cdm_subset <- cdm_subset(cdm = cdm, person_id = cdm$ss_hcq__new %>% distinct(subject_id) %>% pull(subject_id))
+
 ## Prepare data ----
 # Add calendar windows + indication to new user cohorts
-cdm[[new_users_table_name]] <- cdm[[new_users_table_name]] %>%
+cdm_subset[[new_users_table_name]] <- cdm_subset[[new_users_table_name]] %>%
   mutate(window = case_when(
     .data$cohort_start_date >= !! window.before[1] & .data$cohort_start_date <= !! window.before[2] ~
       "before_pandemic",
@@ -13,21 +16,21 @@ cdm[[new_users_table_name]] <- cdm[[new_users_table_name]] %>%
   ) %>%
   filter(!is.na(window)) %>%
   addCohortIntersectFlag(
-    cdm = cdm,
+    cdm = cdm_subset,
     targetCohortTable = study_table_name,
     targetCohortId = covid_id,
     window = c(-21,0),
     nameStyle = "covid"
   ) %>%
   addCohortIntersectFlag(
-    cdm = cdm,
+    cdm = cdm_subset,
     targetCohortTable = study_table_name,
     targetCohortId = ra_id,
     window = c(-Inf,0),
     nameStyle = "rheumatoid_arthritis"
   ) %>%
   addCohortIntersectFlag(
-    cdm = cdm,
+    cdm = cdm_subset,
     targetCohortTable = study_table_name,
     targetCohortId = sle_id,
     window = c(-Inf,0),
@@ -51,41 +54,47 @@ conditions_table_name  <- paste0(stem_table, "_conditions")
 
 # Get concept sets
 medications_concept_list <- readConceptList(
-  cdm,
+  cdm_subset,
   path = here("2_CharacteriseNewUsers", "TableCharacteristics", "MedicationsConceptSet")
 )
-conditions_concept_list <- readConceptList(
-  cdm,
-  path = here("2_CharacteriseNewUsers", "TableCharacteristics", "GeneralConditionsConceptSet")
+conditions_concept_list <- readCohortSet(
+  path = here("2_CharacteriseNewUsers", "TableCharacteristics", "GeneralConditions")
 )
 
 # Generate cohorts in cdm
-cdm <- generateConceptCohortSet(cdm,
-                                       medications_table_name,
-                                       medications_concept_list)
+cdm_subset <- generateConceptCohortSet(cdm = cdm_subset,
+                                conceptSet = medications_concept_list,
+                                name = medications_table_name,
+                                limit = "all",
+                                end = "event_end_date",
+                                overwrite = TRUE)
 
-cdm <- generateConceptCohortSet(cdm,
-                                       conditions_table_name,
-                                       conditions_concept_list)
+cdm_subset <- generateCohortSet(
+  cdm = cdm_subset,
+  cohortSet = conditions_concept_list,
+  name = conditions_table_name,
+  computeAttrition = TRUE,
+  overwrite = TRUE
+)
 
 
 ## Characterisation ----
 ## 1. Drug use ----
 #  1.1. HCQ drug use
-drug_use_table_hcq <- cdm[[new_users_table_name]] %>%
+drug_use_table_hcq <- cdm_subset[[new_users_table_name]] %>%
   filter(cohort_definition_id == 1) %>%
-  addDrugUse(cdm = cdm, ingredientConceptId = 1777087) %>%
+  addDrugUse(cdm = cdm_subset, ingredientConceptId = 1777087) %>%
   summariseDrugUse(
-    cdm = cdm, 
+    cdm = cdm_subset, 
     drugUseEstimates = c("median", "q25", "q75", "mean", "sd"), 
     strata = list("Calendar time" = "window", 
                   "Indication" = "indication")
   )
-drug_use_table_mtx <- cdm[[new_users_table_name]] %>%
+drug_use_table_mtx <- cdm_subset[[new_users_table_name]] %>%
   filter(cohort_definition_id == 2) %>%
-  addDrugUse(cdm = cdm, ingredientConceptId = 1305058) %>%
+  addDrugUse(cdm = cdm_subset, ingredientConceptId = 1305058) %>%
   summariseDrugUse(
-    cdm = cdm, 
+    cdm = cdm_subset, 
     drugUseEstimates = c("median", "q25", "q75", "mean", "sd"), 
     strata = list("Calendar time" = "window",
                   "Indication" = "indication")
@@ -97,17 +106,17 @@ write_csv(drug_use_table_hcq %>%
 ## 2. Table One ----
 # Package: PatientProfiles
 #  2.1. HCQ new users
-table_one <- cdm[[new_users_table_name]] %>% 
+table_one <- cdm_subset[[new_users_table_name]] %>% 
   select(
     "cohort_definition_id", "subject_id", "cohort_start_date",
     "cohort_end_date", "window", "indication"
   ) %>%
   addDemographics(
-    cdm = cdm, 
+    cdm = cdm_subset, 
     ageGroup = list(c(0,19), c(20,39), c(40,59), c(60,79), c(80,150))
   ) %>%
   addIntersect(
-    cdm = cdm, 
+    cdm = cdm_subset, 
     tableName = "visit_occurrence", 
     value = "flag", 
     window = c(-365,0),
@@ -115,17 +124,17 @@ table_one <- cdm[[new_users_table_name]] %>%
     nameStyle = "number_visits"
   ) %>%
   addCohortIntersectFlag(
-    cdm = cdm,
+    cdm = cdm_subset,
     targetCohortTable = medications_table_name,
     window = c(-365, 0),
   ) %>%
   addCohortIntersectFlag(
-    cdm = cdm,
+    cdm = cdm_subset,
     targetCohortTable = conditions_table_name,
     window = c(-Inf, 0),
   ) %>%
   left_join(
-    cdm[[new_users_table_name]] %>%
+    cdm_subset[[new_users_table_name]] %>%
       cohort_set() %>%
       select("cohort_definition_id", "cohort_name"), 
     by = "cohort_definition_id", 
@@ -178,8 +187,8 @@ load(here("Data", "atc.RData"))
 # Characteristics (package DrugUtilisation)
 #  3.1. ATC 
 result_ATC <- summariseCharacteristicsFromCodelist(
-  cohort = cdm[[new_users_table_name]],
-  cdm = cdm,
+  cohort = cdm_subset[[new_users_table_name]],
+  cdm = cdm_subset,
   conceptSetList = atc_codes,
   strata = list("Calendar time" = "window",
                 "Indication" = "indication"),
@@ -191,8 +200,8 @@ write_csv(result_ATC, here(output_folder, "characteristics_atc.csv"))
 
 #  3.2. ICD10 
 result_ICD10 <- summariseCharacteristicsFromCodelist(
-  cohort = cdm[[new_users_table_name]],
-  cdm = cdm,
+  cohort = cdm_subset[[new_users_table_name]],
+  cdm = cdm_subset,
   conceptSetList = icd10_codes,
   strata = list("Calendar time" = "window",
                 "Indication" = "indication"),

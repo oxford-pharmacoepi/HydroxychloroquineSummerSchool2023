@@ -26,7 +26,7 @@ library(SqlRender)
 
 # database metadata and connection details -----
 # The name/ acronym for the database
-db_name <- "..."
+db_name <- "PHARMETRICS"
 
 # Database connection details -----
 # In this study we also use the DBI package to connect to the database
@@ -36,7 +36,7 @@ db_name <- "..."
 # you may need to install another package for this 
 # eg for postgres 
 
-server_dbi <- "..."
+server_dbi <- "cdm_iqvia_pharmetrics_plus_202203"
 user       <- Sys.getenv("DB_USER")
 password   <- Sys.getenv("DB_PASSWORD")
 port       <- Sys.getenv("DB_PORT")
@@ -52,10 +52,10 @@ db <- dbConnect(
 )
 
 # The name of the schema that contains the OMOP CDM with patient-level data
-cdm_database_schema <- "..."
+cdm_database_schema <- "public"
 
 # The name of the schema where results tables will be created 
-results_database_schema <- "..."
+results_database_schema <- "results"
 
 # Name of stem outcome table in the result schema where the outcome cohorts will
 # be stored. 
@@ -110,7 +110,7 @@ write_csv(snapshot(cdm), here(output_folder, "cdm_snapshot.csv"))
 
 
 # Jobs to Run
-runInstantiateCohorts   <- TRUE
+runInstantiateCohorts   <- FALSE
 runCharacteriseNewUsers <- TRUE
 runIncidencePrevalence  <- TRUE
 

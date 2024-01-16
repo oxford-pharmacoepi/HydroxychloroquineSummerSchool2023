@@ -11,7 +11,6 @@ ip_sle_no_covid_table_name <- paste0(stem_table, "_ip_sle_no_covid")  # Denomina
 exportAttrition <- function(cohort, path) {
   cohort %>%
     cohort_set() %>%
-    select("cohort_definition_id", "cohort_name") %>%
     inner_join(cohort %>%
                  cohort_attrition(),
                by = "cohort_definition_id") %>%

@@ -65,9 +65,9 @@ conceptList$users_methotrexate       <- cl$`Ingredient: methotrexate (1305058)`
 cdm <- generateDrugUtilisationCohortSet(
   cdm = cdm,
   name = users_table_name,
-  conceptSetList = conceptList,
-  summariseMode = "AllEras", 
-  gapEra = 30
+  conceptSet = conceptList,
+  gapEra = 30,
+  overwrite = TRUE
 )
 
 # Export cohort counts
@@ -93,12 +93,13 @@ conceptList$new_users_methotrexate       <- cl$`Ingredient: methotrexate (130505
 cdm <- generateDrugUtilisationCohortSet(
   cdm = cdm,
   name = new_users_table_name,
-  conceptSetList = conceptList,
-  summariseMode = "FirstEra",
-  daysPriorHistory = 365,
+  conceptSet = conceptList,
+  limit = "first",
+  priorObservation = 365,
   gapEra = 30,
   priorUseWashout = 365,
-  cohortDateRange = as.Date(c(study.start, study.end))
+  cohortDateRange = as.Date(c(study.start, study.end)),
+  overwrite = TRUE
 )
 
 # Export cohort counts
