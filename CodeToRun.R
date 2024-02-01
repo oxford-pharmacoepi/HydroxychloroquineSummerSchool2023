@@ -1,9 +1,9 @@
-# # Activate renv
-# renv::activate()
-# renv::restore()
-# 
-# # Restart session 
-# .rs.restartR() 
+# Activate renv
+renv::activate()
+renv::restore()
+
+# Restart session 
+.rs.restartR() 
 
 # Load packages
 library(DBI)
