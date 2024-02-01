@@ -66,8 +66,7 @@ cdm <- generateDrugUtilisationCohortSet(
   cdm = cdm,
   name = users_table_name,
   conceptSet = conceptList,
-  gapEra = 30,
-  overwrite = TRUE
+  gapEra = 30
 )
 
 # Export cohort counts
@@ -98,8 +97,7 @@ cdm <- generateDrugUtilisationCohortSet(
   priorObservation = 365,
   gapEra = 30,
   priorUseWashout = 365,
-  cohortDateRange = as.Date(c(study.start, study.end)),
-  overwrite = TRUE
+  cohortDateRange = as.Date(c(study.start, study.end))
 )
 
 # Export cohort counts
