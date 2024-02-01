@@ -1,9 +1,9 @@
-# Activate renv
-renv::activate()
-renv::restore()
-
-# Restart session 
-.rs.restartR() 
+# # Activate renv
+# renv::activate()
+# renv::restore()
+# 
+# # Restart session 
+# .rs.restartR() 
 
 # Load packages
 library(DBI)
@@ -111,7 +111,7 @@ write_csv(snapshot(cdm), here(output_folder, "cdm_snapshot.csv"))
 
 # Jobs to Run
 runInstantiateCohorts   <- FALSE
-runCharacteriseNewUsers <- TRUE
+runCharacteriseNewUsers <- FALSE
 runIncidencePrevalence  <- TRUE
 
 

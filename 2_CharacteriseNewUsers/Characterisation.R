@@ -144,7 +144,7 @@ table_one <- cdm_subset[[new_users_table_name]] %>%
 variables <- list(
   dates = c("cohort_start_date", "cohort_end_date"),
   numeric = c(
-    "age", "number_visits", "prior_history",
+    "age", "number_visits", "prior_observation",
     "future_observation"
   ),
   categorical = c("sex", "age_group", "window", "indication")
@@ -159,8 +159,8 @@ variables$covariates <- colnames(table_one)[
 functions <- list(
   dates = c("median", "q25", "q75"),
   numeric = c("median", "q25", "q75"),
-  categorical = c("count", "%"),
-  covariates = c("count", "%")
+  categorical = c("count", "percentage"),
+  covariates = c("count", "percentage")
 )
 
 table_one <- table_one %>%
@@ -189,7 +189,7 @@ load(here("Data", "atc.RData"))
 result_ATC <- summariseCharacteristicsFromCodelist(
   cohort = cdm_subset[[new_users_table_name]],
   cdm = cdm_subset,
-  conceptSetList = atc_codes,
+  conceptSet = atc_codes,
   strata = list("Calendar time" = "window",
                 "Indication" = "indication"),
   window = list(c(-365, -1), c(-30, -1), c(0, 0), c(1, 30), c(1, 365)),
@@ -202,7 +202,7 @@ write_csv(result_ATC, here(output_folder, "characteristics_atc.csv"))
 result_ICD10 <- summariseCharacteristicsFromCodelist(
   cohort = cdm_subset[[new_users_table_name]],
   cdm = cdm_subset,
-  conceptSetList = icd10_codes,
+  conceptSet = icd10_codes,
   strata = list("Calendar time" = "window",
                 "Indication" = "indication"),
   window = list(c(-Inf, -1), c(-365, -1), c(-30, -1), c(0, 0), c(1, 30), c(1, 365), c(1, Inf)),

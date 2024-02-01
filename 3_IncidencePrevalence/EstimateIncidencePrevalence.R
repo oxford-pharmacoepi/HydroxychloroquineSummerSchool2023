@@ -24,7 +24,8 @@ cdm <- generateDenominatorCohortSet(
   cohortDateRange = c(study.start, study.end),
   ageGroup = age_groups, 
   sex = c("Both", "Female", "Male"),
-  daysPriorHistory = 365
+  daysPriorObservation = 365,
+  overwrite = TRUE
 )
 exportAttrition(cdm[[ip_general_table_name]], here(output_folder, "attrition_ip_general_population.csv"))
 
@@ -35,10 +36,10 @@ cdm <- generateDenominatorCohortSet(
   cohortDateRange = c(study.start, study.end),
   ageGroup = age_groups, 
   sex = c("Both", "Female", "Male"),
-  daysPriorHistory = 365,                                           
-  strataTable = study_table_name,
-  strataCohortId = ra_id,
-  strataRequirementsAtEntry = FALSE
+  daysPriorObservation = 365,                                           
+  targetCohortTable = study_table_name,
+  targetCohortId = ra_id,
+  overwrite = TRUE
 )
 exportAttrition(cdm[[ip_ra_table_name]], here(output_folder, "attrition_ip_ra_population.csv"))
 
@@ -49,10 +50,10 @@ cdm <- generateDenominatorCohortSet(
   cohortDateRange = c(study.start, study.end),
   ageGroup = age_groups, 
   sex = c("Both", "Female", "Male"),
-  daysPriorHistory = 365,                                           
-  strataTable = study_table_name,
-  strataCohortId = ra_no_covid_id,
-  strataRequirementsAtEntry = FALSE
+  daysPriorObservation = 365,                                           
+  targetCohortTable = study_table_name,
+  targetCohortId = ra_no_covid_id,
+  overwrite = TRUE
 )
 exportAttrition(cdm[[ip_ra_no_covid_table_name]], here(output_folder, "attrition_ip_ra_no_covid_population.csv"))
 
@@ -63,10 +64,10 @@ cdm <- generateDenominatorCohortSet(
   cohortDateRange = c(study.start, study.end),
   ageGroup = age_groups, 
   sex = c("Both", "Female", "Male"),
-  daysPriorHistory = 365,                                           
-  strataTable = study_table_name,
-  strataCohortId = sle_id,
-  strataRequirementsAtEntry = FALSE
+  daysPriorObservation = 365,                                           
+  targetCohortTable = study_table_name,
+  targetCohortId = sle_id,
+  overwrite = TRUE
 )
 exportAttrition(cdm[[ip_sle_table_name]], here(output_folder, "attrition_ip_sle_population.csv"))
 
@@ -77,10 +78,10 @@ cdm <- generateDenominatorCohortSet(
   cohortDateRange = c(study.start, study.end),
   ageGroup = age_groups, 
   sex = c("Both", "Female", "Male"),
-  daysPriorHistory = 365,                                           
-  strataTable = study_table_name,
-  strataCohortId = sle_no_covid_id,
-  strataRequirementsAtEntry = FALSE
+  daysPriorObservation = 365,                                           
+  targetCohortTable = study_table_name,
+  targetCohortId = sle_no_covid_id,
+  overwrite = TRUE
 )
 exportAttrition(cdm[[ip_sle_no_covid_table_name]], here(output_folder, "attrition_ip_sle_no_covid_population.csv"))
 
@@ -119,7 +120,7 @@ ip_sle_no_covid <- getIncidencePrevalence(ip_sle_no_covid_table_name) # sle no c
 
 # Export incidence results
 incidence <- ip_general$incidence %>%
-  mutate(denominator_strata_cohort_name = "general") %>%
+  mutate(denominator_target_cohort_name = "general") %>%
   union_all(ip_ra$incidence) %>%
   union_all(ip_ra_no_covid$incidence) %>%
   union_all(ip_sle$incidence) %>%
@@ -128,7 +129,7 @@ write_csv(incidence, file = here(output_folder, "incidence.csv"))
 
 # Export prevalence results
 prevalence <- ip_general$prevalence %>%
-  mutate(denominator_strata_cohort_name = "general") %>%
+  mutate(denominator_target_cohort_name = "general") %>%
   union_all(ip_ra$prevalence) %>%
   union_all(ip_ra_no_covid$prevalence) %>%
   union_all(ip_sle$prevalence) %>%
@@ -146,10 +147,10 @@ getWindowEstimates <- function(temp_id) {
     cohortDateRange = c(study.start, as.Date("2020-02-29")),
     ageGroup = list(c(0,150)), 
     sex = c("Both"),
-    daysPriorHistory = 365,                                           
-    strataTable = study_table_name,
-    strataCohortId = temp_id,
-    strataRequirementsAtEntry = FALSE
+    daysPriorObservation = 365,                                           
+    targetCohortTable = study_table_name,
+    targetCohortId = temp_id,
+    overwrite = TRUE
   )
   
   # march - april
@@ -159,10 +160,10 @@ getWindowEstimates <- function(temp_id) {
     cohortDateRange = c(as.Date("2020-03-01"), as.Date("2020-04-30")),
     ageGroup = list(c(0,150)),
     sex = c("Both"),
-    daysPriorHistory = 365,                                           
-    strataTable = study_table_name,
-    strataCohortId = temp_id,
-    strataRequirementsAtEntry = FALSE
+    daysPriorObservation = 365,                                           
+    targetCohortTable = study_table_name,
+    targetCohortId = temp_id,
+    overwrite = TRUE
   )
   
   # may - end
@@ -172,10 +173,10 @@ getWindowEstimates <- function(temp_id) {
     cohortDateRange = c(as.Date("2020-05-01"), study.end),
     ageGroup = list(c(0,150)), 
     sex = c("Both"),
-    daysPriorHistory = 365,                                           
-    strataTable = study_table_name,
-    strataCohortId = temp_id,
-    strataRequirementsAtEntry = FALSE
+    daysPriorObservation = 365,                                           
+    targetCohortTable = study_table_name,
+    targetCohortId = temp_id,
+    overwrite = TRUE
   )
   
   # incidence estimates ---
