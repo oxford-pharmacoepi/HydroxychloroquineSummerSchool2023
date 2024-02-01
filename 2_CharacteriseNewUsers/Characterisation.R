@@ -1,5 +1,5 @@
 ## cdm subset 
-cdm_subset <- cdm_subset(cdm = cdm, person_id = cdm$ss_hcq__new %>% distinct(subject_id) %>% pull(subject_id))
+cdm_subset <- cdm_subset(cdm = cdm, person_id = cdm[[new_users_table_name]] %>% distinct(subject_id) %>% pull(subject_id))
 
 ## Prepare data ----
 # Add calendar windows + indication to new user cohorts
