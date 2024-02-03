@@ -17,6 +17,13 @@ exportAttrition <- function(cohort, path) {
     write_csv(file = path)
 }
 
+filterCohort <- function(cohort_name) {
+  ids <- cohortCount(cdm[[cohort_name]]) %>% 
+    filter(number_records > 100) %>% 
+    pull()
+  return(ids)
+}
+
 # General denominator
 cdm <- generateDenominatorCohortSet(
   cdm = cdm,
@@ -92,6 +99,7 @@ getIncidencePrevalence <- function(denominator_table_name) {
   inc <- estimateIncidence(
     cdm = cdm,
     denominatorTable = denominator_table_name,
+    denominatorCohortId = filterCohort(denominator_table_name),
     outcomeTable = users_table_name,
     interval = c("months"),
     outcomeWashout = 365,
@@ -103,6 +111,7 @@ getIncidencePrevalence <- function(denominator_table_name) {
   prev <- estimatePeriodPrevalence(
     cdm = cdm,
     denominatorTable = denominator_table_name,
+    denominatorCohortId = filterCohort(denominator_table_name),
     outcomeTable = users_table_name,
     interval = c("months"),
     minCellCount = minimum_counts
@@ -139,63 +148,100 @@ write_csv(prevalence, file = here(output_folder, "prevalence.csv"))
 
 ## Table estimates by window ----
 getWindowEstimates <- function(temp_id) {
-  # denominators ---
-  # pre-covid
-  cdm <- generateDenominatorCohortSet(
-    cdm = cdm,
-    name = "pre_covid",
-    cohortDateRange = c(study.start, as.Date("2020-02-29")),
-    ageGroup = list(c(0,150)), 
-    sex = c("Both"),
-    daysPriorObservation = 365,                                           
-    targetCohortTable = study_table_name,
-    targetCohortId = temp_id,
-    overwrite = TRUE
-  )
+  # denominators ----
+  if (!is.null(temp_id)) {
+    # pre-covid
+    cdm <- generateDenominatorCohortSet(
+      cdm = cdm,
+      name = "pre_covid",
+      cohortDateRange = c(study.start, as.Date("2020-02-29")),
+      ageGroup = list(c(0,150)), 
+      sex = c("Both"),
+      daysPriorObservation = 365,                                           
+      targetCohortTable = study_table_name,
+      targetCohortId = temp_id,
+      overwrite = TRUE
+    )
+    
+    # march - april
+    cdm <- generateDenominatorCohortSet(
+      cdm = cdm,
+      name = "hcq_time",
+      cohortDateRange = c(as.Date("2020-03-01"), as.Date("2020-04-30")),
+      ageGroup = list(c(0,150)),
+      sex = c("Both"),
+      daysPriorObservation = 365,                                           
+      targetCohortTable = study_table_name,
+      targetCohortId = temp_id,
+      overwrite = TRUE
+    )
+    
+    # may - end
+    cdm <- generateDenominatorCohortSet(
+      cdm = cdm,
+      name = "post_hcq",
+      cohortDateRange = c(as.Date("2020-05-01"), study.end),
+      ageGroup = list(c(0,150)), 
+      sex = c("Both"),
+      daysPriorObservation = 365,                                           
+      targetCohortTable = study_table_name,
+      targetCohortId = temp_id,
+      overwrite = TRUE
+    )
+  } else {
+    # pre-covid
+    cdm <- generateDenominatorCohortSet(
+      cdm = cdm,
+      name = "pre_covid",
+      cohortDateRange = c(study.start, as.Date("2020-02-29")),
+      ageGroup = list(c(0,150)), 
+      sex = c("Both"),
+      daysPriorObservation = 365, 
+      overwrite = TRUE
+    )
+    
+    # march - april
+    cdm <- generateDenominatorCohortSet(
+      cdm = cdm,
+      name = "hcq_time",
+      cohortDateRange = c(as.Date("2020-03-01"), as.Date("2020-04-30")),
+      ageGroup = list(c(0,150)),
+      sex = c("Both"),
+      daysPriorObservation = 365,  
+      overwrite = TRUE
+    )
+    
+    # may - end
+    cdm <- generateDenominatorCohortSet(
+      cdm = cdm,
+      name = "post_hcq",
+      cohortDateRange = c(as.Date("2020-05-01"), study.end),
+      ageGroup = list(c(0,150)), 
+      sex = c("Both"),
+      daysPriorObservation = 365,    
+      overwrite = TRUE
+    )
+  }
   
-  # march - april
-  cdm <- generateDenominatorCohortSet(
-    cdm = cdm,
-    name = "hcq_time",
-    cohortDateRange = c(as.Date("2020-03-01"), as.Date("2020-04-30")),
-    ageGroup = list(c(0,150)),
-    sex = c("Both"),
-    daysPriorObservation = 365,                                           
-    targetCohortTable = study_table_name,
-    targetCohortId = temp_id,
-    overwrite = TRUE
-  )
-  
-  # may - end
-  cdm <- generateDenominatorCohortSet(
-    cdm = cdm,
-    name = "post_hcq",
-    cohortDateRange = c(as.Date("2020-05-01"), study.end),
-    ageGroup = list(c(0,150)), 
-    sex = c("Both"),
-    daysPriorObservation = 365,                                           
-    targetCohortTable = study_table_name,
-    targetCohortId = temp_id,
-    overwrite = TRUE
-  )
-  
-  # incidence estimates ---
+  # incidence estimates ----
   # pre
   inc_pre <- estimateIncidence(
     cdm = cdm,
     denominatorTable = "pre_covid",
+    denominatorCohortId = filterCohort("pre_covid"),
     outcomeTable = users_table_name,
     interval = c("overall"),
     outcomeWashout = 365,
     repeatedEvents = FALSE,
     minCellCount = minimum_counts
-   ) %>%
+  ) %>%
     mutate(window = "pre_covid")
   
   # hcq
   inc_hcq <- estimateIncidence(
     cdm = cdm,
     denominatorTable = "hcq_time",
+    denominatorCohortId = filterCohort("hcq_time"),
     outcomeTable = users_table_name,
     interval = c("overall"),
     outcomeWashout = 365,
@@ -208,6 +254,7 @@ getWindowEstimates <- function(temp_id) {
   inc_post <- estimateIncidence(
     cdm = cdm,
     denominatorTable = "post_hcq",
+    denominatorCohortId = filterCohort("post_hcq"),
     outcomeTable = users_table_name,
     interval = c("overall"),
     outcomeWashout = 365,
@@ -222,7 +269,8 @@ getWindowEstimates <- function(temp_id) {
 }
 
 # Save results
-estimates_overall <- getWindowEstimates(ra_no_covid_id)  %>%
+estimates_overall <- getWindowEstimates(NULL)  %>%
+  union_all(getWindowEstimates(ra_no_covid_id)) %>%
   union_all(getWindowEstimates(ra_id)) %>%
   union_all(getWindowEstimates(sle_id)) %>%
   union_all(getWindowEstimates(sle_no_covid_id))
