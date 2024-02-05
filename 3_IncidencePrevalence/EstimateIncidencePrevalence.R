@@ -120,29 +120,41 @@ getIncidencePrevalence <- function(denominator_table_name) {
   return(list("incidence" = inc, "prevalence" = prev))
 }
 
-ip_general      <- getIncidencePrevalence(ip_general_table_name)      # general pop
-ip_ra           <- getIncidencePrevalence(ip_ra_table_name)           # ra pop
-ip_ra_no_covid  <- getIncidencePrevalence(ip_ra_no_covid_table_name)  # ra no covid pop
-ip_sle          <- getIncidencePrevalence(ip_sle_table_name)          # sle pop
-ip_sle_no_covid <- getIncidencePrevalence(ip_sle_no_covid_table_name) # sle no covid pop
-
+incidence  <- NULL
+prevalence <- NULL
+if (!is.null(filterCohort(ip_general_table_name))) {
+  ip_general <- getIncidencePrevalence(ip_general_table_name)
+  incidence  <- incidence %>% 
+    union_all(ip_general$incidence %>%
+                mutate(denominator_target_cohort_name = "general"))
+  prevalence  <- prevalence %>% 
+    union_all(ip_general$prevalence %>%
+                mutate(denominator_target_cohort_name = "general"))
+}
+if (!is.null(filterCohort(ip_ra_table_name))) {
+  ip_ra <- getIncidencePrevalence(ip_ra_table_name)
+  incidence  <- incidence %>% union_all(ip_ra$incidence)
+  prevalence  <- prevalence %>% union_all(ip_ra$prevalence)
+}
+if (!is.null(filterCohort(ip_ra_no_covid_table_name))) {
+  ip_ra_no_covid <- getIncidencePrevalence(ip_ra_no_covid_table_name)
+  incidence  <- incidence %>% union_all(ip_ra_no_covid$incidence)
+  prevalence  <- prevalence %>% union_all(ip_ra_no_covid$prevalence)
+}
+if (!is.null(filterCohort(ip_sle_table_name))) {
+  ip_sle <- getIncidencePrevalence(ip_sle_table_name)
+  incidence  <- incidence %>% union_all(ip_sle$incidence)
+  prevalence  <- prevalence %>% union_all(ip_sle$prevalence)
+}
+if (!is.null(filterCohort(ip_sle_no_covid_table_name))) {
+  ip_sle_no_covid <- getIncidencePrevalence(ip_sle_no_covid_table_name)
+  incidence  <- incidence %>% union_all(ip_sle_no_covid$incidence)
+  prevalence  <- prevalence %>% union_all(ip_sle_no_covid$prevalence)
+}
 
 # Export incidence results
-incidence <- ip_general$incidence %>%
-  mutate(denominator_target_cohort_name = "general") %>%
-  union_all(ip_ra$incidence) %>%
-  union_all(ip_ra_no_covid$incidence) %>%
-  union_all(ip_sle$incidence) %>%
-  union_all(ip_sle_no_covid$incidence)
 write_csv(incidence, file = here(output_folder, "incidence.csv"))
-
 # Export prevalence results
-prevalence <- ip_general$prevalence %>%
-  mutate(denominator_target_cohort_name = "general") %>%
-  union_all(ip_ra$prevalence) %>%
-  union_all(ip_ra_no_covid$prevalence) %>%
-  union_all(ip_sle$prevalence) %>%
-  union_all(ip_sle_no_covid$prevalence)
 write_csv(prevalence, file = here(output_folder, "prevalence.csv"))
 
 
@@ -225,43 +237,60 @@ getWindowEstimates <- function(temp_id) {
   
   # incidence estimates ----
   # pre
-  inc_pre <- estimateIncidence(
-    cdm = cdm,
-    denominatorTable = "pre_covid",
-    denominatorCohortId = filterCohort("pre_covid"),
-    outcomeTable = users_table_name,
-    interval = c("overall"),
-    outcomeWashout = 365,
-    repeatedEvents = FALSE,
-    minCellCount = minimum_counts
-  ) %>%
-    mutate(window = "pre_covid")
+  if (!is.null(filterCohort("pre_covid"))) {
+    inc_pre <- estimateIncidence(
+      cdm = cdm,
+      denominatorTable = "pre_covid",
+      denominatorCohortId = filterCohort("pre_covid"),
+      outcomeTable = users_table_name,
+      interval = c("overall"),
+      outcomeWashout = 365,
+      repeatedEvents = FALSE,
+      minCellCount = minimum_counts
+    ) %>%
+      mutate(window = "pre_covid")
+  } else {
+    inc_pre <- NULL
+  }
+
   
   # hcq
-  inc_hcq <- estimateIncidence(
-    cdm = cdm,
-    denominatorTable = "hcq_time",
-    denominatorCohortId = filterCohort("hcq_time"),
-    outcomeTable = users_table_name,
-    interval = c("overall"),
-    outcomeWashout = 365,
-    repeatedEvents = FALSE,
-    minCellCount = minimum_counts
-  ) %>%
-    mutate(window = "hcq_time")
+  if (!is.null(filterCohort("hcq_time"))) {
+    inc_hcq <- estimateIncidence(
+      cdm = cdm,
+      denominatorTable = "hcq_time",
+      denominatorCohortId = filterCohort("hcq_time"),
+      outcomeTable = users_table_name,
+      interval = c("overall"),
+      outcomeWashout = 365,
+      repeatedEvents = FALSE,
+      minCellCount = minimum_counts
+    ) %>%
+      mutate(window = "hcq_time")
+  } else {
+    inc_hcq <- NULL
+  }
   
   # post
-  inc_post <- estimateIncidence(
-    cdm = cdm,
-    denominatorTable = "post_hcq",
-    denominatorCohortId = filterCohort("post_hcq"),
-    outcomeTable = users_table_name,
-    interval = c("overall"),
-    outcomeWashout = 365,
-    repeatedEvents = FALSE,
-    minCellCount = minimum_counts
-  ) %>%
-    mutate(window = "post_hcq")
+  if (!is.null(filterCohort("post_hcq"))) {
+    inc_post <- estimateIncidence(
+      cdm = cdm,
+      denominatorTable = "post_hcq",
+      denominatorCohortId = filterCohort("post_hcq"),
+      outcomeTable = users_table_name,
+      interval = c("overall"),
+      outcomeWashout = 365,
+      repeatedEvents = FALSE,
+      minCellCount = minimum_counts
+    ) %>%
+      mutate(window = "post_hcq")
+  } else {
+    inc_post <- NULL
+  }
+  
+  rm(cdm$pre_covid)
+  rm(cdm$hcq_time)
+  rm(cdm$post_hcq)
   
   return(inc_pre %>%
            union_all(inc_hcq) %>%
