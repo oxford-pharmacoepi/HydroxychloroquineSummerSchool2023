@@ -16,7 +16,7 @@ exportAttrition <- function(cohort, path) {
 filterCohort <- function(cohort_name) {
   ids <- cohortCount(cdm[[cohort_name]]) %>% 
     filter(number_records > 100) %>% 
-    pull()
+    pull(cohort_definition_id)
   return(ids)
 }
 
